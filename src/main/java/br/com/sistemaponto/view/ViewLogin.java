@@ -54,6 +54,7 @@ public class ViewLogin {
      * @param msg
      */
     public void apresentaMensagem(String msg) {
+
         System.out.println(msg);
         //JOptionPane.showMessageDialog(null, msg);
     }
