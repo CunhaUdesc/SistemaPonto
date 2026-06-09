@@ -15,7 +15,11 @@ import java.util.*;
  */
 public class DaoUsuario {
 
-    private static Set<ModelUsuario> usuarios = new HashSet<ModelUsuario>();
+    private static Set<ModelUsuario> usuarios;
+    
+    public DaoUsuario(){
+        this.usuarios = new HashSet<ModelUsuario>();
+    }
 
     /**
      * Adiciona um novo usuário à lista
@@ -35,7 +39,7 @@ public class DaoUsuario {
      */
     public ModelUsuario autenticar(int login, String senha) {
         for (ModelUsuario usu : usuarios) {
-            if (usu.getLogin() == login) {
+            if (usu.getLogin() == login && usu.getSenha().equals(senha)) {
                 return usu;
             }
         }

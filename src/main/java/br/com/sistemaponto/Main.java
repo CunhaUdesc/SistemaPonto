@@ -15,7 +15,17 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        
+        DaoUsuario dao = new DaoUsuario();
+  //      ControllerLogin controller = new ControllerLogin(dao);
+
+        dao.addUsuario(new ModelUsuario(1, "Teste", EnumTipoUsuario.ADMINISTRADOR));
+               
+        ViewLogin viewLogin = new ViewLogin();
+        ControllerLogin controllerLogin = new ControllerLogin(dao, viewLogin);
         Scanner scn = new Scanner(System.in);
+        
+        viewLogin.apresentarTela();
 
         try {
             Connection conn = Conexao.conectar();
@@ -30,13 +40,6 @@ public class Main {
         String login = scn.nextLine();
         System.out.println("Senha:");
         String senha = scn.nextLine();
-
-        DaoUsuario dao = new DaoUsuario();
-        ControllerLogin controller = new ControllerLogin(dao);
-
-        dao.addUsuario(new ModelUsuario(1, "Teste", EnumTipoUsuario.ADMINISTRADOR));
-
-        (new ViewLogin(controller)).autenticarLogin(login, senha);
 
     }
 }

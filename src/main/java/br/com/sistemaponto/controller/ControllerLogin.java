@@ -5,6 +5,7 @@ import br.com.sistemaponto.exception.ExceptionLogin;
 import br.com.sistemaponto.model.ModelUsuario;
 import br.com.sistemaponto.util.Conexao;
 import br.com.sistemaponto.view.ViewLogin;
+import br.com.sistemaponto.view.ViewMenu;
 
 import java.sql.SQLException;
 
@@ -17,15 +18,27 @@ import java.sql.SQLException;
 public class ControllerLogin {
 
     private DaoUsuario Dao;
+    private ViewLogin viewLogin;
 
     /**
      * Construct
      *
      * @param dao
      */
-    public ControllerLogin(DaoUsuario dao) {
+    public ControllerLogin(DaoUsuario dao, ViewLogin viewLogin) {
         this.Dao = dao;
+        this.viewLogin = viewLogin;
+        adicionarAcao();
     }
+    
+    public void chamarMenu(){
+        new ControllerMenu(new ViewMenu());
+        this.viewLogin.setVisible(false);
+    }
+    
+        public void adicionarAcao(){
+            viewLogin.adcionarAcaoBtnEntrar(a -> autenticarLogin());
+        }
 
     /**
      * Autenticação de Usuário
@@ -34,6 +47,27 @@ public class ControllerLogin {
      * @param senha
      * @return ModelUsuario
      */
+        
+       public void autenticarLogin() {
+           int login = 0;
+           
+           try {
+               login = Integer.parseInt(viewLogin.getLogin());
+           } catch (Exception e) {
+                viewLogin.apresentaMensagem("Login Inválido!");
+                return;
+           }          
+                ModelUsuario Usuario = Dao.autenticar(login, viewLogin.getSenha());
+            
+                if (Usuario != null) {
+                    viewLogin.apresentaMensagem("Bem vindo! ");
+                    chamarMenu();
+                    return;
+                }
+
+                viewLogin.apresentaMensagem("Nenhum Usuário Encontrado!");
+        }
+       
     public ModelUsuario autenticar(String cod, String senha) throws ExceptionLogin, SQLException {
 
         try {
