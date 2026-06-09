@@ -7,8 +7,8 @@ package br.com.sistemaponto.controller;
 import br.com.sistemaponto.view.ViewMenu;
 
 /**
- *
- * @author Lenovo
+ * @author Rafael
+ * @since 09/06/2026
  */
 public class ControllerMenu {
     private ViewMenu viewMenu;
@@ -16,5 +16,27 @@ public class ControllerMenu {
     public ControllerMenu(ViewMenu viewMenu){
         this.viewMenu = viewMenu;
         viewMenu.apresentarTela();
+        adicionarAcoes();
+    }
+    
+    public void adicionarAcoes(){
+        //Adicionado funções dos botões
+        viewMenu.adcionarAcaoBtnBaterPonto(e -> abrirTelaBaterPonto());
+        
+        viewMenu.adcionarAcaoBtnManterControlePonto(e -> abrirTelaManterControlePonto());
+        
+        viewMenu.adcionarAcaoBtnManterFuncionario(e -> abrirTelaManterFuncionario());
+    }
+    
+    public void abrirTelaBaterPonto(){
+        System.out.println("Bater Ponto");
+    }
+    
+    public void abrirTelaManterControlePonto(){
+        System.out.println("Manter Controle Ponto");        
+    }
+    
+    public void abrirTelaManterFuncionario(){
+        System.out.println("Manter Funcionario");        
     }
 }
