@@ -4,11 +4,8 @@
  */
 package br.com.sistemaponto.view;
 
-import br.com.sistemaponto.controller.ControllerLogin;
-import br.com.sistemaponto.exception.ExceptionLogin;
-import br.com.sistemaponto.model.ModelUsuario;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 /**

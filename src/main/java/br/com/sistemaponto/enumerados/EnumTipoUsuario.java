@@ -8,8 +8,8 @@ package br.com.sistemaponto.enumerados;
  */
 public class EnumTipoUsuario {
 
-    public static final int ADMINISTRADOR = 1; // Usuário ADM possui acesso à tudo
+    public static final String ADMINISTRADOR = "Administrador"; // Usuário ADM possui acesso à tudo
 
-    public static final int FUNCIONARIO = 2; // Usuário Funcionário possui acesso apenas aos seus registros
+    public static final String FUNCIONARIO = "Funcionário"; // Usuário Funcionário possui acesso apenas aos seus registros
 
 }

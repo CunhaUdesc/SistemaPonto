@@ -11,7 +11,7 @@ public class ModelUsuario {
     private int codigo;
     private int login;
     private String senha;
-    private int tipo;
+    private String tipo;
 
     /**
      * Construct
@@ -19,17 +19,17 @@ public class ModelUsuario {
      * @param login
      * @param senha
      */
-    public ModelUsuario(int login, String senha, int tipo) {
+    public ModelUsuario(int login, String senha, String tipo) {
         this.login = login;
         this.senha = senha;
         this.tipo = tipo;
     }
 
-    public int getTipo() {
-        return tipo;
+    public String getTipo() {
+        return this.tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 

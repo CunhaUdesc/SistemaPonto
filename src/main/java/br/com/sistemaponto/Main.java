@@ -1,13 +1,14 @@
 package br.com.sistemaponto;
 
+import java.sql.Connection;
+import java.util.Scanner;
+
 import br.com.sistemaponto.controller.ControllerLogin;
 import br.com.sistemaponto.dao.DaoUsuario;
 import br.com.sistemaponto.enumerados.EnumTipoUsuario;
 import br.com.sistemaponto.model.ModelUsuario;
 import br.com.sistemaponto.util.Conexao;
 import br.com.sistemaponto.view.ViewLogin;
-import java.sql.Connection;
-import java.util.Scanner;
 
 /**
  * Teste de Conexão
