@@ -50,13 +50,24 @@ public class ControllerLogin {
         
        public void autenticarLogin() {
            int login = 0;
+           String senha;
            
            try {
                login = Integer.parseInt(viewLogin.getLogin());
            } catch (Exception e) {
                 viewLogin.apresentaMensagem("Login Inválido!");
                 return;
-           }          
+           }
+           try{
+               senha = viewLogin.getSenha();
+               
+               if(senha == null || senha.trim().isEmpty()){
+                    viewLogin.apresentaMensagem("Senha incorreta!");
+                    return;
+               }                
+           }catch(Exception e){
+               viewLogin.apresentaMensagem("Senha incorreta!");
+           }
                 ModelUsuario Usuario = Dao.autenticar(login, viewLogin.getSenha());
             
                 if (Usuario != null) {
