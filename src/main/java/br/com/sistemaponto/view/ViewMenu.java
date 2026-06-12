@@ -21,7 +21,7 @@ public class ViewMenu extends javax.swing.JFrame {
      */
     public ViewMenu() {
         initComponents();
-        jLabel2.setText(Main.versao);
+        lbVersao.setText(Main.versao);
     }
     
     public void apresentarTela(){
@@ -57,7 +57,7 @@ public class ViewMenu extends javax.swing.JFrame {
         btnManterFuncionario = new javax.swing.JButton();
         btnManterControlePonto = new javax.swing.JButton();
         btnBaterPonto = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lbVersao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +73,7 @@ public class ViewMenu extends javax.swing.JFrame {
         btnBaterPonto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBaterPonto.setText("Bater Ponto");
 
-        jLabel2.setText("jLabel2");
+        lbVersao.setText("Versao");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,7 +92,7 @@ public class ViewMenu extends javax.swing.JFrame {
                             .addComponent(btnBaterPonto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -107,7 +107,7 @@ public class ViewMenu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnBaterPonto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jLabel2))
+                .addComponent(lbVersao))
         );
 
         pack();
@@ -118,6 +118,6 @@ public class ViewMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnManterControlePonto;
     private javax.swing.JButton btnManterFuncionario;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lbVersao;
     // End of variables declaration//GEN-END:variables
 }

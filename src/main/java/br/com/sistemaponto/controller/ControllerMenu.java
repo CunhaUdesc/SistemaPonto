@@ -4,6 +4,7 @@
  */
 package br.com.sistemaponto.controller;
 
+import br.com.sistemaponto.view.ViewBaterPonto;
 import br.com.sistemaponto.view.ViewMenu;
 
 /**
@@ -21,15 +22,16 @@ public class ControllerMenu {
     
     public void adicionarAcoes(){
         //Adicionado funções dos botões
-        viewMenu.adcionarAcaoBtnBaterPonto(e -> abrirTelaBaterPonto());
+        viewMenu.adcionarAcaoBtnBaterPonto(e -> chamarTelaBaterPonto());
         
         viewMenu.adcionarAcaoBtnManterControlePonto(e -> abrirTelaManterControlePonto());
         
         viewMenu.adcionarAcaoBtnManterFuncionario(e -> abrirTelaManterFuncionario());
     }
     
-    public void abrirTelaBaterPonto(){
-        System.out.println("Bater Ponto");
+    public void chamarTelaBaterPonto(){
+        new ControllerBaterPonto(new ViewBaterPonto());
+        this.viewMenu.setVisible(false);
     }
     
     public void abrirTelaManterControlePonto(){

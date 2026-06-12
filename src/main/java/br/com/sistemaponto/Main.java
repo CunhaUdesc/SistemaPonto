@@ -16,7 +16,7 @@ import br.com.sistemaponto.view.ViewLogin;
 public class Main {
     
     public static final String versao= "V 1.0.0";
-
+    
     public static void main(String[] args) {
         
         DaoUsuario dao = new DaoUsuario();
@@ -29,6 +29,11 @@ public class Main {
         Scanner scn = new Scanner(System.in);
         
         viewLogin.apresentarTela();
+        
+        //MÉTODO PARA TESTE
+        viewLogin.setLogin("1");
+        viewLogin.setSenha("Teste");
+        viewLogin.clicarBtnEntrar();
 
         try {
             Connection conn = Conexao.conectar();
@@ -43,7 +48,6 @@ public class Main {
         String login = scn.nextLine();
         System.out.println("Senha:");
         String senha = scn.nextLine();
-
-        //Teste
+        
     }
 }

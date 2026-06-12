@@ -23,7 +23,7 @@ public class ViewLogin extends javax.swing.JFrame {
      */
     public ViewLogin() {
         initComponents();
-        jLabel4.setText(Main.versao);
+        lbVersao.setText(Main.versao);
     }
         
     public void adcionarAcaoBtnEntrar(ActionListener a){
@@ -45,6 +45,18 @@ public class ViewLogin extends javax.swing.JFrame {
     public String getSenha(){
         return txtSenha.getText();
     }
+    
+    //MÉTODOS PARA TESTES
+    
+    public void setLogin(String login){
+        txtLogin.setText(login);
+    }
+    public void setSenha(String senha){
+        txtSenha.setText(senha);
+    }
+    public void clicarBtnEntrar(){
+        btnEntrar.doClick();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,7 +73,7 @@ public class ViewLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtSenha = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        lbVersao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +87,7 @@ public class ViewLogin extends javax.swing.JFrame {
 
         btnEntrar.setText("Entrar");
 
-        jLabel4.setText("jLabel4");
+        lbVersao.setText("Versao");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,7 +109,7 @@ public class ViewLogin extends javax.swing.JFrame {
                 .addGap(73, 73, 73))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,7 +128,7 @@ public class ViewLogin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnEntrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jLabel4))
+                .addComponent(lbVersao))
         );
 
         pack();
@@ -127,7 +139,7 @@ public class ViewLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lbVersao;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtSenha;
     // End of variables declaration//GEN-END:variables
