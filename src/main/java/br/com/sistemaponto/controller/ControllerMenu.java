@@ -4,17 +4,45 @@
  */
 package br.com.sistemaponto.controller;
 
+import br.com.sistemaponto.dao.DaoRegistroPonto;
+import br.com.sistemaponto.model.ModelUsuario;
+import br.com.sistemaponto.view.ViewBaterPonto;
 import br.com.sistemaponto.view.ViewMenu;
 
 /**
- *
- * @author Lenovo
+ * @author Rafael
+ * @since 09/06/2026
  */
 public class ControllerMenu {
     private ViewMenu viewMenu;
+    private ModelUsuario usuario;
     
-    public ControllerMenu(ViewMenu viewMenu){
+    public ControllerMenu(ViewMenu viewMenu, ModelUsuario usuario){
+        this.usuario = usuario;
         this.viewMenu = viewMenu;
         viewMenu.apresentarTela();
+        adicionarAcoes();
+    }
+    
+    public void adicionarAcoes(){
+        //Adicionado funções dos botões
+        viewMenu.adcionarAcaoBtnBaterPonto(e -> chamarTelaBaterPonto());
+        
+        viewMenu.adcionarAcaoBtnManterControlePonto(e -> abrirTelaManterControlePonto());
+        
+        viewMenu.adcionarAcaoBtnManterFuncionario(e -> abrirTelaManterFuncionario());
+    }
+    
+    public void chamarTelaBaterPonto(){
+        new ControllerBaterPonto(new ViewBaterPonto(), new DaoRegistroPonto(), usuario);
+        this.viewMenu.setVisible(false);
+    }
+    
+    public void abrirTelaManterControlePonto(){
+        System.out.println("Manter Controle Ponto");        
+    }
+    
+    public void abrirTelaManterFuncionario(){
+        System.out.println("Manter Funcionario");        
     }
 }
