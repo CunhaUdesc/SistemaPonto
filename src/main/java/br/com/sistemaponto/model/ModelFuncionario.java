@@ -16,21 +16,25 @@ public class ModelFuncionario {
     private String nome;
     private String CPF;
     private LocalDate dataNascimento;
-    private EnumTipoUsuario tipo;
+    private String tipo;
     private ModelUsuario usuario;
+    private ModelRegistroPonto registros;
     
     //Verificar se tem mais atributos
     
     private static int geraCodigo = 1;
 
-    public ModelFuncionario(String nome, String CPF, LocalDate dataNascimento, EnumTipoUsuario tipo
-                                            ,ModelUsuario usuario) {
+    public ModelFuncionario(String nome, String CPF, LocalDate dataNascimento, String tipo
+                                            ,ModelUsuario usuario, ModelRegistroPonto registros) {
         this.id = geraCodigo++;
         this.nome = nome;
         this.CPF = CPF;
         this.dataNascimento = dataNascimento;
         this.tipo = tipo;
         this.usuario = usuario;
+        usuario.setFuncionario(this);
+        this.registros = registros;
+        registros.setFuncionario(this);
     }
 
     public int getId() {
@@ -49,12 +53,8 @@ public class ModelFuncionario {
         return dataNascimento;
     }
 
-    public EnumTipoUsuario getTipo() {
+    public String getTipo() {
         return tipo;
-    }
-
-    public static int getGeraCodigo() {
-        return geraCodigo;
     }
 
     public void setNome(String nome) {
@@ -69,8 +69,12 @@ public class ModelFuncionario {
         this.dataNascimento = dataNascimento;
     }
 
-    public void setTipo(EnumTipoUsuario tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+    
+    public ModelRegistroPonto getRegistroPonto(){
+        return registros;
     }
 
 }

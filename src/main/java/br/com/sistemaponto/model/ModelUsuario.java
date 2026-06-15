@@ -12,6 +12,7 @@ public class ModelUsuario {
     private int login;
     private String senha;
     private String tipo;
+    private ModelFuncionario funcionario;  //tem q ver como vai ser relacionado o funcionario e o login
 
     /**
      * Construct
@@ -23,6 +24,7 @@ public class ModelUsuario {
         this.login = login;
         this.senha = senha;
         this.tipo = tipo;
+        
     }
 
     public String getTipo() {
@@ -57,5 +59,12 @@ public class ModelUsuario {
         this.senha = senha;
     }
     
+    public void setFuncionario(ModelFuncionario funcionario){
+        this.funcionario = funcionario;
+    }
+    
+    public ModelFuncionario getFuncionario(){  //teste por hora
+        return funcionario;
+    }
 }
 

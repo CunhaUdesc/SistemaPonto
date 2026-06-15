@@ -6,9 +6,12 @@ import java.util.Scanner;
 import br.com.sistemaponto.controller.ControllerLogin;
 import br.com.sistemaponto.dao.DaoUsuario;
 import br.com.sistemaponto.enumerados.EnumTipoUsuario;
+import br.com.sistemaponto.model.ModelFuncionario;
+import br.com.sistemaponto.model.ModelRegistroPonto;
 import br.com.sistemaponto.model.ModelUsuario;
 import br.com.sistemaponto.util.Conexao;
 import br.com.sistemaponto.view.ViewLogin;
+import java.time.LocalDate;
 
 /**
  * Teste de Conexão
@@ -21,9 +24,13 @@ public class Main {
         
         DaoUsuario dao = new DaoUsuario();
   //      ControllerLogin controller = new ControllerLogin(dao);
+  
+        ModelUsuario usuario = new ModelUsuario(1, "Teste", EnumTipoUsuario.ADMINISTRADOR);
+        ModelFuncionario funcionario = new ModelFuncionario("Rafael", "123.456.789-00", LocalDate.of(2004, 5, 21), EnumTipoUsuario.ADMINISTRADOR, 
+                                                                                                usuario, new ModelRegistroPonto());
+        dao.addUsuario(usuario);
 
-        dao.addUsuario(new ModelUsuario(1, "Teste", EnumTipoUsuario.ADMINISTRADOR));
-               
+                                              
         ViewLogin viewLogin = new ViewLogin();
         ControllerLogin controllerLogin = new ControllerLogin(dao, viewLogin);
         Scanner scn = new Scanner(System.in);
@@ -43,11 +50,6 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println("Login:\n");
-        String login = scn.nextLine();
-        System.out.println("Senha:");
-        String senha = scn.nextLine();
         
     }
 }

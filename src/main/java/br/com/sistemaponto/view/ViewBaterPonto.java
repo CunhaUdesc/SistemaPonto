@@ -7,7 +7,9 @@ package br.com.sistemaponto.view;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /**
@@ -38,6 +40,10 @@ public class ViewBaterPonto extends javax.swing.JFrame {
         lbNomeFuncionario.setText(nomeFuncionario);
     }
     
+    public void atualizaRegistros(String registro){
+        txtRegistroPonto.setText(registro); 
+    }
+    
     public String getDataAtual(){
         LocalDateTime dataAtual = LocalDateTime.now();
         return dataAtual.format(formato);
@@ -65,6 +71,10 @@ public class ViewBaterPonto extends javax.swing.JFrame {
     
     public String getRegistrosPonto(){
         return txtRegistroPonto.getText();
+    }
+    
+    public void apresentaMensagem(String msg) {  
+        JOptionPane.showMessageDialog(null, msg);
     }
 
     /**

@@ -31,8 +31,8 @@ public class ControllerLogin {
         adicionarAcao();
     }
     
-    public void chamarMenu(){
-        new ControllerMenu(new ViewMenu());
+    public void chamarMenu(ModelUsuario usuario){
+        new ControllerMenu(new ViewMenu(), usuario);
         this.viewLogin.setVisible(false);
     }
     
@@ -72,7 +72,7 @@ public class ControllerLogin {
             
                 if (Usuario != null) {
                     viewLogin.apresentaMensagem("Bem vindo! ");
-                    chamarMenu();
+                    chamarMenu(Usuario);
                     return;
                 }
 
