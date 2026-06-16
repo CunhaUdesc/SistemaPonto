@@ -43,6 +43,8 @@ Em qualquer lugar da aplicação: Usuario usuario = Session.getUsuario();
     c) DAORegistroPonto:
       - addRegistroPonto() (ADM, Funcionário)
       - alterarRegistroPonto() (ADM)
+  
+5. Usar o DataGrip: com arquivo na raiz do projeto, ex. no Moodle
       - getAllRegistrosPonto()
       - getRegistrosPontoFromFuncionario()
       - getRegistrosPontoFromData() -> Opcional
