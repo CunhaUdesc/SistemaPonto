@@ -4,14 +4,12 @@
  */
 package br.com.sistemaponto.controller;
 
+import java.util.List;
+
 import br.com.sistemaponto.dao.DaoRegistroPonto;
 import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
-import br.com.sistemaponto.model.ModelRegistroPonto;
 import br.com.sistemaponto.model.ModelUsuario;
 import br.com.sistemaponto.view.ViewBaterPonto;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -45,7 +43,7 @@ public class ControllerBaterPonto {
     }
 
     public void setLabels(){
-        viewBaterPonto.setLabels("NomeTeste");
+        viewBaterPonto.setLabels(usuario.getFuncionario().getNome());
     }
     
     public void adicionarAcoes(){
