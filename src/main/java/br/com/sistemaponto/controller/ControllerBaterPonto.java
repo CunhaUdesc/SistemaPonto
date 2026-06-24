@@ -56,7 +56,7 @@ public class ControllerBaterPonto {
     }
 
     public void setLabels(){
-        viewBaterPonto.setLabels("NomeTeste");
+        viewBaterPonto.setLabels(usuario.getFuncionario().getNome());
     }
     
     public void adicionarAcoes(){

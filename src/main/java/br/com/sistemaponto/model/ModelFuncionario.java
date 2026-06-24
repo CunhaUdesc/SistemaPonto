@@ -4,7 +4,6 @@
  */
 package br.com.sistemaponto.model;
 
-import br.com.sistemaponto.enumerados.EnumTipoUsuario;
 import java.time.LocalDate;
 
 /**
@@ -16,7 +15,7 @@ public class ModelFuncionario {
     private String nome;
     private String CPF;
     private LocalDate dataNascimento;
-    private String tipo;
+    private String tipoFuncionario;
     private ModelUsuario usuario;
     private ModelRegistroPonto registros;
     
@@ -24,13 +23,13 @@ public class ModelFuncionario {
     
     private static int geraCodigo = 1;
 
-    public ModelFuncionario(String nome, String CPF, LocalDate dataNascimento, String tipo
+    public ModelFuncionario(String nome, String CPF, LocalDate dataNascimento, String tipoFuncionario
                                             ,ModelUsuario usuario, ModelRegistroPonto registros) {
         this.id = geraCodigo++;
         this.nome = nome;
         this.CPF = CPF;
         this.dataNascimento = dataNascimento;
-        this.tipo = tipo;
+        this.tipoFuncionario = tipoFuncionario;
         this.usuario = usuario;
         usuario.setFuncionario(this);
         this.registros = registros;
@@ -53,8 +52,8 @@ public class ModelFuncionario {
         return dataNascimento;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getTipoFuncionario() {
+        return tipoFuncionario;
     }
 
     public void setNome(String nome) {
@@ -69,8 +68,8 @@ public class ModelFuncionario {
         this.dataNascimento = dataNascimento;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipo(String tipoFuncionario) {
+        this.tipoFuncionario = tipoFuncionario;
     }
     
     public ModelRegistroPonto getRegistroPonto(){
