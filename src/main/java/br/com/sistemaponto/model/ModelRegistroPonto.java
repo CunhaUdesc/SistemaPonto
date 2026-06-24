@@ -15,7 +15,7 @@ public class ModelRegistroPonto {
     private ModelFuncionario funcionario;
     private List<String> registrosDia;
     private List<String> registrosGeral;
-    private int botao = 0; //0 para ENTRADA e 1 para SAIDA
+    private int botao = 0; //0 para ENTRADA e 1 para
     
     public ModelRegistroPonto(){
         registrosDia = new ArrayList<>();

@@ -1,39 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.sistemaponto.controller;
 
-import br.com.sistemaponto.dao.DaoRegistroPonto;
-import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
-import br.com.sistemaponto.model.ModelRegistroPonto;
-import br.com.sistemaponto.model.ModelUsuario;
-import br.com.sistemaponto.view.ViewBaterPonto;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import br.com.sistemaponto.dao.*;
+import br.com.sistemaponto.exception.*;
+import br.com.sistemaponto.model.*;
+import br.com.sistemaponto.view.*;
+import java.util.*;
 
 /**
+ * Controller da Batida de Ponto
  *
- * @author Lenovo
+ * @author Rafael
+ * @since 15/06/2026
  */
 public class ControllerBaterPonto {
+
+    /** @var ModelUsuario */
     private ModelUsuario usuario;
+
+    /** @var ViewBaterPonto */
     private ViewBaterPonto viewBaterPonto;
+
+    /** @var DaoRegistroPonto */
     private DaoRegistroPonto daoRegistroPonto;
-    
-    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto, ModelUsuario usuario){
+
+    /**
+     * Construct
+     *
+     * @param viewBaterPonto
+     * @param daoRegistroPonto
+     * @param usuario
+     */
+    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto, ModelUsuario usuario) {
         this.usuario = usuario;
         this.daoRegistroPonto = daoRegistroPonto;
         this.viewBaterPonto = viewBaterPonto;
-        viewBaterPonto.mostrarTela();
-        atualizaRegistrosDoDia();
-        adicionarAcoes();
-        setLabels();
-        desabilitaBotao();
+        this.viewBaterPonto.mostrarTela();
+        this.atualizaRegistrosDoDia();
+        this.adicionarAcoes();
+        this.setLabels();
+        this.desabilitaBotao();
     }
-   
-    public void desabilitaBotao(){
+
+    /**
+     * Desabilita o botão
+     */
+    public void desabilitaBotao() {
         //Testando como desabilitar o botão
         if(usuario.getFuncionario().getRegistroPonto().getBotao() == 0){
             viewBaterPonto.getBtnEntrada().setEnabled(true);
@@ -54,19 +65,19 @@ public class ControllerBaterPonto {
         viewBaterPonto.adicionarAcaoBtnSaidaPonto(e -> baterPontoSaida());
     }
     
-    public void baterPontoEntrada(){
+    public void baterPontoEntrada() {
         
-        try{
-            boolean adicionado = usuario.getFuncionario().getRegistroPonto().addRegistro("Entrada -- "+viewBaterPonto.getDataAtual());
+        try {
+            boolean adicionado = usuario.getFuncionario().getRegistroPonto().addRegistro("Entrada -- " + viewBaterPonto.getDataAtual());
             
-            if(!adicionado)
+            if (!adicionado) {
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
-            
+            }
             atualizaRegistrosDoDia();
             usuario.getFuncionario().getRegistroPonto().setBotao(1);
             desabilitaBotao();
             
-        }catch(ExceptionLimiteRegistroPonto e){
+        } catch (ExceptionLimiteRegistroPonto e) {
             viewBaterPonto.apresentaMensagem(e.getMessage());
         }
     }

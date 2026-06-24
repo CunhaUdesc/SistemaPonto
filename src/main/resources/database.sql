@@ -6,7 +6,9 @@ CREATE TABLE IF NOT EXISTS tbfuncionario (
     funtipo 		VARCHAR(7) NOT NULL,
     funcargahoraria SMALLINT,
     funsalario		DECIMAL(5,2);
-    nvfnivel 		SMALLINT NOT NULL
+    nvfnivel 		SMALLINT NOT NULL,
+    usucodigo       SMALLINT NOT NULL,
+    regcodigo       SMALLINT NOT NULL,
 );
 
 -- Comments
@@ -19,7 +21,9 @@ COMMENT ON COLUMN tbfuncionario.funsalario		IS 'Salário mensal do funcionário'
 
 -- Keys
 ALTER TABLE tbfuncionario ADD PRIMARY KEY (funcodigo);
-ALTER TABLE tbfuncionario ADD CONSTRAINT fk_niveis FOREIGN KEY (NFVCODIGO) REFERENCES tbnivelfuncionario(nvfcodigo);
+ALTER TABLE tbfuncionario ADD CONSTRAINT fk_niveis        FOREIGN KEY (NFVCODIGO) REFERENCES tbnivelfuncionario(nvfcodigo);
+ALTER TABLE tbfuncionario ADD CONSTRAINT fk_usuario       FOREIGN KEY (USUCODIGO) REFERENCES tbusuario(usucodigo)
+ALTER TABLE tbfuncionario ADD CONSTRAINT fk_registroPonto FOREIGN KEY (REGCODIGO) REFERENCES tbregistroponto(regcodigo)
 
 -- Checks
 ALTER TABLE tbfuncionario ADD CONSTRAINT chk_tipo_funcionario CHECK (funtipo IN('FIXO', 'HORISTA'));
@@ -27,20 +31,21 @@ ALTER TABLE tbfuncionario ADD CONSTRAINT chk_tipo_funcionario CHECK (funtipo IN(
 
 /* ============================= USUÁRIO ============================= */
 CREATE TABLE IF NOT EXISTS tbusuario (
-    ususequencia SERIAL NOT NULL,
+    usucodigo    SERIAL NOT NULL,
     usulogin 	 SMALLINT UNIQUE NOT NULL,
-    ususenha 	 VARCHAR(20) NOT NULL,
-    usutipo 	 VARCHAR(4) NOT NULL
+    ususenha 	 SMALLINT NOT NULL,
+    usutipo 	 VARCHAR(4) NOT NULL,
+    funcodigo    SMALLINT NOT NULL
 );
 
 -- Comments
-COMMENT ON COLUMN tbusuario.ususequencia IS 'Sequência do Usuário';
+COMMENT ON COLUMN tbusuario.usucodigo    IS 'Código do Usuário';
 COMMENT ON COLUMN tbusuario.usulogin     IS 'Login do Usuário (Código do Funcionário)';
 COMMENT ON COLUMN tbusuario.ususenha     IS 'Senha do Usuário';
 COMMENT ON COLUMN tbusuario.usutipo      IS 'Tipo de Usuário (ADM ou FUNC)';
 
 -- Keys
-ALTER TABLE tbusuario ADD PRIMARY KEY (ususequencia);
+ALTER TABLE tbusuario ADD PRIMARY KEY (usucodigo);
 ALTER TABLE tbusuario ADD CONSTRAINT fk_login FOREIGN KEY (usulogin) REFERENCES tbfuncionario(funcodigo);
 
 -- Checks
@@ -50,22 +55,23 @@ ALTER TABLE tbusuario ADD CONSTRAINT chk_senha CHECK (ususenha ~ '^[A-Za-z0-9]+$
 
 /* ============================= REGISTRO PONTO ============================= */
 CREATE TABLE IF NOT EXISTS tbregistroponto (
-    regsequencia 	  SERIAL NOT NULL,
+    regcodigo         SERIAL NOT NULL,
     regdataregistro   DATE NOT NULL,
-    regentrada  	  TIMESTAMP,
+    regentrada        TIMESTAMP,
     regsaidaintervalo TIMESTAMP,
     regvoltaintervalo TIMESTAMP,
-    regsaidafinal 	  TIMESTAMP
-    funcodigo 		  INTEGER NOT NULL
+    regsaidafinal     TIMESTAMP
+    funcodigo 	      INTEGER NOT NULL
 );
 
+
 -- Comments
-COMMENT ON COLUMN tbregistroponto.regsequencia    IS 'Sequência do registro';
+COMMENT ON COLUMN tbregistroponto.regcodigo       IS 'Sequência do registro';
 COMMENT ON COLUMN tbregistroponto.regdataregistro IS 'Data de criação do registro';
 COMMENT ON COLUMN tbregistroponto.regentrada	  IS 'Hora de entrada';
 
 -- Keys
-ALTER TABLE tbregistroponto ADD PRIMARY KEY (regsequencia);
+ALTER TABLE tbregistroponto ADD PRIMARY KEY (regcodigo);
 ALTER TABLE tbregistroponto ADD CONSTRAINT fk_funcionario FOREIGN KEY (funcodigo) REFERENCES tbfuncionario (funcodigo);
 
 -- Checks
