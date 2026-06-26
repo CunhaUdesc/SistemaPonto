@@ -19,6 +19,8 @@ public class InicializadorDataBase {
             stmt.close();
             conn.close();
 
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

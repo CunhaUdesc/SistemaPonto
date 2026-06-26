@@ -27,12 +27,12 @@ import java.time.LocalDate;
         // Criação e população das tabelas
         InicializadorDataBase.inicializar();
 
-        DaoUsuario dao = new DaoUsuario();
   //      ControllerLogin controller = new ControllerLogin(dao);
-  
+
         ModelUsuario usuario = new ModelUsuario(1, "Teste", EnumTipoUsuario.ADMINISTRADOR);
-        ModelFuncionario funcionario = new ModelFuncionario("Rafael", "123.456.789-00", LocalDate.of(2004, 5, 21), EnumTipoUsuario.ADMINISTRADOR, 
+        ModelFuncionario funcionario = new ModelFuncionario("Rafael", "123.456.789-00", LocalDate.of(2004, 5, 21), EnumTipoUsuario.ADMINISTRADOR,
                                                                                                 usuario, new ModelRegistroPonto());
+        DaoUsuario dao = new DaoUsuario();
         dao.addUsuario(usuario);
 
                                               

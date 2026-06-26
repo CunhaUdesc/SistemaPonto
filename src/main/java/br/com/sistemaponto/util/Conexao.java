@@ -1,5 +1,7 @@
 package br.com.sistemaponto.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,6 +18,18 @@ public class Conexao {
 //    private static final String PASSWORD = "Vitor0209@";
 
     public static Connection conectar() throws SQLException {
-        return DriverManager.getConnection(URL);
+
+        try {
+            InputStream input = InicializadorDataBase.class.getResourceAsStream("/database.sql");
+            if (input == null) {
+                throw new RuntimeException("Arquivo database.sql não encontrado!");
+            }
+            String sql = new String(input.readAllBytes());
+
+            return DriverManager.getConnection(URL);
+        } catch (IOException ex) {
+
+        }
+        return null;
     }
 }
