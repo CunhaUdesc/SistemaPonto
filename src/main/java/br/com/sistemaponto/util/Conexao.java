@@ -9,12 +9,13 @@ import java.sql.SQLException;
  */
 public class Conexao {
 
-    private static final String URL = "jdbc:postgresql://localhost:5434/sistema_ponto_padaria";
+//    private static final String URL = "jdbc:postgresql://localhost:5434/sistema_ponto_padaria";
+    private static final String URL = "jdbc:sqlite:sistemaponto.db";
 
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "Vitor0209@";
+//    private static final String USER = "postgres";
+//    private static final String PASSWORD = "Vitor0209@";
 
     public static Connection conectar() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        return DriverManager.getConnection(URL);
     }
 }

@@ -10,6 +10,7 @@ import br.com.sistemaponto.model.ModelFuncionario;
 import br.com.sistemaponto.model.ModelRegistroPonto;
 import br.com.sistemaponto.model.ModelUsuario;
 import br.com.sistemaponto.util.Conexao;
+import br.com.sistemaponto.util.InicializadorDataBase;
 import br.com.sistemaponto.view.ViewLogin;
 import java.time.LocalDate;
 
@@ -22,7 +23,10 @@ import java.time.LocalDate;
     public static final String versao= "V 1.0.0";
     
     public static void main(String[] args) {
-        
+
+        // Criação e população das tabelas
+        InicializadorDataBase.inicializar();
+
         DaoUsuario dao = new DaoUsuario();
   //      ControllerLogin controller = new ControllerLogin(dao);
   
