@@ -15,6 +15,7 @@ public class ControllerCadastroFuncionario {
     
     public ControllerCadastroFuncionario(ViewCadastroFuncionario viewCadastroFunc){
         this.viewCadastroFunc = viewCadastroFunc;
+        viewCadastroFunc.mostrarTela();
         adicionarAcoes();
     }
     
@@ -29,6 +30,6 @@ public class ControllerCadastroFuncionario {
     }
     
     public void salvarFuncionario(){
-        
+        System.out.println("Testes");
     }
 }

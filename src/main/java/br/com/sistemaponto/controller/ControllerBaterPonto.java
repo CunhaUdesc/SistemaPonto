@@ -1,10 +1,11 @@
 package br.com.sistemaponto.controller;
 
-import br.com.sistemaponto.dao.*;
-import br.com.sistemaponto.exception.*;
-import br.com.sistemaponto.model.*;
-import br.com.sistemaponto.view.*;
-import java.util.*;
+import java.util.List;
+
+import br.com.sistemaponto.dao.DaoRegistroPonto;
+import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
+import br.com.sistemaponto.util.Session;
+import br.com.sistemaponto.view.ViewBaterPonto;
 
 /**
  * Controller da Batida de Ponto
@@ -13,9 +14,6 @@ import java.util.*;
  * @since 15/06/2026
  */
 public class ControllerBaterPonto {
-
-    /** @var ModelUsuario */
-    private ModelUsuario usuario;
 
     /** @var ViewBaterPonto */
     private ViewBaterPonto viewBaterPonto;
@@ -30,8 +28,7 @@ public class ControllerBaterPonto {
      * @param daoRegistroPonto
      * @param usuario
      */
-    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto, ModelUsuario usuario) {
-        this.usuario = usuario;
+    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto) {
         this.daoRegistroPonto = daoRegistroPonto;
         this.viewBaterPonto = viewBaterPonto;
         this.viewBaterPonto.mostrarTela();
@@ -46,7 +43,7 @@ public class ControllerBaterPonto {
      */
     public void desabilitaBotao() {
         //Testando como desabilitar o botão
-        if(usuario.getFuncionario().getRegistroPonto().getBotao() == 0){
+        if(Session.getUsuario().getFuncionario().getRegistroPonto().getBotao() == 0){
             viewBaterPonto.getBtnEntrada().setEnabled(true);
             viewBaterPonto.getBtnSaida().setEnabled(false);
             return;
@@ -56,7 +53,7 @@ public class ControllerBaterPonto {
     }
 
     public void setLabels(){
-        viewBaterPonto.setLabels(usuario.getFuncionario().getNome());
+        viewBaterPonto.setLabels(Session.getUsuario().getFuncionario().getNome());
     }
     
     public void adicionarAcoes(){
@@ -68,13 +65,13 @@ public class ControllerBaterPonto {
     public void baterPontoEntrada() {
         
         try {
-            boolean adicionado = usuario.getFuncionario().getRegistroPonto().addRegistro("Entrada -- " + viewBaterPonto.getDataAtual());
+            boolean adicionado = Session.getUsuario().getFuncionario().getRegistroPonto().addRegistro("Entrada -- " + viewBaterPonto.getDataAtual());
             
             if (!adicionado) {
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
             }
             atualizaRegistrosDoDia();
-            usuario.getFuncionario().getRegistroPonto().setBotao(1);
+            Session.getUsuario().getFuncionario().getRegistroPonto().setBotao(1);
             desabilitaBotao();
             
         } catch (ExceptionLimiteRegistroPonto e) {
@@ -85,14 +82,14 @@ public class ControllerBaterPonto {
     public void baterPontoSaida(){ //talvez pode tirar, pois o último registro sempre é uma saída
         
         try{
-            boolean adicionado = usuario.getFuncionario().getRegistroPonto().addRegistro("Saida -- "+viewBaterPonto.getDataAtual());
+            boolean adicionado = Session.getUsuario().getFuncionario().getRegistroPonto().addRegistro("Saida -- "+viewBaterPonto.getDataAtual());
             
             if(!adicionado)
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
             
             atualizaRegistrosDoDia();
             
-            usuario.getFuncionario().getRegistroPonto().setBotao(0);
+            Session.getUsuario().getFuncionario().getRegistroPonto().setBotao(0);
             desabilitaBotao();
  
         }catch(ExceptionLimiteRegistroPonto e){
@@ -101,7 +98,7 @@ public class ControllerBaterPonto {
     }
     
     public void atualizaRegistrosDoDia(){
-        List<String> registros = usuario.getFuncionario().getRegistroPonto().getRegistrosDia();
+        List<String> registros = Session.getUsuario().getFuncionario().getRegistroPonto().getRegistrosDia();
         StringBuilder sb = new StringBuilder();
         for(String r : registros){
             sb.append(r).append("\n");

@@ -42,6 +42,7 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
     }
     
     public void limparTela(){
+        txtId.setText("");
         txtNome.setText("");
         txtCpf.setText("");
         txtDataNascimento.setText("");
@@ -76,7 +77,7 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Id");
 

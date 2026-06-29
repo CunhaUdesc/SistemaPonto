@@ -5,8 +5,8 @@
 package br.com.sistemaponto.controller;
 
 import br.com.sistemaponto.dao.DaoRegistroPonto;
-import br.com.sistemaponto.model.ModelUsuario;
 import br.com.sistemaponto.view.ViewBaterPonto;
+import br.com.sistemaponto.view.ViewManterFuncionario;
 import br.com.sistemaponto.view.ViewMenu;
 
 /**
@@ -15,10 +15,8 @@ import br.com.sistemaponto.view.ViewMenu;
  */
 public class ControllerMenu {
     private ViewMenu viewMenu;
-    private ModelUsuario usuario;
     
-    public ControllerMenu(ViewMenu viewMenu, ModelUsuario usuario){
-        this.usuario = usuario;
+    public ControllerMenu(ViewMenu viewMenu){
         this.viewMenu = viewMenu;
         viewMenu.apresentarTela();
         adicionarAcoes();
@@ -34,8 +32,7 @@ public class ControllerMenu {
     }
     
     public void chamarTelaBaterPonto(){
-        new ControllerBaterPonto(new ViewBaterPonto(), new DaoRegistroPonto(), usuario);
-        this.viewMenu.setVisible(false);
+        new ControllerBaterPonto(new ViewBaterPonto(), new DaoRegistroPonto());
     }
     
     public void abrirTelaManterControlePonto(){
@@ -43,6 +40,6 @@ public class ControllerMenu {
     }
     
     public void abrirTelaManterFuncionario(){
-        System.out.println("Manter Funcionario");        
+        new ControllerManterFuncionario(new ViewManterFuncionario());
     }
 }

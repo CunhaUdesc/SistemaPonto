@@ -3,30 +3,10 @@ Sistema de Controle Ponto para Padaria
 
 === AFAZERES ===
 
-1. Criar JTable para a consulta de funcionários e consulta de registro ponto;
-2. Ajustar telar extrar para não fecharem o sistema todo;
-3. Implementar classe:
-public final class Session {
+1. Criar JTable para a consulta de registro ponto -- Rafael
+2. Updates nas classes + conferir demais -- Rafael
 
-    private static Usuario usuario;
-
-    private Session() {}
-
-    public static Usuario getUsuario() {
-        return usuario;
-    }
-
-    public static void setUsuario(Usuario usuario) {
-        Session.usuario = usuario;
-    }
-
-    public static void logout() {
-        usuario = null;
-    }
-}
-Em qualquer lugar da aplicação: Usuario usuario = Session.getUsuario();
-
-4. Métodos DAO:
+3. Métodos DAO:
    a) DAOUsuario:
      - addUsuario() (insert)
      - excluirUsuario() (delete)
@@ -44,8 +24,7 @@ Em qualquer lugar da aplicação: Usuario usuario = Session.getUsuario();
       - addRegistroPonto() (ADM, Funcionário)
       - alterarRegistroPonto() (ADM)
   
-5. Usar o DataGrip: com arquivo na raiz do projeto, ex. no Moodle
+4. Usar o DataGrip: com arquivo na raiz do projeto, ex. no Moodle
       - getAllRegistrosPonto()
       - getRegistrosPontoFromFuncionario()
       - getRegistrosPontoFromData() -> Opcional
-      - 

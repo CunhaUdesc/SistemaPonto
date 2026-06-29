@@ -1,6 +1,7 @@
 package br.com.sistemaponto;
 
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import br.com.sistemaponto.controller.ControllerLogin;
@@ -12,7 +13,6 @@ import br.com.sistemaponto.model.ModelUsuario;
 import br.com.sistemaponto.util.Conexao;
 import br.com.sistemaponto.util.InicializadorDataBase;
 import br.com.sistemaponto.view.ViewLogin;
-import java.time.LocalDate;
 
 /**
  * Teste de Conexão
@@ -39,9 +39,7 @@ import java.time.LocalDate;
         ViewLogin viewLogin = new ViewLogin();
         ControllerLogin controllerLogin = new ControllerLogin(dao, viewLogin);
         Scanner scn = new Scanner(System.in);
-        
-        viewLogin.apresentarTela();
-        
+                
         //MÉTODO PARA TESTE
         viewLogin.setLogin("1");
         viewLogin.setSenha("Teste");

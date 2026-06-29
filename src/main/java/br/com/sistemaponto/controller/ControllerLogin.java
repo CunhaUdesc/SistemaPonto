@@ -1,13 +1,13 @@
 package br.com.sistemaponto.controller;
 
+import java.sql.SQLException;
+
 import br.com.sistemaponto.dao.DaoUsuario;
 import br.com.sistemaponto.exception.ExceptionLogin;
 import br.com.sistemaponto.model.ModelUsuario;
-import br.com.sistemaponto.util.Conexao;
+import br.com.sistemaponto.util.Session;
 import br.com.sistemaponto.view.ViewLogin;
 import br.com.sistemaponto.view.ViewMenu;
-
-import java.sql.SQLException;
 
 /**
  * Controlador de Login do Sistema Ponto
@@ -28,11 +28,12 @@ public class ControllerLogin {
     public ControllerLogin(DaoUsuario dao, ViewLogin viewLogin) {
         this.Dao = dao;
         this.viewLogin = viewLogin;
+        viewLogin.apresentarTela();
         adicionarAcao();
     }
     
-    public void chamarMenu(ModelUsuario usuario){
-        new ControllerMenu(new ViewMenu(), usuario);
+    public void chamarMenu(){
+        new ControllerMenu(new ViewMenu());
         this.viewLogin.setVisible(false);
     }
     
@@ -71,8 +72,9 @@ public class ControllerLogin {
                 ModelUsuario Usuario = Dao.autenticar(login, viewLogin.getSenha());
             
                 if (Usuario != null) {
+                    Session.setUsuario(Usuario);
                     viewLogin.apresentaMensagem("Bem vindo! ");
-                    chamarMenu(Usuario);
+                    chamarMenu();
                     return;
                 }
 

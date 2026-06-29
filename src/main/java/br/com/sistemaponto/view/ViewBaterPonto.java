@@ -7,7 +7,7 @@ package br.com.sistemaponto.view;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -99,7 +99,7 @@ public class ViewBaterPonto extends javax.swing.JFrame {
         lbNomeFuncionario.setText("NomeFuncionario");
 
         lbDataHoje.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lbDataHoje.setText("DataDeHoje");
+        lbDataHoje.setText("Hora do Dia");
 
         txtRegistroPonto.setColumns(20);
         txtRegistroPonto.setRows(5);
