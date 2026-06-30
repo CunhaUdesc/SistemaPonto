@@ -20,7 +20,7 @@ public class DaoUsuario implements InterfaceDados {
 
     private static Set<ModelUsuario> usuarios;
     
-    public DaoUsuario(){
+    public DaoUsuario() {
         this.usuarios = new HashSet<ModelUsuario>();
     }
 
@@ -57,13 +57,49 @@ public class DaoUsuario implements InterfaceDados {
     }
 
     @Override
-    public void alterar(Object usuario) {
-
-    }
+    public void alterar(Object usuario) {}
 
     @Override
     public void excluir(Object usuario) {
+        ModelUsuario Usuario = (ModelUsuario) usuario;
+        String sql = """
+            DELETE 
+              FROM tbusuario
+             WHERE usucodigo = ? 
+        """;
 
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, Usuario.getCodigo());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    /**
+     * Retorna o usuário de acordo com o código
+     *
+     * @param codigo
+     * @return
+     */
+    public ModelUsuario getUsuarioFromCodigo(int codigo) {
+        return new ModelUsuario(0, "", "");
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public List<Iterator> selectAll() {
+        return new ArrayList<>();
     }
 
     /**

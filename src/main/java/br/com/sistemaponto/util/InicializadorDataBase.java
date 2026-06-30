@@ -1,6 +1,7 @@
 package br.com.sistemaponto.util;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -9,20 +10,23 @@ public class InicializadorDataBase {
     public static void inicializar() {
 
         try {
+            /* Busca o arquivo 'database.sql' dentro da pasta resource */
             InputStream input = InicializadorDataBase.class.getResourceAsStream("/database.sql");
-            String sql = new String(input.readAllBytes());
+            if (input == null) {
+                throw new IllegalStateException("Arquivo 'database.sql não encontrado.'");
+            }
 
-            Connection conn = Conexao.conectar();
-            Statement stmt = conn.createStatement();
+            try (
+                /* Abre uma conexão e executa o SQL */
+                Connection conn = Conexao.conectar();
+                Statement stmt = conn.createStatement();
+            ) {}
 
-            stmt.execute(sql);
-            stmt.close();
-            conn.close();
+            /* Lê o arquivo e transforma em String */
+            String sql = new String(input.readAllBytes(), StandardCharsets.UTF_8);
 
-        } catch (NullPointerException ex) {
-            ex.printStackTrace();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException("Erro ao inicializar o banco.", ex);
         }
     }
 

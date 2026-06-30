@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS tbfuncionario (
     funtipo 		VARCHAR(7) NOT NULL,
     funcargahoraria SMALLINT,
     funsalario		DECIMAL(5,2);
-    nvfnivel 		SMALLINT NOT NULL,
     usucodigo       SMALLINT NOT NULL,
     regcodigo       SMALLINT NOT NULL,
 );
@@ -18,6 +17,7 @@ COMMENT ON COLUMN tbfuncionario.funcpf    		IS 'CPF do Funcionário';
 COMMENT ON COLUMN tbfuncionario.funtipo   		IS 'Tipo do Funcionário (Fixo ou Horista)';
 COMMENT ON COLUMN tbfuncionario.funcargahoraria IS 'Carga Horária Diária do Funcionário';
 COMMENT ON COLUMN tbfuncionario.funsalario		IS 'Salário mensal do funcionário';
+COMMENT ON COLUMN tbfuncionario.usucodigo       IS 'Código do usuário relacionado ao funcionário'
 
 -- Keys
 ALTER TABLE tbfuncionario ADD PRIMARY KEY (funcodigo);
@@ -27,7 +27,6 @@ ALTER TABLE tbfuncionario ADD CONSTRAINT fk_registroPonto FOREIGN KEY (REGCODIGO
 
 -- Checks
 ALTER TABLE tbfuncionario ADD CONSTRAINT chk_tipo_funcionario CHECK (funtipo IN('FIXO', 'HORISTA'));
-
 
 /* ============================= USUÁRIO ============================= */
 CREATE TABLE IF NOT EXISTS tbusuario (

@@ -14,30 +14,32 @@ public class ModelFuncionario {
     private int id;
     private String nome;
     private String CPF;
-    private LocalDate dataNascimento;
     private String tipoFuncionario;
-    private ModelUsuario usuario;
-    private ModelRegistroPonto registros;
-    
+    private float cargahoraria;
+    private double salario;
+    private ModelUsuario Usuario;
+    private ModelRegistroPonto Registro;
+
     //Verificar se tem mais atributos
     
     private static int geraCodigo = 1;
 
-    public ModelFuncionario(String nome, String CPF, LocalDate dataNascimento, String tipoFuncionario
-                                            ,ModelUsuario usuario, ModelRegistroPonto registros) {
-        this.id = geraCodigo++;
+    public ModelFuncionario(String nome, String CPF, String tipoFuncionario, int cargaHoraria, double salario, ModelUsuario usuario) {
         this.nome = nome;
         this.CPF = CPF;
-        this.dataNascimento = dataNascimento;
         this.tipoFuncionario = tipoFuncionario;
-        this.usuario = usuario;
+        this.cargahoraria = cargaHoraria;
+        this.Usuario = usuario;
         usuario.setFuncionario(this);
-        this.registros = registros;
-        registros.setFuncionario(this);
     }
 
     public int getId() {
         return id;
+    }
+
+    public ModelFuncionario setId(int id) {
+        this.id = id;
+        return this;
     }
 
     public String getNome() {
@@ -48,32 +50,53 @@ public class ModelFuncionario {
         return CPF;
     }
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
     public String getTipoFuncionario() {
         return tipoFuncionario;
     }
 
-    public void setNome(String nome) {
+    public ModelFuncionario setNome(String nome) {
         this.nome = nome;
+        return this;
     }
 
-    public void setCPF(String CPF) {
+    public ModelFuncionario setCPF(String CPF) {
         this.CPF = CPF;
+        return this;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public void setTipo(String tipoFuncionario) {
+    public ModelFuncionario setTipo(String tipoFuncionario) {
         this.tipoFuncionario = tipoFuncionario;
+        return this;
     }
     
     public ModelRegistroPonto getRegistroPonto(){
-        return registros;
+        return this.Registro;
     }
 
+    public double getSalario() {
+        return salario;
+    }
+
+    public ModelFuncionario setSalario(double salario) {
+        this.salario = salario;
+        return this;
+    }
+
+    public float getCargahoraria() {
+        return cargahoraria;
+    }
+
+    public ModelFuncionario setCargahoraria(float cargahoraria) {
+        this.cargahoraria = cargahoraria;
+        return this;
+    }
+
+    public ModelUsuario getUsuario() {
+        return Usuario;
+    }
+
+    public ModelFuncionario setUsuario(ModelUsuario usuario) {
+        Usuario = usuario;
+        return this;
+    }
 }
