@@ -4,57 +4,128 @@
  */
 package br.com.sistemaponto.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 /**
  *
  * @author WIN11
  */
 public class ModelRegistroPonto {
+    private int codigo;
     private ModelFuncionario funcionario;
-    private List<String> registrosDia;
-    private List<String> registrosGeral;
+    private LocalDate diaAtual;
+    private String registroEntrada;
+    private String registroSaida;
+    private String registroEntradaIntervalo;
+    private String registroSaidaIntervalo;
+    
     private int botao = 0; //0 para ENTRADA e 1 para
-    
+    private int idRegistro = 1; // 1 a 4 para definir qual registro salvar
+
     public ModelRegistroPonto(){
-        registrosDia = new ArrayList<>();
-        registrosGeral = new ArrayList<>();
     }
-    
-    public void setFuncionario(ModelFuncionario funcionario){
-        this.funcionario = funcionario;
+
+    public int getCodigo() {
+        return codigo;
     }
-    
-    public List<String> getRegistrosDia(){
-        return registrosDia;
+
+    public LocalDate getDiaAtual() {
+        return diaAtual;
     }
-    
-    public boolean setRegistrosDia(String registro){
-        return registrosDia.add(registro);
+
+    public String getRegistroEntrada() {
+        return registroEntrada;
     }
-    
-    public List<String> getRegistrosGeral(){
-        return registrosGeral;
+
+    public String getRegistroSaida() {
+        return registroSaida;
+    }
+
+    public String getRegistroEntradaIntervalo() {
+        return registroEntradaIntervalo;
+    }
+
+    public String getRegistroSaidaIntervalo() {
+        return registroSaidaIntervalo;
     }
     
     public ModelFuncionario getFuncionario(){
         return funcionario;
     }
     
-    public boolean addRegistro(String registro){
-        if(registrosDia.size()==4)
-            return false;
-        this.registrosDia.add(registro);
-        this.registrosGeral.add(registro);
-        return true;
-    }
-    
     public int getBotao(){
         return botao;
+    }
+
+    public int getIdRegistro() {
+        return idRegistro;
+    }
+
+    public void setDiaAtual(LocalDate diaAtual) {
+        this.diaAtual = diaAtual;
+    }
+
+    public boolean setRegistroEntrada(String registroEntrada) {
+        if(idRegistro == 5)
+            return false;
+        this.registroEntrada = registroEntrada;
+        return true;
+    }
+
+    public boolean setRegistroSaida(String registroSaida) {
+        if(idRegistro == 5)
+            return false;
+        this.registroSaida = registroSaida;
+        return true;
+    }
+
+    public boolean setRegistroEntradaIntervalo(String registroEntradaIntervalo) {
+        if(idRegistro == 5)
+            return false;
+        this.registroEntradaIntervalo = registroEntradaIntervalo;
+        return true;
+    }
+
+    public boolean setRegistroSaidaIntervalo(String registroSaidaIntervalo) {
+        if(idRegistro == 5)
+            return false;
+        this.registroSaidaIntervalo = registroSaidaIntervalo;
+        return true;
+    }
+
+    public void setFuncionario(ModelFuncionario funcionario){
+        this.funcionario = funcionario;
     }
     
     public void setBotao(int botao){
         this.botao = botao;
+    }
+
+    public void setIdRegistro(int idRegistro) {
+        this.idRegistro = idRegistro;
+    }
+    
+    @Override
+    public String toString(){
+
+        StringBuilder s = new StringBuilder();
+
+        if(getRegistroEntrada() != null){
+            s.append(getRegistroEntrada()).append("\n");
+        }
+
+        if(getRegistroSaida() != null){
+            s.append(getRegistroSaida()).append("\n");
+        }
+
+        if(getRegistroEntradaIntervalo() != null){
+            s.append(getRegistroEntradaIntervalo()).append("\n");
+        }
+
+        if(getRegistroSaidaIntervalo() != null){
+            s.append(getRegistroSaidaIntervalo()).append("\n");
+        }
+
+        return s.toString().trim();
     }
 }

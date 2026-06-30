@@ -1,7 +1,5 @@
 package br.com.sistemaponto.controller;
 
-import java.util.List;
-
 import br.com.sistemaponto.dao.DaoRegistroPonto;
 import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
 import br.com.sistemaponto.util.Session;
@@ -42,7 +40,6 @@ public class ControllerBaterPonto {
      * Desabilita o botão
      */
     public void desabilitaBotao() {
-        //Testando como desabilitar o botão
         if(Session.getUsuario().getFuncionario().getRegistroPonto().getBotao() == 0){
             viewBaterPonto.getBtnEntrada().setEnabled(true);
             viewBaterPonto.getBtnSaida().setEnabled(false);
@@ -63,46 +60,65 @@ public class ControllerBaterPonto {
     }
     
     public void baterPontoEntrada() {
+        boolean adicionado = false;
         
         try {
-            boolean adicionado = Session.getUsuario().getFuncionario().getRegistroPonto().addRegistro("Entrada -- " + viewBaterPonto.getDataAtual());
-            
+            switch(Session.getUsuario().getFuncionario().getRegistroPonto().getIdRegistro()){
+                case 1:
+                    adicionado = Session.getUsuario().getFuncionario().getRegistroPonto().setRegistroEntrada(viewBaterPonto.getDataAtual());
+                    break;                    
+                case 3:
+                    adicionado = Session.getUsuario().getFuncionario().getRegistroPonto().setRegistroEntradaIntervalo(viewBaterPonto.getDataAtual());
+                    break;            
+            }
             if (!adicionado) {
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
             }
             atualizaRegistrosDoDia();
+            
+            //atualiza botão
             Session.getUsuario().getFuncionario().getRegistroPonto().setBotao(1);
             desabilitaBotao();
             
+            //atualiza o idRegistro
+            Session.getUsuario().getFuncionario().getRegistroPonto().setIdRegistro(Session.getUsuario().getFuncionario().getRegistroPonto().getIdRegistro()+1);
+            
         } catch (ExceptionLimiteRegistroPonto e) {
-            viewBaterPonto.apresentaMensagem(e.getMessage());
+            viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
         }
     }
     
-    public void baterPontoSaida(){ //talvez pode tirar, pois o último registro sempre é uma saída
+    public void baterPontoSaida(){
+        boolean adicionado = false;
         
-        try{
-            boolean adicionado = Session.getUsuario().getFuncionario().getRegistroPonto().addRegistro("Saida -- "+viewBaterPonto.getDataAtual());
+        try {
+            switch(Session.getUsuario().getFuncionario().getRegistroPonto().getIdRegistro()){
+                case 2:
+                    adicionado = Session.getUsuario().getFuncionario().getRegistroPonto().setRegistroSaida(viewBaterPonto.getDataAtual());
+                    break;                    
+                case 4:
+                    adicionado = Session.getUsuario().getFuncionario().getRegistroPonto().setRegistroSaidaIntervalo(viewBaterPonto.getDataAtual());
+                    break;            
+            }
             
             if(!adicionado)
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
             
             atualizaRegistrosDoDia();
             
+            //atualiza botão
             Session.getUsuario().getFuncionario().getRegistroPonto().setBotao(0);
             desabilitaBotao();
+            
+            //atualiza o idRegistro
+            Session.getUsuario().getFuncionario().getRegistroPonto().setIdRegistro(Session.getUsuario().getFuncionario().getRegistroPonto().getIdRegistro()+1);
  
         }catch(ExceptionLimiteRegistroPonto e){
-            viewBaterPonto.apresentaMensagem(e.getMessage());
+            viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
         }
     }
     
     public void atualizaRegistrosDoDia(){
-        List<String> registros = Session.getUsuario().getFuncionario().getRegistroPonto().getRegistrosDia();
-        StringBuilder sb = new StringBuilder();
-        for(String r : registros){
-            sb.append(r).append("\n");
-        }
-        viewBaterPonto.atualizaRegistros(sb.toString().trim());
+        viewBaterPonto.atualizaRegistros(Session.getUsuario().getFuncionario().getRegistroPonto().toString());
     }
 }
