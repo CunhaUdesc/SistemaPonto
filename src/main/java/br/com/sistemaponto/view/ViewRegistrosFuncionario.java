@@ -5,6 +5,7 @@
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +27,7 @@ public class ViewRegistrosFuncionario extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    public void apresentaMensagem(String msg) {  
+    public void apresentaMensagem(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
     

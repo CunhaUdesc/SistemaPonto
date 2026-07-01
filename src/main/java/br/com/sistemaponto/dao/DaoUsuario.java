@@ -126,5 +126,4 @@ public class DaoUsuario implements InterfaceDados {
         }
         return null;
     }
-
 }

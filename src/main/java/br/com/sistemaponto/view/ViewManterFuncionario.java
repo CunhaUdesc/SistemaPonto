@@ -61,20 +61,20 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
         btnIncluir = new javax.swing.JButton();
         lbVersao = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        modelo = new DefaultTableModel();
-        modelo.addColumn("ID");
-        modelo.addColumn("Nome");
-        modelo.addColumn("CPF");
-        modelo.addColumn("Data de Nascimento");
-        modelo.addColumn("Tipo");
-
-        tbFuncionarios = new JTable(modelo);
-        JScrollPane scroll = new JScrollPane(tbFuncionarios);
-        add(scroll);
-        setSize(400,300);
-        tbFuncionarios.setVisible(true);
+        tbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbFuncionarios);
 
         lbFuncionarios.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lbFuncionarios.setText("Funcionários");
@@ -95,13 +95,9 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(lbFuncionarios)
-                .addContainerGap(130, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -111,6 +107,10 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnAlterar)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(168, 168, 168)
+                .addComponent(lbFuncionarios)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,6 +144,5 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel lbFuncionarios;
     private javax.swing.JLabel lbVersao;
     private javax.swing.JTable tbFuncionarios;
-    private DefaultTableModel modelo;
     // End of variables declaration//GEN-END:variables
 }

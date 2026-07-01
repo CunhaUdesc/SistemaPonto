@@ -19,6 +19,8 @@ public class ModelRegistroPonto {
     private String registroEntradaIntervalo;
     private String registroSaidaIntervalo;
     
+    private float horasDia;
+    
     private int botao = 0; //0 para ENTRADA e 1 para
     private int idRegistro = 1; // 1 a 4 para definir qual registro salvar
 

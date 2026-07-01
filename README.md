@@ -4,15 +4,13 @@ Sistema de Controle Ponto para Padaria
 === AFAZERES ===
 
 1. Criar JTable para a consulta de registro ponto -- Rafael
-2. Updates nas classes + conferir demais -- Rafael
-
-3. Métodos DAO:
+2. Métodos DAO:
    a) DAOUsuario:
      - addUsuario() (insert)
      - excluirUsuario() (delete)
    b) DAOFuncionario:
      - addFuncionario()
-     - alterar() 
+     - alterar()
      - excluir()
      - Select():
         - getAllFuncionarios() (ADM)
@@ -24,7 +22,7 @@ Sistema de Controle Ponto para Padaria
       - addRegistroPonto() (ADM, Funcionário)
       - alterarRegistroPonto() (ADM)
   
-4. Usar o DataGrip: com arquivo na raiz do projeto, ex. no Moodle
+3. Usar o DataGrip: com arquivo na raiz do projeto, ex. no Moodle
       - getAllRegistrosPonto()
       - getRegistrosPontoFromFuncionario()
       - getRegistrosPontoFromData() -> Opcional

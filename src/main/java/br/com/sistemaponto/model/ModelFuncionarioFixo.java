@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.com.sistemaponto.model;
-
-import java.time.LocalDate;
-
 /**
  *
  * @author Lenovo
@@ -14,9 +11,8 @@ public class ModelFuncionarioFixo extends ModelFuncionario{
     private float salarioBase;
     private float cargaHoraria;
 
-    public ModelFuncionarioFixo(String nome, String CPF, LocalDate dataNascimento, String tipoFuncionario, ModelUsuario usuario, 
-                                                        ModelRegistroPonto registros, float salarioBase, float cargaHoraria) {
-        super(nome, CPF, dataNascimento, tipoFuncionario, usuario, registros);
+    public ModelFuncionarioFixo(String nome, String CPF, String tipoFuncionario, String dataNascimento, ModelUsuario usuario, float salarioBase, float cargaHoraria) {
+        super(nome, CPF, dataNascimento, tipoFuncionario, usuario);
         this.salarioBase = salarioBase;
         this.cargaHoraria = cargaHoraria;
     }

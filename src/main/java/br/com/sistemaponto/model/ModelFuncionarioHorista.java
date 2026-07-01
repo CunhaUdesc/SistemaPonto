@@ -4,8 +4,6 @@
  */
 package br.com.sistemaponto.model;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author Lenovo
@@ -14,11 +12,9 @@ public class ModelFuncionarioHorista extends ModelFuncionario{
     private float valorHora;
     private float horasTrabalhadas;
     
-    public ModelFuncionarioHorista(String nome, String CPF, LocalDate dataNascimento, String tipoFuncionario,
-                                                        ModelUsuario usuario, ModelRegistroPonto registros, float valorHora,float horasTrabalhadas) {
-        super(nome, CPF, dataNascimento, tipoFuncionario, usuario, registros);
+    public ModelFuncionarioHorista(String nome, String CPF, String dataNascimento, String tipoFuncionario, ModelUsuario usuario, float valorHora) {
+        super(nome, CPF, dataNascimento, tipoFuncionario, usuario);
         this.valorHora = valorHora;
-        this.horasTrabalhadas = horasTrabalhadas;
     }
 
     public float getValorHora() {
@@ -35,6 +31,11 @@ public class ModelFuncionarioHorista extends ModelFuncionario{
 
     public void setHorasTrabalhadas(float horasTrabalhadas) {
         this.horasTrabalhadas = horasTrabalhadas;
+    }
+    
+    @Override
+    public String toString(){
+        return super.toString() + ", Valor p/ Hora: "+valorHora+", Horas Trabalhadas: "+horasTrabalhadas;
     }
     
 }

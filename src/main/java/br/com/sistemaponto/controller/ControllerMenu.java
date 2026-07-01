@@ -4,7 +4,7 @@
  */
 package br.com.sistemaponto.controller;
 
-import br.com.sistemaponto.dao.DaoRegistroPonto;
+import br.com.sistemaponto.dao.DaoRegistroPontoTeste;
 import br.com.sistemaponto.view.ViewBaterPonto;
 import br.com.sistemaponto.view.ViewManterFuncionario;
 import br.com.sistemaponto.view.ViewManterRegistroPonto;
@@ -33,7 +33,7 @@ public class ControllerMenu {
     }
     
     public void chamarTelaBaterPonto(){
-        new ControllerBaterPonto(new ViewBaterPonto(), new DaoRegistroPonto());
+        new ControllerBaterPonto(new ViewBaterPonto(), new DaoRegistroPontoTeste());
     }
     
     public void abrirTelaManterControlePonto(){

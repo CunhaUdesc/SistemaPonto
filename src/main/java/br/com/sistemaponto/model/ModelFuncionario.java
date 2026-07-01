@@ -4,42 +4,32 @@
  */
 package br.com.sistemaponto.model;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author Lenovo
  */
 public class ModelFuncionario {
-    private int id;
+    private int codigo;
     private String nome;
     private String CPF;
     private String tipoFuncionario;
-    private float cargahoraria;
-    private double salario;
+    private String dataNascimento;
     private ModelUsuario Usuario;
-    private ModelRegistroPonto Registro;
-
-    //Verificar se tem mais atributos
     
-    private static int geraCodigo = 1;
+    private static int geraCodigo = 1; //APENAS PARA TESTES
 
-    public ModelFuncionario(String nome, String CPF, String tipoFuncionario, int cargaHoraria, double salario, ModelUsuario usuario) {
+    public ModelFuncionario(String nome, String CPF, String tipoFuncionario, String dataNascimento, ModelUsuario usuario) {
+        this.codigo = geraCodigo++; //APENAS PARA TESTES
         this.nome = nome;
         this.CPF = CPF;
         this.tipoFuncionario = tipoFuncionario;
-        this.cargahoraria = cargaHoraria;
+        this.dataNascimento = dataNascimento;
         this.Usuario = usuario;
         usuario.setFuncionario(this);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public ModelFuncionario setId(int id) {
-        this.id = id;
-        return this;
+    public int getCodigo() {
+        return codigo;
     }
 
     public String getNome() {
@@ -52,6 +42,15 @@ public class ModelFuncionario {
 
     public String getTipoFuncionario() {
         return tipoFuncionario;
+    }
+    
+    public String getDataNascimento() {
+        return dataNascimento;
+    }
+    
+    public ModelFuncionario setCodigo(int codigo) {
+        this.codigo = codigo;
+        return this;
     }
 
     public ModelFuncionario setNome(String nome) {
@@ -69,28 +68,11 @@ public class ModelFuncionario {
         return this;
     }
     
-    public ModelRegistroPonto getRegistroPonto(){
-        return this.Registro;
-    }
-
-    public double getSalario() {
-        return salario;
-    }
-
-    public ModelFuncionario setSalario(double salario) {
-        this.salario = salario;
+    public ModelFuncionario setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
         return this;
     }
-
-    public float getCargahoraria() {
-        return cargahoraria;
-    }
-
-    public ModelFuncionario setCargahoraria(float cargahoraria) {
-        this.cargahoraria = cargahoraria;
-        return this;
-    }
-
+    
     public ModelUsuario getUsuario() {
         return Usuario;
     }
@@ -98,5 +80,10 @@ public class ModelFuncionario {
     public ModelFuncionario setUsuario(ModelUsuario usuario) {
         Usuario = usuario;
         return this;
+    }
+    
+    @Override
+    public String toString(){
+        return "Codigo: "+codigo+", Nome: "+nome+", CPF: "+CPF+", Tipo: "+tipoFuncionario;
     }
 }
