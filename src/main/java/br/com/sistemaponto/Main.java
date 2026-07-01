@@ -1,14 +1,11 @@
 package br.com.sistemaponto;
 
 import java.sql.Connection;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 import br.com.sistemaponto.controller.ControllerLogin;
 import br.com.sistemaponto.dao.DaoUsuario;
 import br.com.sistemaponto.enumerados.EnumTipoUsuario;
-import br.com.sistemaponto.model.ModelFuncionario;
-import br.com.sistemaponto.model.ModelRegistroPonto;
 import br.com.sistemaponto.model.ModelUsuario;
 import br.com.sistemaponto.util.Conexao;
 import br.com.sistemaponto.util.InicializadorDataBase;
@@ -30,8 +27,8 @@ import br.com.sistemaponto.view.ViewLogin;
   //      ControllerLogin controller = new ControllerLogin(dao);
 
         ModelUsuario usuario = new ModelUsuario(1, "Teste", EnumTipoUsuario.ADMINISTRADOR);
-        ModelFuncionario funcionario = new ModelFuncionario("Rafael", "123.456.789-00", LocalDate.of(2004, 5, 21), EnumTipoUsuario.ADMINISTRADOR,
-                                                                                                usuario, new ModelRegistroPonto());
+        // ModelFuncionario funcionario = new ModelFuncionario("Rafael", "123.456.789-00", LocalDate.of(2004, 5, 21), EnumTipoUsuario.ADMINISTRADOR,
+                                                                                                // usuario, new ModelRegistroPonto());
         DaoUsuario dao = new DaoUsuario();
         dao.addUsuario(usuario);
 

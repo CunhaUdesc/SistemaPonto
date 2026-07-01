@@ -22,6 +22,12 @@ public class DaoFuncionario implements InterfaceDados {
     // Armazenamento temporário dos funcionários
     private static List<ModelFuncionario> funcionarios;
 
+    /** Filtros a fazer
+     * Nome funcionario
+     * CPF funcionario
+     * Tipo funcionario
+     * /
+
     /**
      * Construct
      */
@@ -45,8 +51,8 @@ public class DaoFuncionario implements InterfaceDados {
             stmt.setString(1, funcionario.getNome());
             stmt.setString(2, funcionario.getCPF());
             stmt.setString(3, funcionario.getTipoFuncionario());
-            stmt.setFloat(4, funcionario.getCargahoraria());
-            stmt.setDouble(5, funcionario.getSalario());
+//            stmt.setFloat(4, funcionario.getCargahoraria());
+//            stmt.setDouble(5, funcionario.getSalario());
             stmt.setInt(6, funcionario.getUsuario().getCodigo());
 
         } catch (Exception ex) {
@@ -74,11 +80,12 @@ public class DaoFuncionario implements InterfaceDados {
                         src.getString("funnome"),
                         src.getString("funcpf"),
                         src.getString("funtipo"),
-                        src.getInt("funcargahoraria"),
-                        src.getDouble("funsalario"),
+//                        src.getInt("funcargahoraria"),
+//                        src.getDouble("funsalario"),
+                        src.getString("fundatanacimento"),
                         (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo"))
                 );
-                Funcionario.setId(src.getInt("funcodigo"));
+                Funcionario.setCodigo(src.getInt("funcodigo"));
                 return Funcionario;
             }
             return null;
@@ -106,8 +113,25 @@ public class DaoFuncionario implements InterfaceDados {
         }
     }
 
-    public void alterar(Object obj) {
+    @Override
+    public void alterar(Object obj) throws ExceptionSistemaPonto {
+        String sql = """
+            UPDATE tbfuncionario
+               SET nome     = ?,
+                   cpf      = ?,
+                   telefone = ?,
+                   endereco = ?
+             WHERE id = ?;
+        """;
 
+        try (
+            Connection conn = Conexao.conectar();
+
+        ) {
+
+        } catch (Exception ex) {
+            throw new ExceptionSistemaPonto("Dados inválidos");
+        }
     }
 
     @Override
@@ -127,16 +151,50 @@ public class DaoFuncionario implements InterfaceDados {
                     src.getString("funnome"),
                     src.getString("funcpf"),
                     src.getString("funtipo"),
-                    src.getInt("funcargahoraria"),
-                    src.getDouble("funsalario"),
+//                    src.getInt("funcargahoraria"),
+//                    src.getDouble("funsalario"),
+                    src.getString("fundatanacimento"),
                     (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo"))
                 );
-                Funcionario.setId(src.getInt("funcodigo"));
+                Funcionario.setCodigo(src.getInt("funcodigo"));
                 allFuncionarios.add(Funcionario);
             }
             return allFuncionarios;
         } catch (SQLException ex) {
             throw new ExceptionSistemaPonto("Registro não encontrado!");
+        }
+    }
+
+    public ModelFuncionario getFuncionarioFromCodigo(int codigo) throws ExceptionSistemaPonto {
+        String sql = """
+            SELECT * 
+              FROM tbfuncionario
+             WHERE funcodigo = ?;
+        """;
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setInt(1, codigo);
+            ResultSet src = stmt.executeQuery();
+
+            if (src.next()) {
+                ModelFuncionario Funcionario = new ModelFuncionario (
+                        src.getString("funnome"),
+                        src.getString("funcpf"),
+                        src.getString("funtipo"),
+//                        src.getInt("funcargahoraria"),
+//                        src.getDouble("funsalario"),
+                        src.getString("fundatanacimento"),
+                        (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo"))
+                );
+                Funcionario.setCodigo(codigo);
+                return Funcionario;
+            }
+            return null;
+        } catch (Exception ex) {
+            throw new ExceptionSistemaPonto("Funcionário não encontrado");
         }
     }
 

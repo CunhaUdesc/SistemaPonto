@@ -98,8 +98,8 @@ public class DaoUsuario implements InterfaceDados {
     }
 
     @Override
-    public List<Iterator> selectAll() {
-        return new ArrayList<>();
+    public List<ModelUsuario> selectAll() {
+        return (new ArrayList<ModelUsuario>());
     }
 
     /**

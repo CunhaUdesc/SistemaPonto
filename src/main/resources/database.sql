@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS tbregistroponto (
     regentrada        TIMESTAMP,
     regsaidaintervalo TIMESTAMP,
     regvoltaintervalo TIMESTAMP,
-    regsaidafinal     TIMESTAMP
+    regsaidafinal     TIMESTAMP,
     funcodigo 	      INTEGER NOT NULL
 );
 

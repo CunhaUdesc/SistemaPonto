@@ -34,7 +34,7 @@ public interface InterfaceDados {
      * Altera um Registro do Banco de Dados
      * @param obj
      */
-    public void alterar(Object obj);
+    public void alterar(Object obj) throws ExceptionSistemaPonto;
 
     /**
      * Retorna um objeto de acordo com as informações passadas

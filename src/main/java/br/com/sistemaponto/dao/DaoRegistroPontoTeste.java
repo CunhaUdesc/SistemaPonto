@@ -4,11 +4,17 @@
  */
 package br.com.sistemaponto.dao;
 
+import br.com.sistemaponto.exception.ExceptionSistemaPonto;
+import br.com.sistemaponto.interfaces.InterfaceDadosRegistroPonto;
+import br.com.sistemaponto.model.ModelFuncionario;
+import br.com.sistemaponto.model.ModelRegistroPonto;
+import br.com.sistemaponto.util.Conexao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
-
-import br.com.sistemaponto.interfaces.InterfaceDadosRegistroPonto;
-import br.com.sistemaponto.model.ModelRegistroPonto;
 
 /**
  *
@@ -25,12 +31,51 @@ public class DaoRegistroPontoTeste implements InterfaceDadosRegistroPonto{
     public boolean salvarRegistro(ModelRegistroPonto registro) {
         try{
             registros.put(registro.getFuncionario().getNome(), registro);
-            return true;
+            return true;            
         } catch(Exception e){
             e.printStackTrace();
             return false;
         }
     }
+
+    /**
+     * Retorna o Registro Ponto do Funcionário para determinado dia
+     *
+     * @param data
+     * @return
+     */
+    public ModelRegistroPonto getRegistroPontoDiaFuncionario(String data, ModelFuncionario func) throws ExceptionSistemaPonto {
+        String sql = """
+            SELECT * 
+              FROM tbregistroponto 
+             WHERE regdataregistro = ?
+               AND funcodigo = ? 
+        """;
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setString(1, data);
+            stmt.setInt(2, func.getCodigo());
+            ResultSet rst = stmt.executeQuery();
+
+            ModelRegistroPonto registro = new ModelRegistroPonto();
+            if (rst.next()) {
+                registro.setFuncionario((new DaoFuncionario()).getFuncionarioFromCodigo(rst.getInt("funcodigo")));
+            }
+            return registro;
+
+        } catch (Exception ex) {
+            throw new ExceptionSistemaPonto("Nenhum registro encontrado!");
+        }
+    }
+
+    /**
+     * Filtros
+     *
+     * Data do Registro
+     */
 
     @Override
     public Map<String, ModelRegistroPonto> buscarRegistros() {
