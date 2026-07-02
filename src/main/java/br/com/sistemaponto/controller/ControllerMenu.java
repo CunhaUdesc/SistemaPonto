@@ -7,7 +7,6 @@ package br.com.sistemaponto.controller;
 import br.com.sistemaponto.dao.DaoRegistroPontoTeste;
 import br.com.sistemaponto.view.ViewBaterPonto;
 import br.com.sistemaponto.view.ViewManterFuncionario;
-import br.com.sistemaponto.view.ViewManterRegistroPonto;
 import br.com.sistemaponto.view.ViewMenu;
 
 /**
@@ -26,18 +25,12 @@ public class ControllerMenu {
     public void adicionarAcoes(){
         //Adicionado funções dos botões
         viewMenu.adcionarAcaoBtnBaterPonto(e -> chamarTelaBaterPonto());
-        
-        viewMenu.adcionarAcaoBtnManterControlePonto(e -> abrirTelaManterControlePonto());
-        
+                
         viewMenu.adcionarAcaoBtnManterFuncionario(e -> abrirTelaManterFuncionario());
     }
     
     public void chamarTelaBaterPonto(){
         new ControllerBaterPonto(new ViewBaterPonto(), new DaoRegistroPontoTeste());
-    }
-    
-    public void abrirTelaManterControlePonto(){
-        new ControllerManterRegistroPonto(new ViewManterRegistroPonto());
     }
     
     public void abrirTelaManterFuncionario(){

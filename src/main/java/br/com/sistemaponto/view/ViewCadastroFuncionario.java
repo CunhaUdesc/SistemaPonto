@@ -5,6 +5,8 @@
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 /**
  *
@@ -19,14 +21,21 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
      */
     public ViewCadastroFuncionario() {
         initComponents();
+        
+        //campos de acordo com o tipo
+        configuraAcoes();
+        visualizaCamposPorTipoFuncionario();
+        //desabilitar botões
+        txtSalario.setEnabled(false);
+        txtCargaHoraria.setEnabled(false);
     }
     
     public void mostrarTela(){
         setVisible(true);
     }
     
-    public String getId(){
-        return txtId.getText();
+    public String getCodigo(){
+        return txtCodigo.getText();
     }
     
     public String getNome(){
@@ -41,11 +50,62 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
         return txtDataNascimento.getText();
     }
     
+    public String getTipoFuncionario(){
+        return (String) cbTipoFuncionario.getSelectedItem();
+    }
+    
+    public String getValorHora(){
+        return txtValorHora.getText();
+    }
+    
+    public String getSalario(){
+        return txtSalario.getText();
+    }
+    
+    public String getCargaHoraria(){
+        return txtCargaHoraria.getText();
+    }
+
+    public void setCbTipoFuncionario(JComboBox<String> cbTipoFuncionario) {
+        this.cbTipoFuncionario = cbTipoFuncionario;
+    }
+
+    public void setTxtCargaHoraria(JTextField txtCargaHoraria) {
+        this.txtCargaHoraria = txtCargaHoraria;
+    }
+
+    public void setTxtCodigo(JTextField txtCodigo) {
+        this.txtCodigo = txtCodigo;
+    }
+
+    public void setTxtCpf(JTextField txtCpf) {
+        this.txtCpf = txtCpf;
+    }
+
+    public void setTxtDataNascimento(JTextField txtDataNascimento) {
+        this.txtDataNascimento = txtDataNascimento;
+    }
+
+    public void setTxtNome(JTextField txtNome) {
+        this.txtNome = txtNome;
+    }
+
+    public void setTxtSalario(JTextField txtSalario) {
+        this.txtSalario = txtSalario;
+    }
+
+    public void setTxtValorHora(JTextField txtValorHora) {
+        this.txtValorHora = txtValorHora;
+    }
+    
     public void limparTela(){
-        txtId.setText("");
+        txtCodigo.setText("");
         txtNome.setText("");
         txtCpf.setText("");
         txtDataNascimento.setText("");
+        txtValorHora.setText("");
+        txtSalario.setText("");
+        txtCargaHoraria.setText("");
     }
     
     public void adcionarAcaoBtnLimpar(ActionListener a){
@@ -54,6 +114,29 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
     
     public void adcionarAcaoBtnSalvar(ActionListener a){
         btnSalvar.addActionListener(a);
+    }
+    
+    public void configuraAcoes(){	
+        cbTipoFuncionario.addActionListener( e -> visualizaCamposPorTipoFuncionario());
+    }
+    
+    public void visualizaCamposPorTipoFuncionario(){
+        cbTipoFuncionario.addActionListener(e -> {
+            String tipo = (String) cbTipoFuncionario.getSelectedItem();
+
+            if ("Horista".equals(tipo)) {
+                txtValorHora.setEnabled(true);
+                txtSalario.setEnabled(false);
+                txtCargaHoraria.setEnabled(false);
+            } else {
+                txtValorHora.setEnabled(false);
+                txtSalario.setEnabled(true);
+                txtCargaHoraria.setEnabled(true);
+            }
+
+            revalidate();
+            repaint();		
+        });
     }
 
     /**
@@ -65,32 +148,51 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbCodigo = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JTextField();
+        lbTitulo = new javax.swing.JLabel();
+        lbNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         txtCpf = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lbCpf = new javax.swing.JLabel();
         txtDataNascimento = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        lbDataNascimento = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
+        cbTipoFuncionario = new javax.swing.JComboBox<>();
+        txtValorHora = new javax.swing.JTextField();
+        lbTipoFuncionario = new javax.swing.JLabel();
+        lbValorHora = new javax.swing.JLabel();
+        lbSalario = new javax.swing.JLabel();
+        lbCargaHoraria = new javax.swing.JLabel();
+        txtSalario = new javax.swing.JTextField();
+        txtCargaHoraria = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Id");
+        lbCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbCodigo.setText("Codigo");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel2.setText("Cadastro de Funcionários");
+        txtCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel3.setText("Nome");
+        lbTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbTitulo.setText("Cadastro de Funcionários");
 
+        lbNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbNome.setText("Nome");
+
+        txtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        txtCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCpf.setToolTipText("");
 
-        jLabel4.setText("Cpf");
+        lbCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbCpf.setText("Cpf");
 
-        jLabel5.setText("Data de Nascimento");
+        txtDataNascimento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        lbDataNascimento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbDataNascimento.setText("Data de Nascimento");
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnSalvar.setText("Salvar");
@@ -98,62 +200,117 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
         btnLimpar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnLimpar.setText("Limpar");
 
+        cbTipoFuncionario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbTipoFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Horista", "Fixo" }));
+
+        txtValorHora.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        lbTipoFuncionario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbTipoFuncionario.setText("Tipo");
+
+        lbValorHora.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbValorHora.setText("Valor por Hora");
+
+        lbSalario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbSalario.setText("Salario");
+
+        lbCargaHoraria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbCargaHoraria.setText("Carga Horaria");
+
+        txtSalario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        txtCargaHoraria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lbCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                                .addComponent(lbNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbDataNascimento)
+                                    .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnLimpar)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(btnSalvar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtDataNascimento))))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lbSalario)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lbCargaHoraria))
+                                    .addComponent(txtValorHora, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbValorHora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtCargaHoraria, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)))))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
+                .addComponent(lbTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(lbCodigo)
+                    .addComponent(lbNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbCpf)
+                    .addComponent(lbDataNascimento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTipoFuncionario)
+                    .addComponent(lbValorHora))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtValorHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbSalario)
+                    .addComponent(lbCargaHoraria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnLimpar))
-                .addGap(15, 15, 15))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -162,14 +319,22 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JComboBox<String> cbTipoFuncionario;
+    private javax.swing.JLabel lbCargaHoraria;
+    private javax.swing.JLabel lbCodigo;
+    private javax.swing.JLabel lbCpf;
+    private javax.swing.JLabel lbDataNascimento;
+    private javax.swing.JLabel lbNome;
+    private javax.swing.JLabel lbSalario;
+    private javax.swing.JLabel lbTipoFuncionario;
+    private javax.swing.JLabel lbTitulo;
+    private javax.swing.JLabel lbValorHora;
+    private javax.swing.JTextField txtCargaHoraria;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtDataNascimento;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtSalario;
+    private javax.swing.JTextField txtValorHora;
     // End of variables declaration//GEN-END:variables
 }

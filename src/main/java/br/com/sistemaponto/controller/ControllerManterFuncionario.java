@@ -2,6 +2,7 @@ package br.com.sistemaponto.controller;
 
 import br.com.sistemaponto.view.ViewCadastroFuncionario;
 import br.com.sistemaponto.view.ViewManterFuncionario;
+import br.com.sistemaponto.view.ViewRegistrosFuncionario;
 
 public class ControllerManterFuncionario {
     private ViewManterFuncionario viewManterFuncionario;
@@ -18,6 +19,15 @@ public class ControllerManterFuncionario {
         viewManterFuncionario.adcionarAcaoBtnAlterar(e-> alterarFuncionario());
     
         viewManterFuncionario.adcionarAcaoBtnExcluir(e -> excluirFuncionario());
+        
+        viewManterFuncionario.adicionarAcaoBtnVisualizarRegistros(e -> chamarTelaRegistrosPontoFuncionario());
+        
+        viewManterFuncionario.adicionarAcaoBtnPesquisar(e -> pesquisarFiltro());
+
+    }
+    
+    public void chamarTelaRegistrosPontoFuncionario(){
+        new ControllerRegistrosFuncionario(new ViewRegistrosFuncionario());
     }
 
     public void chamarTelaCadastroFuncionario(){
@@ -34,6 +44,9 @@ public class ControllerManterFuncionario {
 
     public void excluirFuncionario(){
         System.out.println("Funcionario Excluido");
-
+    }
+    
+    public void pesquisarFiltro(){
+        System.out.println("Filtro selecionado");
     }
 }

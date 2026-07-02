@@ -1,11 +1,14 @@
 package br.com.sistemaponto.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import br.com.sistemaponto.dao.DaoRegistroPontoTeste;
 import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
+import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.model.ModelRegistroPonto;
 import br.com.sistemaponto.util.Session;
 import br.com.sistemaponto.view.ViewBaterPonto;
-import java.time.LocalDate;
 
 /**
  * Controller da Batida de Ponto
@@ -42,7 +45,14 @@ public class ControllerBaterPonto {
     }
     
     public ModelRegistroPonto verificaRegistro(){
-        return daoRegistroPonto.getRegistroPontoDiaFuncionario(LocalDate.now(), Session.getUsuario().getFuncionario());
+        try {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String data = LocalDate.now().format(formato);
+            return daoRegistroPonto.getRegistroPontoDiaFuncionario(data, Session.getUsuario().getFuncionario());
+        } catch (ExceptionSistemaPonto e) {
+            viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
+            return null;
+        }
     }
 
     public void desabilitaBotao() {
@@ -72,10 +82,10 @@ public class ControllerBaterPonto {
             switch(this.registro.getIdRegistro()){
                 case 1:
                     adicionado = this.registro.setRegistroEntrada(viewBaterPonto.getDataAtual());
-                    break;                    
+                    break;
                 case 3:
                     adicionado = this.registro.setRegistroEntradaIntervalo(viewBaterPonto.getDataAtual());
-                    break;            
+                    break;
             }
             if (!adicionado) {
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
@@ -101,10 +111,10 @@ public class ControllerBaterPonto {
             switch(this.registro.getIdRegistro()){
                 case 2:
                     adicionado = this.registro.setRegistroSaida(viewBaterPonto.getDataAtual());
-                    break;                    
+                    break;
                 case 4:
                     adicionado = this.registro.setRegistroSaidaIntervalo(viewBaterPonto.getDataAtual());
-                    break;            
+                    break;
             }
             
             if(!adicionado)

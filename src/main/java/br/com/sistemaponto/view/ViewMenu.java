@@ -36,10 +36,6 @@ public class ViewMenu extends javax.swing.JFrame {
         btnManterFuncionario.addActionListener(a);
     }
     
-    public void adcionarAcaoBtnManterControlePonto(ActionListener a){
-        btnManterControlePonto.addActionListener(a);
-    }
-    
     public void adcionarAcaoBtnBaterPonto(ActionListener a){
         btnBaterPonto.addActionListener(a);
     }
@@ -53,22 +49,18 @@ public class ViewMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lbTitulo = new javax.swing.JLabel();
         btnManterFuncionario = new javax.swing.JButton();
-        btnManterControlePonto = new javax.swing.JButton();
         btnBaterPonto = new javax.swing.JButton();
         lbVersao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Sistema Ponto - Menu Inicial");
+        lbTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbTitulo.setText("Sistema Ponto - Menu Inicial");
 
         btnManterFuncionario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnManterFuncionario.setText("Funcionários");
-
-        btnManterControlePonto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnManterControlePonto.setText("Controle Ponto");
+        btnManterFuncionario.setText("Cadastro");
 
         btnBaterPonto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBaterPonto.setText("Bater Ponto");
@@ -82,31 +74,29 @@ public class ViewMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(143, 143, 143)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnManterControlePonto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnManterFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnBaterPonto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnBaterPonto, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lbVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 56, Short.MAX_VALUE)
+                .addComponent(lbTitulo)
+                .addGap(54, 54, 54))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel1)
-                .addGap(34, 34, 34)
+                .addGap(39, 39, 39)
+                .addComponent(lbTitulo)
+                .addGap(39, 39, 39)
                 .addComponent(btnManterFuncionario)
                 .addGap(18, 18, 18)
-                .addComponent(btnManterControlePonto)
-                .addGap(18, 18, 18)
                 .addComponent(btnBaterPonto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(lbVersao))
         );
 
@@ -115,9 +105,8 @@ public class ViewMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaterPonto;
-    private javax.swing.JButton btnManterControlePonto;
     private javax.swing.JButton btnManterFuncionario;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lbTitulo;
     private javax.swing.JLabel lbVersao;
     // End of variables declaration//GEN-END:variables
 }

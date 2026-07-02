@@ -1,9 +1,10 @@
 package br.com.sistemaponto.dao;
 
-import br.com.sistemaponto.interfaces.InterfaceFuncionario;
-import br.com.sistemaponto.model.ModelFuncionario;
 import java.util.HashMap;
 import java.util.Map;
+
+import br.com.sistemaponto.interfaces.InterfaceFuncionario;
+import br.com.sistemaponto.model.ModelFuncionario;
 
 public class DaoFuncionarioTeste implements InterfaceFuncionario{
     private Map<Integer, ModelFuncionario> funcionarios;
@@ -14,17 +15,17 @@ public class DaoFuncionarioTeste implements InterfaceFuncionario{
 
     @Override
     public void adicionarFuncionario(ModelFuncionario funcionario) {
-        funcionarios.put(funcionario.getId(), funcionario);
+        funcionarios.put(funcionario.getCodigo(), funcionario);
     }
 
     @Override
     public void alterarFuncionario(ModelFuncionario funcionario) {
-        funcionarios.put(funcionario.getId(), funcionario);
+        funcionarios.put(funcionario.getCodigo(), funcionario);
     }
 
     @Override
     public void excluirFuncionario(ModelFuncionario funcionario) {
-        funcionarios.remove(funcionario.getId());
+        funcionarios.remove(funcionario.getCodigo());
     }
 
     @Override
@@ -55,14 +56,14 @@ public class DaoFuncionarioTeste implements InterfaceFuncionario{
         
         for(ModelFuncionario f : funcionarios.values()){
             if(f.getTipoFuncionario().equals(tipo))
-                lista.put(f.getId(), f);
+                lista.put(f.getCodigo(), f);
         }
-        return lista;    
+        return lista;
     }
 
     @Override
-    public ModelFuncionario getFuncionario(int id) {
-        return funcionarios.get(id);
+    public ModelFuncionario getFuncionario(int codigo) {
+        return funcionarios.get(codigo);
     }
 
 }

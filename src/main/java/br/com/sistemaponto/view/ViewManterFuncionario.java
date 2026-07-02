@@ -7,10 +7,6 @@ package br.com.sistemaponto.view;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 import br.com.sistemaponto.Main;
 
 /**
@@ -48,6 +44,22 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
     public void adcionarAcaoBtnExcluir(ActionListener a){
         btnExcluir.addActionListener(a);
     }
+    
+    public void adicionarAcaoBtnVisualizarRegistros(ActionListener a){
+        btnRegistrosPonto.addActionListener(a);
+    }
+    
+    public void adicionarAcaoBtnPesquisar(ActionListener a){
+        btnPesquisar.addActionListener(a);
+    }
+    
+    public String getTipoFiltro(){
+        return (String) cbFiltros.getSelectedItem();
+    }
+    
+    public String getFiltro(){
+        return txtFiltro.getText();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -60,6 +72,10 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
         lbVersao = new javax.swing.JLabel();
+        btnRegistrosPonto = new javax.swing.JButton();
+        cbFiltros = new javax.swing.JComboBox<>();
+        txtFiltro = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,27 +106,46 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
 
         lbVersao.setText("Versao");
 
+        btnRegistrosPonto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnRegistrosPonto.setText("Visualizar Registros");
+
+        cbFiltros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "CPF", "Tipo" }));
+
+        txtFiltro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnPesquisar.setText("Pesquisar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbFuncionarios)
+                .addGap(194, 194, 194))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(btnIncluir)
                         .addGap(18, 18, 18)
                         .addComponent(btnExcluir)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAlterar)))
+                        .addComponent(btnAlterar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRegistrosPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPesquisar)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(168, 168, 168)
-                .addComponent(lbFuncionarios)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,16 +153,21 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lbFuncionarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPesquisar)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAlterar)
-                            .addComponent(btnExcluir)
-                            .addComponent(btnIncluir))
-                        .addContainerGap())
-                    .addComponent(lbVersao, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAlterar)
+                        .addComponent(btnExcluir)
+                        .addComponent(btnIncluir)
+                        .addComponent(btnRegistrosPonto))
+                    .addComponent(lbVersao, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -140,9 +180,13 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
+    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnRegistrosPonto;
+    private javax.swing.JComboBox<String> cbFiltros;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbFuncionarios;
     private javax.swing.JLabel lbVersao;
     private javax.swing.JTable tbFuncionarios;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }
