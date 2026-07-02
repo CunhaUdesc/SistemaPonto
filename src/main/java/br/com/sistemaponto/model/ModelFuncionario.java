@@ -8,7 +8,7 @@ package br.com.sistemaponto.model;
  *
  * @author Lenovo
  */
-public class ModelFuncionario {
+public abstract class ModelFuncionario {
     private int codigo;
     private String nome;
     private String CPF;

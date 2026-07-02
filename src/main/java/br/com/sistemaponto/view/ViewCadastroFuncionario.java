@@ -6,6 +6,7 @@ package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -65,6 +66,14 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
     public String getCargaHoraria(){
         return txtCargaHoraria.getText();
     }
+    
+    public String getPerfilUsuario(){
+        return (String) cbTipoUsuario.getSelectedItem();
+    }
+
+    public void setCbTipoUsuario(JComboBox<String> cbTipoUsuario) {
+        this.cbTipoUsuario = cbTipoUsuario;
+    }
 
     public void setCbTipoFuncionario(JComboBox<String> cbTipoFuncionario) {
         this.cbTipoFuncionario = cbTipoFuncionario;
@@ -120,6 +129,10 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
         cbTipoFuncionario.addActionListener( e -> visualizaCamposPorTipoFuncionario());
     }
     
+    public void apresentaMensagem(String msg){
+        JOptionPane.showMessageDialog(null, msg);
+    }
+    
     public void visualizaCamposPorTipoFuncionario(){
         cbTipoFuncionario.addActionListener(e -> {
             String tipo = (String) cbTipoFuncionario.getSelectedItem();
@@ -133,7 +146,6 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
                 txtSalario.setEnabled(true);
                 txtCargaHoraria.setEnabled(true);
             }
-
             revalidate();
             repaint();		
         });
@@ -167,6 +179,8 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
         lbCargaHoraria = new javax.swing.JLabel();
         txtSalario = new javax.swing.JTextField();
         txtCargaHoraria = new javax.swing.JTextField();
+        cbTipoUsuario = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -221,6 +235,12 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
 
         txtCargaHoraria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        cbTipoUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Adm" }));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Perfil");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -252,9 +272,11 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
                                     .addComponent(lbDataNascimento)
                                     .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbTipoFuncionario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbTipoUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbTipoFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -267,7 +289,7 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
                                         .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(txtCargaHoraria, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)))))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,10 +323,13 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbSalario)
-                    .addComponent(lbCargaHoraria))
+                    .addComponent(lbCargaHoraria)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -320,6 +345,8 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbTipoFuncionario;
+    private javax.swing.JComboBox<String> cbTipoUsuario;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbCargaHoraria;
     private javax.swing.JLabel lbCodigo;
     private javax.swing.JLabel lbCpf;
