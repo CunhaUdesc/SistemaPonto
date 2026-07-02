@@ -3,25 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.com.sistemaponto.model;
+
 /**
  *
  * @author Lenovo
  */
 public class ModelFuncionarioFixo extends ModelFuncionario{
-    private float salarioBase;
+    private double salarioBase;
     private float cargaHoraria;
 
-    public ModelFuncionarioFixo(String nome, String CPF, String tipoFuncionario, String dataNascimento, ModelUsuario usuario, float salarioBase, float cargaHoraria) {
-        super(nome, CPF, dataNascimento, tipoFuncionario, usuario);
+    public ModelFuncionarioFixo(String nome, String CPF, String tipoFuncionario, String dataNascimento, ModelUsuario usuario, double salarioBase, float cargaHoraria) {
+        super(nome, CPF, tipoFuncionario, dataNascimento, usuario);
         this.salarioBase = salarioBase;
         this.cargaHoraria = cargaHoraria;
     }
 
-    public float getSalarioBase() {
+    public double getSalarioBase() {
         return salarioBase;
     }
 
-    public void setSalarioBase(float salarioBase) {
+    public void setSalarioBase(double salarioBase) {
         this.salarioBase = salarioBase;
     }
 

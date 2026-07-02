@@ -9,19 +9,19 @@ package br.com.sistemaponto.model;
  * @author Lenovo
  */
 public class ModelFuncionarioHorista extends ModelFuncionario{
-    private float valorHora;
+    private double valorHora;
     private float horasTrabalhadas;
     
-    public ModelFuncionarioHorista(String nome, String CPF, String dataNascimento, String tipoFuncionario, ModelUsuario usuario, float valorHora) {
+    public ModelFuncionarioHorista(String nome, String CPF, String dataNascimento, String tipoFuncionario, ModelUsuario usuario, double valorHora) {
         super(nome, CPF, dataNascimento, tipoFuncionario, usuario);
         this.valorHora = valorHora;
     }
 
-    public float getValorHora() {
+    public double getValorHora() {
         return valorHora;
     }
 
-    public void setValorHora(float valorHora) {
+    public void setValorHora(double valorHora) {
         this.valorHora = valorHora;
     }
 

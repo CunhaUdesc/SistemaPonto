@@ -4,8 +4,6 @@
  */
 package br.com.sistemaponto.model;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author WIN11
@@ -13,7 +11,7 @@ import java.time.LocalDate;
 public class ModelRegistroPonto {
     private int codigo;
     private ModelFuncionario funcionario;
-    private LocalDate diaAtual;
+    private String diaAtual;
     private String registroEntrada;
     private String registroSaida;
     private String registroEntradaIntervalo;
@@ -31,7 +29,7 @@ public class ModelRegistroPonto {
         return codigo;
     }
 
-    public LocalDate getDiaAtual() {
+    public String getDiaAtual() {
         return diaAtual;
     }
 
@@ -63,7 +61,7 @@ public class ModelRegistroPonto {
         return idRegistro;
     }
 
-    public void setDiaAtual(LocalDate diaAtual) {
+    public void setDiaAtual(String diaAtual) {
         this.diaAtual = diaAtual;
     }
 

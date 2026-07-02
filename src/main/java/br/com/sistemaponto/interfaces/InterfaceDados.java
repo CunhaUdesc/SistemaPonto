@@ -21,7 +21,7 @@ public interface InterfaceDados {
      * @throws SQLException
      * @throws ExceptionLogin
      */
-    public void salvar(Object obj) throws SQLException, ExceptionLogin;
+    public void salvar(Object obj) throws SQLException, ExceptionLogin, ExceptionSistemaPonto;
 
     /**
      * Exclui um registro do Banco de Dados

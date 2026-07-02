@@ -1,13 +1,14 @@
 /* ============================= FUNCIONÁRIO ============================= */
 CREATE TABLE IF NOT EXISTS tbfuncionario (
-    funcodigo 		SERIAL NOT NULL
-    funnome 		VARCHAR(100) NOT NULL,
-    funcpf 			VARCHAR(11) NOT NULL UNIQUE,
-    funtipo 		VARCHAR(7) NOT NULL,
-    funcargahoraria SMALLINT,
-    funsalario		DECIMAL(5,2);
-    usucodigo       SMALLINT NOT NULL,
-    regcodigo       SMALLINT NOT NULL,
+    funcodigo 		  SERIAL NOT NULL
+    funnome 		  VARCHAR(100) NOT NULL,
+    funcpf 			  VARCHAR(11) NOT NULL UNIQUE,
+    funtipo 		  VARCHAR(7) NOT NULL,
+    fundatanascimento DATE,
+    funcargahoraria   SMALLINT,
+    funsalario		  DECIMAL(5,2),
+    funvalorhora      DECIMAL(5,2),
+    usucodigo         SMALLINT NOT NULL,
 );
 
 -- Comments
@@ -15,8 +16,10 @@ COMMENT ON COLUMN tbfuncionario.funcodigo 		IS 'Código sequencial que será o l
 COMMENT ON COLUMN tbfuncionario.funnome   		IS 'Nome do Funcionário';
 COMMENT ON COLUMN tbfuncionario.funcpf    		IS 'CPF do Funcionário';
 COMMENT ON COLUMN tbfuncionario.funtipo   		IS 'Tipo do Funcionário (Fixo ou Horista)';
-COMMENT ON COLUMN tbfuncionario.funcargahoraria IS 'Carga Horária Diária do Funcionário';
-COMMENT ON COLUMN tbfuncionario.funsalario		IS 'Salário mensal do funcionário';
+COMMENT ON COLUMN tbfuncionario.fundatanascimento IS 'Data de Nascimento do Funcionário'
+COMMENT ON COLUMN tbfuncionario.funcargahoraria IS 'Carga Horária Diária do Funcionário Fixo';
+COMMENT ON COLUMN tbfuncionario.funsalario		IS 'Salário mensal do Funcionário Fixo';
+COMMENT ON COLUMN tbfuncionario.funvalorhora    IS 'Valor da Hora do Funcionário Horista';
 COMMENT ON COLUMN tbfuncionario.usucodigo       IS 'Código do usuário relacionado ao funcionário'
 
 -- Keys
