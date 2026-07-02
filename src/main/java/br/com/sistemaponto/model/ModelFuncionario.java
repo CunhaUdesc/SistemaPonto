@@ -15,15 +15,25 @@ public abstract class ModelFuncionario {
     private String tipoFuncionario;
     private String dataNascimento;
     private ModelUsuario Usuario;
-    
-    private static int geraCodigo = 1; //APENAS PARA TESTES
 
-    public ModelFuncionario(String nome, String CPF, String tipoFuncionario, String dataNascimento, ModelUsuario usuario) {
-        this.codigo = geraCodigo++; //APENAS PARA TESTES
+    //Construtor para adicionar novo funcionário
+    public ModelFuncionario(String nome, String CPF, String tipoFuncionario, String dataNascimento) {
         this.nome = nome;
         this.CPF = CPF;
         this.tipoFuncionario = tipoFuncionario;
         this.dataNascimento = dataNascimento;
+    }
+
+    //Construtor para buscar funcionario e mostrar na tela
+    public ModelFuncionario(int codigo, String nome, String CPF, String tipoFuncionario, String dataNascimento){
+        this.codigo = codigo;
+        this.nome = nome;
+        this.CPF = CPF;
+        this.tipoFuncionario = tipoFuncionario;
+        this.dataNascimento = dataNascimento;
+    }
+
+    public void criaUsuario(ModelUsuario usuario){
         this.Usuario = usuario;
         usuario.setFuncionario(this);
     }

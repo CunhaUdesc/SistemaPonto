@@ -12,8 +12,8 @@ public class ModelFuncionarioHorista extends ModelFuncionario{
     private double valorHora;
     private float horasTrabalhadas;
     
-    public ModelFuncionarioHorista(String nome, String CPF, String dataNascimento, String tipoFuncionario, ModelUsuario usuario, double valorHora) {
-        super(nome, CPF, dataNascimento, tipoFuncionario, usuario);
+    public ModelFuncionarioHorista(String nome, String CPF, String dataNascimento, String tipoFuncionario, double valorHora) {
+        super(nome, CPF, dataNascimento, tipoFuncionario);
         this.valorHora = valorHora;
     }
 

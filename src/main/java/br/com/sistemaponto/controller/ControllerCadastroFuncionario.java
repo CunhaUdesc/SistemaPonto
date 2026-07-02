@@ -56,11 +56,20 @@ public class ControllerCadastroFuncionario {
         if(valorHora<0)// tem q continuar a validação
             throw new ExceptionValorPorHoraInvalido("Valor invalido!");
     }
+
+    public void criaUsuario(ModelFuncionario funcionario){
+        //Criando o usuário e vinculado
+        int login = funcionario.getCodigo(); // PRECISO DO CODIGO
+        String senha = funcionario.getCPF();
+        String perfil = viewCadastroFunc.getPerfilUsuario();
+        
+        ModelUsuario usuario = new ModelUsuario(login, senha, perfil);
+        funcionario.criaUsuario(usuario);
+    }
     
     public void salvarFuncionario(){
         try {
             ModelFuncionario funcionario;
-            int codigo = 101; // PRECISO DE UM METODO PRA TRAZER O CÓDIGO DO BANCO DE DADOS -- getNovoCodigo()
             String nome = viewCadastroFunc.getNome();
 
             String cpf = viewCadastroFunc.getCpf();
@@ -71,24 +80,19 @@ public class ControllerCadastroFuncionario {
             String dataNascimento = viewCadastroFunc.getDataNascimento();
             validarDataNascimento(dataNascimento);
             
-             //Criando o usuário
-            int login = codigo; // VAI SER O CODIGO DO FUNCIONARIO
-            String senha = cpf;
-            String perfil = viewCadastroFunc.getPerfilUsuario();
-            ModelUsuario usuario = new ModelUsuario(login, senha, tipo);
-            
             if(viewCadastroFunc.getTipoFuncionario().equals("Horista")){
                 double valorHora = Double.parseDouble(viewCadastroFunc.getValorHora());
                 validarValorHora(valorHora);
                 
-                funcionario = new ModelFuncionarioHorista(nome, cpf, dataNascimento, tipo, usuario, valorHora);
+                funcionario = new ModelFuncionarioHorista(nome, cpf, dataNascimento, tipo, valorHora);
             }else{
                 double salario = Double.parseDouble(viewCadastroFunc.getSalario()); //TEM Q VALIDAR
-                double cargaHoraria = Double.parseDouble(viewCadastroFunc.getCargaHoraria());
-                funcionario = new ModelFuncionarioFixo(nome, cpf, tipo, dataNascimento, usuario, salario, (float) cargaHoraria); //CARGA HORARIA DEVIA SER FLOAT????
+                float cargaHoraria = Float.parseFloat(viewCadastroFunc.getCargaHoraria());
+                funcionario = new ModelFuncionarioFixo(nome, cpf, tipo, dataNascimento, salario, cargaHoraria);
             }
             
             daoFuncionario.salvar(funcionario); //ARRUMAR OS EXCEPTIONS
+            criaUsuario(daoFuncionario.getUltimoFuncionario());
 
         } catch (ExceptionCpfInvalido e) {
             viewCadastroFunc.apresentaMensagem("Erro: "+e.getMessage());
@@ -98,12 +102,16 @@ public class ControllerCadastroFuncionario {
 
         } catch (ExceptionValorPorHoraInvalido e) {
             viewCadastroFunc.apresentaMensagem("Erro: "+e.getMessage());
-        } catch (SQLException ex) {
-            System.getLogger(ControllerCadastroFuncionario.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        } catch (ExceptionLogin ex) {
-            System.getLogger(ControllerCadastroFuncionario.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        } catch (ExceptionSistemaPonto ex) {
-            System.getLogger(ControllerCadastroFuncionario.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+        } catch (SQLException e) {
+            viewCadastroFunc.apresentaMensagem("Erro: "+e.getMessage());
+
+        } catch (ExceptionLogin e) {
+            viewCadastroFunc.apresentaMensagem("Erro: "+e.getMessage());
+
+        } catch (ExceptionSistemaPonto e) {
+            viewCadastroFunc.apresentaMensagem("Erro: "+e.getMessage());
         }
     }
+
 }
