@@ -59,7 +59,7 @@ public class DaoFuncionario implements InterfaceDados {
 
         String sql = """
             INSERT INTO tbfuncionario (funnome, funcpf, funtipo, fundatanascimento, funcargahoraria, funsalario, funhorastrabalhadas, funvalorhora, usucodigo)
-            VALUES (?, ?, ?, ?, ?, ?, ?); 
+            VALUES (?, ?, ?, ?, ?, ?, ?);
         """;
 
         try (

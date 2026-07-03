@@ -23,15 +23,15 @@ public class DaoUsuario implements InterfaceDados {
     public DaoUsuario() {
         this.usuarios = new HashSet<ModelUsuario>();
     }
-
+/*
     @Override
-    public List<Iterator> select(Object usuario) {
+    public ModelUsuario selectFromCodigo(int codigo) {
         // Poderá receber o usuário com alguma informação, para assim consultar no BD de acordo com
         // as informações preenchidas no modelo.
 
-        return List.of();
+        return 0;
     }
-
+*/
     @Override
     public void salvar(Object obj) throws SQLException, ExceptionLogin {
         ModelUsuario Usuario = (ModelUsuario)obj;

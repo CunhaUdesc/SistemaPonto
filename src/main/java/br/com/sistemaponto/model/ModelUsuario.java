@@ -10,7 +10,7 @@ public class ModelUsuario {
 
     private int codigo;
     private int login;
-    private String senha;
+    private int senha;
     private String tipoUsuario;
     private ModelFuncionario funcionario;  //tem q ver como vai ser relacionado o funcionario e o login
 
@@ -20,11 +20,11 @@ public class ModelUsuario {
      * @param login
      * @param senha
      */
-    public ModelUsuario(int login, String senha, String tipoUsuario) {
+    public ModelUsuario(int login, int senha, String tipoUsuario, ModelFuncionario funcionario) {
         this.login = login;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
-        
+        this.funcionario = funcionario;
     }
 
     public String getTipo() {
@@ -51,11 +51,11 @@ public class ModelUsuario {
         this.login = login;
     }
 
-    public String getSenha() {
+    public int getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public void setSenha(int senha) {
         this.senha = senha;
     }
     

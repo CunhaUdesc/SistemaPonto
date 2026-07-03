@@ -17,7 +17,7 @@ public class Conexao {
     public static Connection conectar() throws SQLException {
 
         try {
-            InputStream input = InicializadorDataBase.class.getResourceAsStream("/database.sql");
+            InputStream input = InicializadorDataBase.class.getResourceAsStream("/resources/database.sql");
             if (input == null) {
                 throw new RuntimeException("Arquivo database.sql não encontrado!");
             }

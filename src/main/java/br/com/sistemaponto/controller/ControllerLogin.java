@@ -29,7 +29,7 @@ public class ControllerLogin {
         this.Dao = dao;
         this.viewLogin = viewLogin;
         viewLogin.apresentarTela();
-        adicionarAcao();
+        adicionarAcoes();
     }
     
     public void chamarMenu(){
@@ -37,7 +37,7 @@ public class ControllerLogin {
         this.viewLogin.setVisible(false);
     }
     
-        public void adicionarAcao(){
+        public void adicionarAcoes(){
             viewLogin.adcionarAcaoBtnEntrar(a -> autenticarLogin());
         }
 
@@ -65,7 +65,7 @@ public class ControllerLogin {
                if(senha == null || senha.trim().isEmpty()){
                     viewLogin.apresentaMensagem("Senha incorreta!");
                     return;
-               }                
+               }
            }catch(Exception e){
                viewLogin.apresentaMensagem("Senha incorreta!");
            }

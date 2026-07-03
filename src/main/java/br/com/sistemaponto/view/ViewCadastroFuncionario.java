@@ -5,6 +5,8 @@
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -125,7 +127,7 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
         btnSalvar.addActionListener(a);
     }
     
-    public void configuraAcoes(){	
+    public void configuraAcoes(){
         cbTipoFuncionario.addActionListener( e -> visualizaCamposPorTipoFuncionario());
     }
     
@@ -147,8 +149,12 @@ public class ViewCadastroFuncionario extends javax.swing.JFrame {
                 txtCargaHoraria.setEnabled(true);
             }
             revalidate();
-            repaint();		
+            repaint();
         });
+    }
+
+    public JButton getBtnLimpar(){
+        return btnLimpar;
     }
 
     /**

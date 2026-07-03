@@ -8,8 +8,8 @@ package br.com.sistemaponto.exception;
  *
  * @author Lenovo
  */
-public class ExceptionValorPorHoraInvalido extends Exception{
-    public ExceptionValorPorHoraInvalido(String msg){
+public class ExceptionValorInvalido extends Exception{
+    public ExceptionValorInvalido(String msg){
         super(msg);
     }
 }

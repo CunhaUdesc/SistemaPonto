@@ -14,7 +14,6 @@ public abstract class ModelFuncionario {
     private String CPF;
     private String tipoFuncionario;
     private String dataNascimento;
-    private ModelUsuario Usuario;
 
     //Construtor para adicionar novo funcionário
     public ModelFuncionario(String nome, String CPF, String tipoFuncionario, String dataNascimento) {
@@ -31,11 +30,6 @@ public abstract class ModelFuncionario {
         this.CPF = CPF;
         this.tipoFuncionario = tipoFuncionario;
         this.dataNascimento = dataNascimento;
-    }
-
-    public void criaUsuario(ModelUsuario usuario){
-        this.Usuario = usuario;
-        usuario.setFuncionario(this);
     }
 
     public int getCodigo() {
@@ -80,15 +74,6 @@ public abstract class ModelFuncionario {
     
     public ModelFuncionario setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
-        return this;
-    }
-    
-    public ModelUsuario getUsuario() {
-        return Usuario;
-    }
-
-    public ModelFuncionario setUsuario(ModelUsuario usuario) {
-        Usuario = usuario;
         return this;
     }
     

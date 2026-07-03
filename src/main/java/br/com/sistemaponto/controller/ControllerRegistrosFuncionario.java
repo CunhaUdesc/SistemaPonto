@@ -4,6 +4,7 @@
  */
 package br.com.sistemaponto.controller;
 
+import br.com.sistemaponto.util.Session;
 import br.com.sistemaponto.view.ViewRegistrosFuncionario;
 
 /**
@@ -15,9 +16,19 @@ public class ControllerRegistrosFuncionario {
     
     public ControllerRegistrosFuncionario(ViewRegistrosFuncionario viewRegistrosFuncionario){
         this.view = viewRegistrosFuncionario;
+        view.apresentarTela();
+        adicionarAcoes();
     }
     
     public void adicionarAcoes(){
-        
+        view.acaoBtnPesquisar(e -> pesquisar());
+    }
+    
+    public void setLabels(){
+        view.setLabelNomeFuncionario(Session.getUsuario().getFuncionario().getNome());
+    }
+    
+    public void pesquisar(){
+        System.out.println("");
     }
 }

@@ -4,17 +4,17 @@
  */
 package br.com.sistemaponto.dao;
 
-import br.com.sistemaponto.exception.ExceptionSistemaPonto;
-import br.com.sistemaponto.interfaces.InterfaceDadosRegistroPonto;
-import br.com.sistemaponto.model.ModelFuncionario;
-import br.com.sistemaponto.model.ModelRegistroPonto;
-import br.com.sistemaponto.util.Conexao;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
+
+import br.com.sistemaponto.exception.ExceptionSistemaPonto;
+import br.com.sistemaponto.interfaces.InterfaceDadosRegistroPonto;
+import br.com.sistemaponto.model.ModelFuncionario;
+import br.com.sistemaponto.model.ModelRegistroPonto;
+import br.com.sistemaponto.util.Conexao;
 
 /**
  *
@@ -51,7 +51,7 @@ public class DaoRegistroPontoTeste implements InterfaceDadosRegistroPonto{
              WHERE regdataregistro = ?
                AND funcodigo = ? 
         """;
-
+        
         try (
             Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);

@@ -11,7 +11,7 @@ public class InicializadorDataBase {
 
         try {
             /* Busca o arquivo 'database.sql' dentro da pasta resource */
-            InputStream input = InicializadorDataBase.class.getResourceAsStream("/database.sql");
+            InputStream input = InicializadorDataBase.class.getResourceAsStream("resources/database.sql");
             if (input == null) {
                 throw new IllegalStateException("Arquivo 'database.sql não encontrado.'");
             }

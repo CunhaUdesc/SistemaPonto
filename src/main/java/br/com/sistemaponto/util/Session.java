@@ -6,7 +6,6 @@ public final class Session {
     private static ModelUsuario usuario;
 
     private Session(){
-
     }
 
     public static ModelUsuario getUsuario() {
