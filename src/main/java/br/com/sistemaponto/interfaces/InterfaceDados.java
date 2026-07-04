@@ -28,13 +28,13 @@ public interface InterfaceDados {
      *
      * @param codigo
      */
-    public void excluir(int codigo) throws ExceptionSistemaPonto;
+    public void excluir(int codigo) throws ExceptionLogin, ExceptionSistemaPonto;
 
     /**
      * Altera um Registro do Banco de Dados
      * @param obj
      */
-    public void alterar(Object obj) throws ExceptionSistemaPonto;
+    public void alterar(Object obj) throws ExceptionLogin, ExceptionSistemaPonto;
 
     /**
      * Retorna um objeto de acordo com as informações passadas
@@ -43,13 +43,6 @@ public interface InterfaceDados {
      * @return
      * @throws ExceptionSistemaPonto
      */
-    public ModelFuncionario selectFromCodigo(int codigo) throws ExceptionSistemaPonto;
+    public Object getFromCodigo(int codigo) throws ExceptionLogin, ExceptionSistemaPonto;
 
-    /**
-     * Retorna uma lista com todos os registros da tabela
-     *
-     * @return
-     * @throws ExceptionSistemaPonto
-     */
-    public List<ModelFuncionario> selectAll() throws ExceptionSistemaPonto;
 }

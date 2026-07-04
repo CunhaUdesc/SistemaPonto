@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Classe de teste de conexão como o Banco de Dados
@@ -12,21 +13,26 @@ import java.sql.SQLException;
 public class Conexao {
 
     /* URL de conexão com SQLite */
-    private static final String URL = "jdbc:sqlite:sistemaponto.db";
+    private static final String URL = "jdbc:sqlite:database/sistemaponto.db";
 
-    public static Connection conectar() throws SQLException {
+    public static Connection conectar() throws Exception, SQLException {
 
         try {
-            InputStream input = InicializadorDataBase.class.getResourceAsStream("/resources/database.sql");
-            if (input == null) {
-                throw new RuntimeException("Arquivo database.sql não encontrado!");
+          Connection conn = DriverManager.getConnection(URL);
+
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute("PRAGMA foreign_keys = ON;");
             }
-            String sql = new String(input.readAllBytes());
 
-            return DriverManager.getConnection(URL);
-        } catch (IOException ex) {
+            System.out.println("Conectado em:");
+            System.out.println(conn.getMetaData().getURL());
 
+            return conn;
+        } catch (SQLException ex) {
+            throw new SQLException(ex.getMessage());
+
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
         }
-        return null;
     }
 }

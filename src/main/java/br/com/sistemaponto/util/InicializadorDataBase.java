@@ -11,22 +11,35 @@ public class InicializadorDataBase {
 
         try {
             /* Busca o arquivo 'database.sql' dentro da pasta resource */
-            InputStream input = InicializadorDataBase.class.getResourceAsStream("resources/database.sql");
+            InputStream input = InicializadorDataBase.class.getResourceAsStream("/database.sql");
             if (input == null) {
                 throw new IllegalStateException("Arquivo 'database.sql não encontrado.'");
             }
+            System.out.println("Arquivo encontrado \n");
 
             try (
                 /* Abre uma conexão e executa o SQL */
                 Connection conn = Conexao.conectar();
                 Statement stmt = conn.createStatement();
-            ) {}
+            ) {
 
             /* Lê o arquivo e transforma em String */
             String sql = new String(input.readAllBytes(), StandardCharsets.UTF_8);
+            String[] comandos = sql.split(";");
+            System.out.println("Arquivo lido");
+
+            for (String comando : comandos) {
+                if (comando.trim().isEmpty()) {
+                    continue;
+                }
+                System.out.println("Executando comando: " + comando);
+                stmt.execute(comando);
+            }
+
+            }
 
         } catch (Exception ex) {
-            throw new RuntimeException("Erro ao inicializar o banco.", ex);
+            System.out.println(ex.getMessage());
         }
     }
 

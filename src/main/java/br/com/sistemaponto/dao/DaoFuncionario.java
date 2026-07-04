@@ -8,9 +8,12 @@ import br.com.sistemaponto.model.ModelFuncionarioFixo;
 import br.com.sistemaponto.model.ModelFuncionarioHorista;
 import br.com.sistemaponto.util.Conexao;
 
+import javax.lang.model.type.NullType;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.*;
 
 /**
@@ -32,64 +35,170 @@ public class DaoFuncionario implements InterfaceDados {
         this.funcionarios = new ArrayList<>();
     }
 
-    /** Filtros a fazer
-     * Nome funcionario
-     * CPF funcionario
-     * Tipo funcionario
+    /**
+     * Retorna os Funcionário de acordo com o tipo
+     *
+     * @param tipo
+     * @return List<ModelFuncionario>
      */
-
-    public List<ModelFuncionario> getFuncionariosFromNome(String nome) {
-        return new ArrayList<ModelFuncionario>();
-    }
-
-    public void getFuncionarioFromCpf(String cpf) {
-//        return new ModelFuncionario();
-    }
-
-    public List<ModelFuncionario> getFuncionariosFromTipo(String tipo) {
-        return new ArrayList<ModelFuncionario>();
-    }
-
-    @Override
-    public void salvar(Object obj) throws ExceptionSistemaPonto {
-        if (!(obj instanceof ModelFuncionario)) {
-            throw new ExceptionSistemaPonto("Funcionário inválido!");
-        }
-        ModelFuncionario Funcionario = (ModelFuncionario) obj;
+    public List<ModelFuncionario> getFuncionariosFromTipo(String tipo) throws ExceptionSistemaPonto {
+        List<ModelFuncionario> allFuncionarios = new ArrayList<>();
 
         String sql = """
-            INSERT INTO tbfuncionario (funnome, funcpf, funtipo, fundatanascimento, funcargahoraria, funsalario, funhorastrabalhadas, funvalorhora, usucodigo)
-            VALUES (?, ?, ?, ?, ?, ?, ?);
+            SELECT *
+              FROM tbfuncionario
+             WHERE funtipo LIKE ?;
         """;
 
         try (
-                Connection conn = Conexao.conectar();
-                PreparedStatement stmt = conn.prepareStatement(sql);
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
-            // O código do funcionário é gerado automaticamente pelo Banco de Dados
-            stmt.setString(1, Funcionario.getNome());
-            stmt.setString(2, Funcionario.getCPF());
-            stmt.setString(3, Funcionario.getTipoFuncionario());
-            stmt.setString(4, Funcionario.getDataNascimento());
-            stmt.setInt(9, Funcionario.getUsuario().getCodigo());
+            stmt.setString(1, "%"+tipo+"%");
+            ResultSet src = stmt.executeQuery();
 
-            if (Funcionario.getTipoFuncionario().equals(EnumTipoFuncionario.FIXO)) {
-                ModelFuncionarioFixo Fixo = (ModelFuncionarioFixo) Funcionario;
-                stmt.setFloat(5, Fixo.getCargaHoraria());
-                stmt.setDouble(6, Fixo.getSalarioBase());
-            } else {
-                ModelFuncionarioHorista Horista = (ModelFuncionarioHorista) Funcionario;
-                stmt.setFloat(7, Horista.getHorasTrabalhadas());
-                stmt.setDouble(8, Horista.getValorHora());
+            while (src.next()) {
+                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
+
+                    ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
+                            src.getString("funnome"),
+                            src.getString("funcpf"),
+                            src.getString("funtipo"),
+                            src.getString("fundatanacimento"),
+                            src.getDouble("funsalario"),
+                            src.getFloat("funcargahoraria")
+                    );
+                    Funcionario.setCodigo(src.getInt("funcodigo"));
+                    allFuncionarios.add(Funcionario);
+
+                } else {
+                    ModelFuncionarioHorista Funcionario = new ModelFuncionarioHorista(
+                            src.getString("funnome"),
+                            src.getString("funcpf"),
+                            src.getString("funtipo"),
+                            src.getString("fundatanacimento"),
+                            src.getDouble("funvalorhora")
+                    );
+                    Funcionario.setCodigo(src.getInt("funcodigo"));
+                    allFuncionarios.add(Funcionario);
+                }
+                return allFuncionarios;
             }
+            return null;
 
         } catch (Exception ex) {
-            throw new ExceptionSistemaPonto("Funcinário inválido!");
+            throw new ExceptionSistemaPonto(ex.getMessage());
+        }
+    }
+
+    /**
+     * Retorna o Funcionário de acordo com o nome
+     *
+     * @param nome
+     * @return List<ModelFuncionario>
+     */
+    public List<ModelFuncionario> getFuncionariosFromNome(String nome) throws ExceptionSistemaPonto {
+        List<ModelFuncionario> allFuncionarios = new ArrayList<>();
+
+        String sql = """
+             SELECT * 
+               FROM tbfuncionario
+              WHERE funnome LIKE ?;
+        """;
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setString(1, "%"+nome+"%");
+            ResultSet src = stmt.executeQuery();
+
+            while (src.next()) {
+                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
+
+                    ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
+                        src.getString("funnome"),
+                        src.getString("funcpf"),
+                        src.getString("funtipo"),
+                        src.getString("fundatanacimento"),
+                        src.getDouble("funsalario"),
+                        src.getFloat("funcargahoraria")
+                    );
+                    Funcionario.setCodigo(src.getInt("funcodigo"));
+                    allFuncionarios.add(Funcionario);
+
+                } else {
+                    ModelFuncionarioHorista Funcionario = new ModelFuncionarioHorista(
+                        src.getString("funnome"),
+                        src.getString("funcpf"),
+                        src.getString("funtipo"),
+                        src.getString("fundatanacimento"),
+                        src.getDouble("funvalorhora")
+                    );
+                    Funcionario.setCodigo(src.getInt("funcodigo"));
+                    allFuncionarios.add(Funcionario);
+                }
+                return allFuncionarios;
+            }
+            return null;
+
+        } catch (Exception ex) {
+            throw new ExceptionSistemaPonto(ex.getMessage());
+        }
+    }
+
+    /**
+     * Retorna um Funcionário de acordo com o CPF
+     *
+     * @param cpf
+     * @return ModelFuncionario
+     * @throws ExceptionSistemaPonto
+     */
+    public ModelFuncionario getFuncionarioFromCpf(String cpf) throws ExceptionSistemaPonto {
+        String sql = """
+            SELECT *
+              FROM tbfuncionario
+             WHERE funcpf = ?;
+        """;
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setString(1, cpf);
+            ResultSet src = stmt.executeQuery();
+
+            if (src.next()) {
+                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
+                    ModelFuncionarioFixo fixo = new ModelFuncionarioFixo(
+                        src.getString("funnome"),
+                        src.getString("funcpf"),
+                        src.getString("funtipo"),
+                        src.getString("fundatanascimento"),
+                        src.getDouble("funsalario"),
+                        src.getFloat("funcargahoraria")
+                    );
+                    return fixo;
+                } else {
+                    ModelFuncionarioHorista horista = new ModelFuncionarioHorista(
+                            src.getString("funnome"),
+                            src.getString("funcpf"),
+                            src.getString("funtipo"),
+                            src.getString("fundatanascimento"),
+                            src.getDouble("funvalorhora")
+                    );
+                    return horista;
+                }
+             }
+            return null;
+
+        } catch (Exception ex) {
+            throw new ExceptionSistemaPonto(ex.getMessage());
         }
     }
 
     @Override
-    public ModelFuncionario selectFromCodigo(int codigo) throws ExceptionSistemaPonto {
+    public ModelFuncionario getFromCodigo(int codigo) throws ExceptionSistemaPonto {
         String sql = """
             SELECT * 
               FROM tbfuncionario 
@@ -110,7 +219,6 @@ public class DaoFuncionario implements InterfaceDados {
                         src.getString("funcpf"),
                         src.getString("funtipo"),
                         src.getString("fundatanacimento"),
-                        (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
                         src.getDouble("funsalario"),
                         src.getFloat("funcargahoraria")
                     );
@@ -123,7 +231,6 @@ public class DaoFuncionario implements InterfaceDados {
                         src.getString("funcpf"),
                         src.getString("funtipo"),
                         src.getString("fundatanacimento"),
-                        (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
                         src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -131,8 +238,48 @@ public class DaoFuncionario implements InterfaceDados {
                 }
             }
             return null;
+
         } catch (Exception ex) {
             throw new ExceptionSistemaPonto("Funcionário não encontrado!");
+        }
+    }
+
+    @Override
+    public void salvar(Object obj) throws ExceptionSistemaPonto {
+        if (!(obj instanceof ModelFuncionario)) {
+            throw new ExceptionSistemaPonto("Funcionário inválido!");
+        }
+        ModelFuncionario Funcionario = (ModelFuncionario) obj;
+
+        String sql = """
+            INSERT INTO tbfuncionario (funnome, funcpf, funtipo, fundatanascimento, funcargahoraria, funsalario, funhorastrabalhadas, funvalorhora)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?); 
+        """;
+
+        try (
+                Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setString(1, Funcionario.getNome());
+            stmt.setString(2, Funcionario.getCPF());
+            stmt.setString(3, Funcionario.getTipoFuncionario());
+            stmt.setString(4, Funcionario.getDataNascimento());
+
+            if (Funcionario.getTipoFuncionario().equals(EnumTipoFuncionario.FIXO)) {
+                ModelFuncionarioFixo Fixo = (ModelFuncionarioFixo) Funcionario;
+                stmt.setFloat(5, Fixo.getCargaHoraria());
+                stmt.setDouble(6, Fixo.getSalarioBase());
+                stmt.setNull(7, Types.NULL);
+
+            } else {
+                ModelFuncionarioHorista Horista = (ModelFuncionarioHorista) Funcionario;
+                stmt.setNull(5, Types.NULL);
+                stmt.setNull(6, Types.NULL);
+                stmt.setDouble(7, Horista.getValorHora());
+            }
+            stmt.executeUpdate();
+        } catch (Exception ex) {
+            throw new ExceptionSistemaPonto("Funcinário inválido!");
         }
     }
 
@@ -148,7 +295,7 @@ public class DaoFuncionario implements InterfaceDados {
             Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
         } catch (Exception ex) {
             throw new ExceptionSistemaPonto("Funcionário não encontrado!");
@@ -160,17 +307,15 @@ public class DaoFuncionario implements InterfaceDados {
         if (!(obj instanceof ModelFuncionario)) {
             throw new ExceptionSistemaPonto("Funcionário inválido!");
         }
-
         String sql = """
             UPDATE tbfuncionario
                SET funnome           = ?,
                    funcpf            = ?,
                    funtipo           = ?,
                    fundatanascimento = ?,
-                   funusuario        = ?,
                    funcargahoraria   = ?,
                    funsalario        = ?,
-                   funvalorhora      = ?,
+                   funvalorhora      = ?
              WHERE id = ?;
         """;
 
@@ -183,18 +328,20 @@ public class DaoFuncionario implements InterfaceDados {
             stmt.setString(2, ((ModelFuncionario) obj).getCPF());
             stmt.setString(3, ((ModelFuncionario) obj).getTipoFuncionario());
             stmt.setString(4, ((ModelFuncionario) obj).getDataNascimento());
-            stmt.setInt(5, ((ModelFuncionario) obj).getCodigo());
 
             if (((ModelFuncionario) obj).getTipoFuncionario().equals(EnumTipoFuncionario.FIXO)) {
                 ModelFuncionarioFixo Fixo = (ModelFuncionarioFixo) obj;
-                stmt.setFloat(6, Fixo.getCargaHoraria());
-                stmt.setDouble(7, Fixo.getSalarioBase());
+                stmt.setFloat(5, Fixo.getCargaHoraria());
+                stmt.setDouble(6, Fixo.getSalarioBase());
+                stmt.setNull(7, Types.NULL);
 
             } else {
                 ModelFuncionarioHorista Horista = (ModelFuncionarioHorista) obj;
-                stmt.setDouble(8, Horista.getValorHora());
+                stmt.setNull(5, Types.NULL);
+                stmt.setNull(6, Types.NULL);
+                stmt.setDouble(7, Horista.getValorHora());
             }
-            stmt.executeQuery();
+            stmt.executeUpdate();
             return;
 
         } catch (Exception ex) {
@@ -202,7 +349,12 @@ public class DaoFuncionario implements InterfaceDados {
         }
     }
 
-    @Override
+    /**
+     * Retorna todos os Funcionários cadastrados
+     *
+     * @return List<ModelFuncionario>
+     * @throws ExceptionSistemaPonto
+     */
     public List<ModelFuncionario> selectAll() throws ExceptionSistemaPonto {
         List<ModelFuncionario> allFuncionarios = new ArrayList<>();
 
@@ -221,7 +373,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funcpf"),
                             src.getString("funtipo"),
                             src.getString("fundatanacimento"),
-                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
+//                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
                             src.getDouble("funsalario"),
                             src.getFloat("funcargahoraria")
                     );
@@ -234,7 +386,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funcpf"),
                             src.getString("funtipo"),
                             src.getString("fundatanacimento"),
-                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
+//                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
                             src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -244,62 +396,7 @@ public class DaoFuncionario implements InterfaceDados {
             return allFuncionarios;
 
         } catch (Exception ex) {
-            throw new ExceptionSistemaPonto("Registro não encontrado!");
+            throw new ExceptionSistemaPonto(ex.getMessage());
         }
     }
-
-    /**
-     * Retorna um Funcionário de acordo com o código recebido.
-     *
-     * @param codigo
-     * @return ModelFuncionario
-     * @throws ExceptionSistemaPonto
-     */
-    public ModelFuncionario getFuncionarioFromCodigo(int codigo) throws ExceptionSistemaPonto {
-        String sql = """
-            SELECT * 
-              FROM tbfuncionario
-             WHERE funcodigo = ?;
-        """;
-
-        try (
-            Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-        ) {
-            stmt.setInt(1, codigo);
-            ResultSet src = stmt.executeQuery();
-
-            if (src.next()) {
-                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
-                    ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
-                            src.getString("funnome"),
-                            src.getString("funcpf"),
-                            src.getString("funtipo"),
-                            src.getString("fundatanacimento"),
-                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
-                            src.getDouble("funsalario"),
-                            src.getFloat("funcargahoraria")
-                    );
-                    Funcionario.setCodigo(src.getInt("funcodigo"));
-                    return Funcionario;
-
-                } else {
-                    ModelFuncionarioHorista Funcionario = new ModelFuncionarioHorista(
-                            src.getString("funnome"),
-                            src.getString("funcpf"),
-                            src.getString("funtipo"),
-                            src.getString("fundatanacimento"),
-                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
-                            src.getDouble("funvalorhora")
-                    );
-                    Funcionario.setCodigo(src.getInt("funcodigo"));
-                    return Funcionario;
-                }
-            }
-            return null;
-        } catch (Exception ex) {
-            throw new ExceptionSistemaPonto("Funcionário não encontrado");
-        }
-    }
-
 }

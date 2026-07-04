@@ -25,7 +25,7 @@ import br.com.sistemaponto.view.ViewLogin;
         InicializadorDataBase.inicializar();
 
   //      ControllerLogin controller = new ControllerLogin(dao);
-
+        /*
         ModelUsuario usuario = new ModelUsuario(1, "Teste", EnumTipoUsuario.ADMINISTRADOR);
         // ModelFuncionario funcionario = new ModelFuncionario("Rafael", "123.456.789-00", LocalDate.of(2004, 5, 21), EnumTipoUsuario.ADMINISTRADOR,
                                                                                                 // usuario, new ModelRegistroPonto());
@@ -41,7 +41,7 @@ import br.com.sistemaponto.view.ViewLogin;
         viewLogin.setLogin("1");
         viewLogin.setSenha("Teste");
         viewLogin.clicarBtnEntrar();
-
+        */
         try {
             Connection conn = Conexao.conectar();
 

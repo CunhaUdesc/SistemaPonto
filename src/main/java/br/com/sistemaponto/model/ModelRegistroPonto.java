@@ -5,6 +5,7 @@
 package br.com.sistemaponto.model;
 
 /**
+ * Modelo de Dados do Registro de Ponto
  *
  * @author WIN11
  */
@@ -22,7 +23,10 @@ public class ModelRegistroPonto {
     private int botao = 0; //0 para ENTRADA e 1 para
     private int idRegistro = 1; // 1 a 4 para definir qual registro salvar
 
-    public ModelRegistroPonto(){
+    public ModelRegistroPonto() {}
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public int getCodigo() {

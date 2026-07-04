@@ -4,14 +4,19 @@
  */
 package br.com.sistemaponto.interfaces;
 
+import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.model.ModelRegistroPonto;
-import java.util.Map;
+import java.util.List;
 
 /**
+ *  Interface para o DAO de Registro Ponto
  *
- * @author WIN11
+ * @author Rafael Boing
+ * @since 03/07/2026
  */
 public interface InterfaceDadosRegistroPonto {
-    public boolean salvarRegistro(ModelRegistroPonto registro);
-    public Map<String, ModelRegistroPonto> buscarRegistros();
+
+    public void salvarRegistro(ModelRegistroPonto registro) throws ExceptionSistemaPonto;
+
+    public List<ModelRegistroPonto> selectAll() throws ExceptionSistemaPonto;
 }

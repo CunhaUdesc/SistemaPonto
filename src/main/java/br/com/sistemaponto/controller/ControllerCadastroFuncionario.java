@@ -116,11 +116,12 @@ public class ControllerCadastroFuncionario {
 
     //=========================METODOS USUARIO================================
 
-    public int criaSenha(String dataNascimento){
+    public String criaSenha(String dataNascimento){
         String diaString = dataNascimento.substring(0,2);
         String mesString = dataNascimento.substring(3,5);
 
-        return Integer.parseInt(diaString+mesString);
+        return diaString + mesString;
+//        return Integer.parseInt(diaString+mesString);
     }
 
     //===========================FUNÇÕES BOTÕES================================
@@ -157,7 +158,7 @@ public class ControllerCadastroFuncionario {
 
             //Criando o usuário
             int login = criaLogin(cpf);
-            int senha = criaSenha(dataNascimento);
+            String senha = criaSenha(dataNascimento);
             String perfil = viewCadastroFunc.getPerfilUsuario();
 
             usuario = new ModelUsuario(login, senha, perfil, funcionario);
