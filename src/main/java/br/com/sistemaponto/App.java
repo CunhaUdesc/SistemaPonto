@@ -22,17 +22,13 @@ public class App {
 //            System.out.println(ex.getStackTrace());
 //        }
         try {
-            InicializadorDataBase.inicializar();
-            /*
-            ModelFuncionarioFixo func = new ModelFuncionarioFixo("", "", "", "02/02/2020", 0, 0);
-            DaoFuncionario DAO = new DaoFuncionario();
-            DAO.salvar(func);
+//            InicializadorDataBase.inicializar();
 
+            DaoFuncionario DAO = new DaoFuncionario();
             for (ModelFuncionario f : DAO.selectAll()) {
-                System.out.println("Data: \n");
-                System.out.println(f.getDataNascimento());
+                System.out.println(f.toString() + "\n");
             }
-            */
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

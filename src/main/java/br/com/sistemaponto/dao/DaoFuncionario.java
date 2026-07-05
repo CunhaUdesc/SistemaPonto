@@ -372,7 +372,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funnome"),
                             src.getString("funcpf"),
                             src.getString("funtipo"),
-                            src.getString("fundatanacimento"),
+                            src.getString("fundatanascimento"),
 //                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
                             src.getDouble("funsalario"),
                             src.getFloat("funcargahoraria")
@@ -385,7 +385,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funnome"),
                             src.getString("funcpf"),
                             src.getString("funtipo"),
-                            src.getString("fundatanacimento"),
+                            src.getString("fundatanascimento"),
 //                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
                             src.getDouble("funvalorhora")
                     );
