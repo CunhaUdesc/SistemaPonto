@@ -23,7 +23,7 @@ public class ControllerManterFuncionario {
      *
      * @param view
      */
-    public ControllerManterFuncionario(ViewManterFuncionario view){
+    public ControllerManterFuncionario(ViewManterFuncionario view) {
         this.viewManterFuncionario = view;
         this.viewManterFuncionario.apresentarTela();
         this.viewManterFuncionario.atualizarTabela();

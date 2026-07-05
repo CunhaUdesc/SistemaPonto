@@ -19,6 +19,8 @@ public class ModelUsuario {
      *
      * @param login
      * @param senha
+     * @param tipoUsuario
+     * @param funcionario
      */
     public ModelUsuario(int login, String senha, String tipoUsuario, ModelFuncionario funcionario) {
         this.login = login;

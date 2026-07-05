@@ -7,21 +7,14 @@ import br.com.sistemaponto.model.ModelFuncionario;
 import br.com.sistemaponto.model.ModelFuncionarioFixo;
 import br.com.sistemaponto.model.ModelFuncionarioHorista;
 import br.com.sistemaponto.util.Conexao;
-
-import javax.lang.model.type.NullType;
-import java.lang.reflect.Type;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Types;
+import java.sql.*;
 import java.util.*;
 
 /**
  * DAO do Funcionário
  *
- * @package dao
- * @author Vitor Hugo
- * @since 26/06
+ * @author Vitor Hugo da Cunha
+ * @since 26/06/2026
  */
 public class DaoFuncionario implements InterfaceDados {
 
@@ -36,7 +29,7 @@ public class DaoFuncionario implements InterfaceDados {
     }
 
     /**
-     * Retorna os Funcionário de acordo com o tipo
+     * Retorna o Funcionário conforme o tipo
      *
      * @param tipo
      * @return List<ModelFuncionario>
@@ -92,7 +85,7 @@ public class DaoFuncionario implements InterfaceDados {
     }
 
     /**
-     * Retorna o Funcionário de acordo com o nome
+     * Retorna o Funcionário conforme o nome
      *
      * @param nome
      * @return List<ModelFuncionario>

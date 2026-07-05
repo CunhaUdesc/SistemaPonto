@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.sistemaponto.model;
 
 /**
+ * Modelo de Dados do Funcionário
  *
- * @author Lenovo
+ * @author Vitor Hugo da Cunha
+ * @since 04/06/2026
  */
 public abstract class ModelFuncionario {
     private int codigo;
@@ -15,7 +13,14 @@ public abstract class ModelFuncionario {
     private String tipoFuncionario;
     private String dataNascimento;
 
-    //Construtor para adicionar novo funcionário
+    /**
+     * Construct para adicionar um novo Funcionário
+     *
+     * @param nome
+     * @param CPF
+     * @param tipoFuncionario
+     * @param dataNascimento
+     */
     public ModelFuncionario(String nome, String CPF, String tipoFuncionario, String dataNascimento) {
         this.nome = nome;
         this.CPF = CPF;
@@ -23,7 +28,15 @@ public abstract class ModelFuncionario {
         this.dataNascimento = dataNascimento;
     }
 
-    //Construtor para buscar funcionario e mostrar na tela
+    /**
+     * Construct para buscar funcionários
+     * 
+     * @param codigo
+     * @param nome
+     * @param CPF
+     * @param tipoFuncionario
+     * @param dataNascimento
+     */
     public ModelFuncionario(int codigo, String nome, String CPF, String tipoFuncionario, String dataNascimento){
         this.codigo = codigo;
         this.nome = nome;

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.sistemaponto.controller;
 
 import br.com.sistemaponto.dao.DaoRegistroPontoTeste;
@@ -10,30 +6,48 @@ import br.com.sistemaponto.view.ViewManterFuncionario;
 import br.com.sistemaponto.view.ViewMenu;
 
 /**
+ * Controller do Menu Principal
+ *
  * @author Rafael
  * @since 09/06/2026
  */
 public class ControllerMenu {
+
+    /** @var ViewMenu */
     private ViewMenu viewMenu;
-    
-    public ControllerMenu(ViewMenu viewMenu){
+
+    /**
+     * Construct
+     *
+     * @param viewMenu
+     */
+    public ControllerMenu(ViewMenu viewMenu) {
         this.viewMenu = viewMenu;
         viewMenu.apresentarTela();
-        adicionarAcoes();
+        this.adicionarAcoes();
     }
-    
-    public void adicionarAcoes(){
+
+    /**
+     * Adiciona as Ações dos Botões da tela
+     */
+    public void adicionarAcoes() {
         //Adicionado funções dos botões
-        viewMenu.adcionarAcaoBtnBaterPonto(e -> chamarTelaBaterPonto());
-                
-        viewMenu.adcionarAcaoBtnManterFuncionario(e -> abrirTelaManterFuncionario());
+        this.viewMenu.adcionarAcaoBtnBaterPonto(e -> this.chamarTelaBaterPonto());
+
+        this.viewMenu.adcionarAcaoBtnManterFuncionario(e -> this.abrirTelaManterFuncionario());
     }
-    
-    public void chamarTelaBaterPonto(){
+
+    /**
+     * Chamada da tela de bater ponto
+     */
+    public void chamarTelaBaterPonto() {
         new ControllerBaterPonto(new ViewBaterPonto(), new DaoRegistroPontoTeste());
     }
-    
-    public void abrirTelaManterFuncionario(){
+
+    /**
+     * Abre a tela de manter funcionários
+     */
+    public void abrirTelaManterFuncionario() {
         new ControllerManterFuncionario(new ViewManterFuncionario());
     }
 }

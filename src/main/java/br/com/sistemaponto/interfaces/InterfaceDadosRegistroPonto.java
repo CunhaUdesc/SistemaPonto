@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package br.com.sistemaponto.interfaces;
 
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
@@ -16,7 +12,19 @@ import java.util.List;
  */
 public interface InterfaceDadosRegistroPonto {
 
+    /**
+     * Salva um novo registro no Banco de Dados
+     *
+     * @param registro
+     * @throws ExceptionSistemaPonto
+     */
     public void salvarRegistro(ModelRegistroPonto registro) throws ExceptionSistemaPonto;
 
+    /**
+     * Seleciona todos os Registros
+     *
+     * @return List<ModelRegistroPonto>
+     * @throws ExceptionSistemaPonto
+     */
     public List<ModelRegistroPonto> selectAll() throws ExceptionSistemaPonto;
 }

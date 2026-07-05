@@ -1,15 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.sistemaponto.exception;
 
 /**
+ * Exceção de Valor Inválido
  *
- * @author Lenovo
+ * @author Rafael Boing
+ * @since 20/06/2026
  */
-public class ExceptionValorInvalido extends Exception{
-    public ExceptionValorInvalido(String msg){
+public class ExceptionValorInvalido extends Exception {
+
+    /**
+     * Construct
+     * 
+     * @param msg
+     */
+    public ExceptionValorInvalido(String msg) {
         super(msg);
     }
 }

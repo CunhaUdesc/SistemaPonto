@@ -1,100 +1,146 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
-
-import javax.swing.JOptionPane;
-
+import javax.swing.*;
 import br.com.sistemaponto.Main;
 
 /**
+ * Tela de Manter os Funcionários
  *
- * @author WIN11
+ * @author Rafael Boing
+ * @since 15/06/2026
  */
-public class ViewManterFuncionario extends javax.swing.JFrame {
+public class ViewManterFuncionario extends JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ViewManterFuncionario.class.getName());
 
     /**
-     * Creates new form ViewManterFuncionario
+     * Criação da Tela de Manter Funcionário
      */
     public ViewManterFuncionario() {
-        initComponents();
-        lbVersao.setText(Main.versao);
+        this.initComponents();
+        this.lbVersao.setText(Main.versao);
     }
 
-    public void apresentarTela(){
+    /**
+     * Apresenta a Tela atual
+     */
+    public void apresentarTela() {
         setVisible(true);
     }
 
+    /**
+     * Apresenta uma mensagem na tela
+     *
+     * @param msg
+     */
     public void apresentaMensagem(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
-    
-    public void adcionarAcaoBtnIncluir(ActionListener a){
-        btnIncluir.addActionListener(a);
+
+    /**
+     * Adiciona uma ação no botão de Incluir
+     *
+     * @param a
+     */
+    public void adcionarAcaoBtnIncluir(ActionListener a) {
+        this.btnIncluir.addActionListener(a);
     }
-    
-    public void adcionarAcaoBtnAlterar(ActionListener a){
-        btnAlterar.addActionListener(a);
+
+    /**
+     * Adiciona uma ação no botão de alterar
+     *
+     * @param a
+     */
+    public void adcionarAcaoBtnAlterar(ActionListener a) {
+        this.btnAlterar.addActionListener(a);
     }
-    
-    public void adcionarAcaoBtnExcluir(ActionListener a){
-        btnExcluir.addActionListener(a);
+
+    /**
+     * Adiciona uma ação no botão de excluir
+     *
+     * @param a
+     */
+    public void adcionarAcaoBtnExcluir(ActionListener a) {
+        this.btnExcluir.addActionListener(a);
     }
-    
-    public void adicionarAcaoBtnVisualizarRegistros(ActionListener a){
-        btnRegistrosPonto.addActionListener(a);
+
+    /**
+     * Adiciona uma ação no botão de visualizar os registros
+     * @param a
+     */
+    public void adicionarAcaoBtnVisualizarRegistros(ActionListener a) {
+        this.btnRegistrosPonto.addActionListener(a);
     }
-    
-    public void adicionarAcaoBtnPesquisar(ActionListener a){
-        btnPesquisar.addActionListener(a);
+
+    /**
+     * Adiciona uma ação no botão de pesquisar
+     *
+     * @param a
+     */
+    public void adicionarAcaoBtnPesquisar(ActionListener a) {
+        this.btnPesquisar.addActionListener(a);
     }
-    
+
+    /**
+     * Retorna o tipo de filtro
+     *
+     * @return String
+     */
     public String getTipoFiltro(){
-        return (String) cbFiltros.getSelectedItem();
-    }
-    
-    public String getFiltro(){
-        return txtFiltro.getText();
+        return (String) this.cbFiltros.getSelectedItem();
     }
 
+    /**
+     * Retorna o valor do filtro da Tela
+     *
+     * @return String
+     */
+    public String getFiltro() {
+        return this.txtFiltro.getText();
+    }
+
+    /**
+     * Retorna o código do registro selecionado na tabela
+     *
+     * @return int
+     */
     public int getCodigoSelecionadoNaTabela() {
-        int linha = tbFuncionarios.getSelectedRow();
+        int linha = this.tbFuncionarios.getSelectedRow();
 
-        if(linha == -1){
+        if(linha == -1) {
             return -1;
         }
-
-        return (Integer) tbFuncionarios.getValueAt(linha, 0);
+        return (Integer) this.tbFuncionarios.getValueAt(linha, 0);
     }
 
+    /**
+     * Atualiza as informações da tabela
+     */
     public void atualizarTabela(){
         //TEM Q FAZER O METODO AINDA
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    /**
+     * Inicialização dos Componentes
+     */
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbFuncionarios = new javax.swing.JTable();
-        lbFuncionarios = new javax.swing.JLabel();
-        btnAlterar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
-        btnIncluir = new javax.swing.JButton();
-        lbVersao = new javax.swing.JLabel();
-        btnRegistrosPonto = new javax.swing.JButton();
-        cbFiltros = new javax.swing.JComboBox<>();
-        txtFiltro = new javax.swing.JTextField();
-        btnPesquisar = new javax.swing.JButton();
+        jScrollPane1 = new JScrollPane();
+        tbFuncionarios = new JTable();
+        lbFuncionarios = new JLabel();
+        btnAlterar = new JButton();
+        btnExcluir = new JButton();
+        btnIncluir = new JButton();
+        lbVersao = new JLabel();
+        btnRegistrosPonto = new JButton();
+        cbFiltros = new JComboBox<>();
+        txtFiltro = new JTextField();
+        btnPesquisar = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        tbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+        this.tbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -102,47 +148,47 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
                 "Nome", "CPF", "Data de Nascimento", "Tipo", "Salario"
             }
         ));
-        jScrollPane1.setViewportView(tbFuncionarios);
+        this.jScrollPane1.setViewportView(tbFuncionarios);
 
-        lbFuncionarios.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lbFuncionarios.setText("Funcionários");
+        this.lbFuncionarios.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        this.lbFuncionarios.setText("Funcionários");
 
-        btnAlterar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnAlterar.setText("Alterar");
+        this.btnAlterar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        this.btnAlterar.setText("Alterar");
 
-        btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnExcluir.setText("Excluir");
+        this.btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        this.btnExcluir.setText("Excluir");
 
-        btnIncluir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnIncluir.setText("Incluir");
+        this.btnIncluir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        this.btnIncluir.setText("Incluir");
 
-        lbVersao.setText("Versao");
+        this.lbVersao.setText("Versao");
 
-        btnRegistrosPonto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnRegistrosPonto.setText("Visualizar Registros");
+        this.btnRegistrosPonto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        this.btnRegistrosPonto.setText("Visualizar Registros");
 
-        cbFiltros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "CPF", "Tipo" }));
+        this.cbFiltros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        this.cbFiltros.setModel(new DefaultComboBoxModel<>(new String[] { "Nome", "CPF", "Tipo" }));
 
-        txtFiltro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        this.txtFiltro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnPesquisar.setText("Pesquisar");
+        this.btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        this.btnPesquisar.setText("Pesquisar");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        GroupLayout layout = new GroupLayout(getContentPane());
+        this.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lbFuncionarios)
                 .addGap(232, 232, 232))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbVersao, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 94, Short.MAX_VALUE)
                         .addComponent(btnIncluir)
                         .addGap(18, 18, 18)
@@ -150,55 +196,50 @@ public class ViewManterFuncionario extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnAlterar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRegistrosPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRegistrosPonto, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cbFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbFiltros, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFiltro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbFuncionarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPesquisar)
-                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFiltros, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAlterar)
                         .addComponent(btnExcluir)
                         .addComponent(btnIncluir)
                         .addComponent(btnRegistrosPonto))
-                    .addComponent(lbVersao, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbVersao, GroupLayout.Alignment.TRAILING))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    /**
-     * @param args the command line arguments
-     */
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnIncluir;
-    private javax.swing.JButton btnPesquisar;
-    private javax.swing.JButton btnRegistrosPonto;
-    private javax.swing.JComboBox<String> cbFiltros;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbFuncionarios;
-    private javax.swing.JLabel lbVersao;
-    private javax.swing.JTable tbFuncionarios;
-    private javax.swing.JTextField txtFiltro;
-    // End of variables declaration//GEN-END:variables
+    private JButton btnAlterar;
+    private JButton btnExcluir;
+    private JButton btnIncluir;
+    private JButton btnPesquisar;
+    private JButton btnRegistrosPonto;
+    private JComboBox<String> cbFiltros;
+    private JScrollPane jScrollPane1;
+    private JLabel lbFuncionarios;
+    private JLabel lbVersao;
+    private JTable tbFuncionarios;
+    private JTextField txtFiltro;
 }

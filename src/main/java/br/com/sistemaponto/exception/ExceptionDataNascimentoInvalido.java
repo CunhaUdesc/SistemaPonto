@@ -1,15 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.sistemaponto.exception;
 
 /**
+ * Exceção da Data de Nascimento
  *
- * @author Lenovo
+ * @author Rafel Boing
+ * @since 15/06/2026
  */
-public class ExceptionDataNascimentoInvalido extends Exception{
-    public ExceptionDataNascimentoInvalido(String msg){
+public class ExceptionDataNascimentoInvalido extends Exception {
+
+    /**
+     * Construct
+     *
+     * @param msg
+     */
+    public ExceptionDataNascimentoInvalido(String msg) {
         super(msg);
     }
 }

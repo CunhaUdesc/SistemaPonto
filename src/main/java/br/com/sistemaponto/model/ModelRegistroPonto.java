@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.sistemaponto.model;
 
 /**
  * Modelo de Dados do Registro de Ponto
  *
- * @author WIN11
+ * @author Vitor Hugo da Cunha
+ * @since 06/06/2026
  */
 public class ModelRegistroPonto {
+
     private int codigo;
     private ModelFuncionario funcionario;
     private String diaAtual;
@@ -17,12 +15,14 @@ public class ModelRegistroPonto {
     private String registroSaida;
     private String registroEntradaIntervalo;
     private String registroSaidaIntervalo;
-    
     private float horasDia;
-    
+
     private int botao = 0; //0 para ENTRADA e 1 para
     private int idRegistro = 1; // 1 a 4 para definir qual registro salvar
 
+    /**
+     * Construct
+     */
     public ModelRegistroPonto() {}
 
     public void setCodigo(int codigo) {

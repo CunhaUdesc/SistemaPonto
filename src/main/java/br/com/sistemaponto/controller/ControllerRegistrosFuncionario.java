@@ -1,34 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.sistemaponto.controller;
 
 import br.com.sistemaponto.util.Session;
 import br.com.sistemaponto.view.ViewRegistrosFuncionario;
 
 /**
+ * Controller do Registro de Ponto do Funcionário
  *
- * @author Lenovo
+ * @author Rafael Boing
+ * @since 09/06/2026
  */
 public class ControllerRegistrosFuncionario {
+
+    /** @var ViewRegistrossFuncionário */
     ViewRegistrosFuncionario view;
-    
-    public ControllerRegistrosFuncionario(ViewRegistrosFuncionario viewRegistrosFuncionario){
+
+    /**
+     * Construct
+     *
+     * @param viewRegistrosFuncionario
+     */
+    public ControllerRegistrosFuncionario(ViewRegistrosFuncionario viewRegistrosFuncionario) {
         this.view = viewRegistrosFuncionario;
-        view.apresentarTela();
-        adicionarAcoes();
+        this.view.apresentarTela();
+        this.adicionarAcoes();
     }
-    
-    public void adicionarAcoes(){
-        view.acaoBtnPesquisar(e -> pesquisar());
+
+    /**
+     * Adiciona as Ações aos Botões da Tela
+     */
+    public void adicionarAcoes() {
+        this.view.acaoBtnPesquisar(e -> this.pesquisar());
     }
-    
-    public void setLabels(){
-        view.setLabelNomeFuncionario(Session.getUsuario().getFuncionario().getNome());
+
+    /**
+     * Define as Labels da Tela
+     */
+    public void setLabels() {
+        this.view.setLabelNomeFuncionario(Session.getUsuario().getFuncionario().getNome());
     }
-    
-    public void pesquisar(){
-        System.out.println("");
+
+    /**
+     * Pesquisa
+     */
+    public void pesquisar() {
+        System.out.println(" ");
     }
 }

@@ -1,15 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.sistemaponto.exception;
 
 /**
+ * Exceção do Registro Ponto
  *
- * @author WIN11
+ * @author Rafael Boing
+ * @since 15/06/2026
  */
 public class ExceptionLimiteRegistroPonto extends Exception {
-    public ExceptionLimiteRegistroPonto(String msg){
+
+    /**
+     * Construct
+     *
+     * @param msg
+     */
+    public ExceptionLimiteRegistroPonto(String msg) {
         super(msg);
     }
 }

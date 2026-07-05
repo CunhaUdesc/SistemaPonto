@@ -5,8 +5,17 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.Statement;
 
+/**
+ * Inicializador de Scrips do Banco de Dados
+ *
+ * @author Vitor Hugo da Cunha
+ * @since 15/06/2026
+ */
 public class InicializadorDataBase {
 
+    /**
+     * Inicialização
+     */
     public static void inicializar() {
 
         try {
@@ -22,20 +31,18 @@ public class InicializadorDataBase {
                 Connection conn = Conexao.conectar();
                 Statement stmt = conn.createStatement();
             ) {
+                /* Lê o arquivo e transforma em String */
+                String sql = new String(input.readAllBytes(), StandardCharsets.UTF_8);
+                String[] comandos = sql.split(";");
+                System.out.println("Arquivo lido");
 
-            /* Lê o arquivo e transforma em String */
-            String sql = new String(input.readAllBytes(), StandardCharsets.UTF_8);
-            String[] comandos = sql.split(";");
-            System.out.println("Arquivo lido");
-
-            for (String comando : comandos) {
-                if (comando.trim().isEmpty()) {
-                    continue;
+                for (String comando : comandos) {
+                    if (comando.trim().isEmpty()) {
+                        continue;
+                    }
+                    System.out.println("Executando comando: " + comando);
+                    stmt.execute(comando);
                 }
-                System.out.println("Executando comando: " + comando);
-                stmt.execute(comando);
-            }
-
             }
 
         } catch (Exception ex) {
