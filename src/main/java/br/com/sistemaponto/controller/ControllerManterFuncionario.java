@@ -1,6 +1,10 @@
 package br.com.sistemaponto.controller;
 
+import br.com.sistemaponto.dao.DaoFuncionario;
+import br.com.sistemaponto.exception.ExceptionLogin;
+import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.interfaces.InterfaceDados;
+import br.com.sistemaponto.model.ModelFuncionario;
 import br.com.sistemaponto.view.ViewCadastroFuncionario;
 import br.com.sistemaponto.view.ViewManterFuncionario;
 import br.com.sistemaponto.view.ViewRegistrosFuncionario;
@@ -77,7 +81,20 @@ public class ControllerManterFuncionario {
             this.viewManterFuncionario.apresentaMensagem("Selecione um Funcionario!"); //CONTINUAR O METODO NO CADASTRO
             return;
         }
-        new ControllerCadastroFuncionario(new ViewCadastroFuncionario(), codigo);
+
+        daoFuncionario = new DaoFuncionario();
+        ModelFuncionario funcionario;
+
+        try {
+            funcionario = (ModelFuncionario) daoFuncionario.getFromCodigo(codigo);
+            new ControllerCadastroFuncionario(new ViewCadastroFuncionario(), funcionario);
+
+        } catch (ExceptionSistemaPonto e) { //TEM Q VER SE É ISSO MESMO
+            viewManterFuncionario.apresentaMensagem("Erro: "+e.getMessage());
+            
+        } catch (ExceptionLogin e) {
+            viewManterFuncionario.apresentaMensagem("Erro: "+e.getMessage());
+        }
     }
 
     /**

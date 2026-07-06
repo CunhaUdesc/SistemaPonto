@@ -2,7 +2,8 @@ package br.com.sistemaponto.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import br.com.sistemaponto.dao.DaoRegistroPontoTeste;
+
+import br.com.sistemaponto.dao.DaoRegistroPonto;
 import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.model.ModelRegistroPonto;
@@ -21,7 +22,7 @@ public class ControllerBaterPonto {
     private ViewBaterPonto viewBaterPonto;
 
     /** @var DaoRegistroPonto */
-    private DaoRegistroPontoTeste daoRegistroPonto;
+    private DaoRegistroPonto daoRegistroPonto;
 
     /** @var ModelRegistroPonto */
     private ModelRegistroPonto registro;
@@ -32,7 +33,7 @@ public class ControllerBaterPonto {
      * @param viewBaterPonto
      * @param daoRegistroPonto
      */
-    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPontoTeste daoRegistroPonto) {
+    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto) {
         this.daoRegistroPonto = daoRegistroPonto;
         this.viewBaterPonto = viewBaterPonto;
         this.viewBaterPonto.mostrarTela();
@@ -77,7 +78,7 @@ public class ControllerBaterPonto {
     }
 
     /**
-     *
+     * Adiciona o nome do funcionário atual na view
      */
     public void setLabels(){
         this.viewBaterPonto.setLabels(Session.getUsuario().getFuncionario().getNome());

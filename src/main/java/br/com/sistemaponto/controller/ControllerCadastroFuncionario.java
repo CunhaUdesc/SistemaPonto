@@ -1,6 +1,9 @@
 package br.com.sistemaponto.controller;
 
 import java.sql.SQLException;
+
+import br.com.sistemaponto.dao.DaoFuncionario;
+import br.com.sistemaponto.dao.DaoUsuario;
 import br.com.sistemaponto.exception.ExceptionCargaHoraria;
 import br.com.sistemaponto.exception.ExceptionCpfInvalido;
 import br.com.sistemaponto.exception.ExceptionDataNascimentoInvalido;
@@ -27,15 +30,27 @@ public class ControllerCadastroFuncionario {
     /** @var InterfaceDados */
     private InterfaceDados daoFuncionario;
 
+    private InterfaceDados daoUsuario;
+
+    private ModelFuncionario funcionarioAlteracao;
+
+    private ModelUsuario usuarioAlteracao;
+
+    private int acao; //0 Para quando for novo funcionario e 1 para quando for alteração
+
     /**
      * Construct para Adicionar um Funcionário
      *
      * @param viewCadastroFunc
      */
     public ControllerCadastroFuncionario(ViewCadastroFuncionario viewCadastroFunc) {
+        this.acao = 0;
+        this.funcionarioAlteracao = null;
         this.viewCadastroFunc = viewCadastroFunc;
-        this.viewCadastroFunc.mostrarTela();
-        this.viewCadastroFunc.getBtnLimpar().setEnabled(true);
+        viewCadastroFunc.mostrarTela();
+        viewCadastroFunc.setLbTitulo("Cadastro de Funcionario");
+        viewCadastroFunc.getBtnLimpar().setEnabled(true);
+        viewCadastroFunc.getTxtCodigo().setEnabled(true);
         this.adicionarAcoes();
     }
 
@@ -43,11 +58,16 @@ public class ControllerCadastroFuncionario {
      * Construct para Alterar um Funcionário
      *
      * @param viewCadastroFunc
-     * @param codigoFuncionario
      */
-    public ControllerCadastroFuncionario(ViewCadastroFuncionario viewCadastroFunc, int codigoFuncionario) {
+    public ControllerCadastroFuncionario(ViewCadastroFuncionario viewCadastroFunc, ModelFuncionario funcionario) {
+        this.acao = 1;
+        this.funcionarioAlteracao = funcionario;
         this.viewCadastroFunc = viewCadastroFunc;
-        this.viewCadastroFunc.mostrarTela();
+        viewCadastroFunc.mostrarTela();
+        viewCadastroFunc.setLbTitulo("Alterar Funcionario");
+        viewCadastroFunc.getBtnLimpar().setEnabled(false);
+        viewCadastroFunc.getTxtCodigo().setEnabled(false);
+        viewCadastroFunc.mostraFuncionarioNaTela(funcionario);
         this.adicionarAcoes();
     }
 
@@ -160,6 +180,7 @@ public class ControllerCadastroFuncionario {
         }
     }
 
+        //=========================METODOS USUARIO================================
     /**
      * Cria o login do Usuário
      *
@@ -169,8 +190,6 @@ public class ControllerCadastroFuncionario {
     public int criaLogin(String cpf) {
         return Integer.parseInt(cpf.substring(0,3));
     }
-
-    //=========================METODOS USUARIO================================
 
     /**
      * Cria a senha do Usuário
@@ -192,73 +211,148 @@ public class ControllerCadastroFuncionario {
      * Salva um novo Funcionário
      */
     public void salvarFuncionario() {
-        try {
-            ModelFuncionario funcionario;
-            ModelUsuario usuario;
+        if(acao == 0){
+            try {
+                ModelFuncionario funcionario;
+                ModelUsuario usuario;
 
-            String nome = this.viewCadastroFunc.getNome();
+                String nome = this.viewCadastroFunc.getNome();
 
-            String cpf = this.viewCadastroFunc.getCpf();
-            this.validarCPF(cpf);
+                String cpf = this.viewCadastroFunc.getCpf();
+                this.validarCPF(cpf);
 
-            String tipo = this.viewCadastroFunc.getTipoFuncionario();
+                String tipo = this.viewCadastroFunc.getTipoFuncionario();
 
-            String dataNascimento = this.viewCadastroFunc.getDataNascimento();
-            this.validarDataNascimento(dataNascimento);
-            
-            if (this.viewCadastroFunc.getTipoFuncionario().equals("Horista")) {
-                double valorHora = Double.parseDouble(this.viewCadastroFunc.getValorHora());
-                this.validarValorHora(valorHora);
+                String dataNascimento = this.viewCadastroFunc.getDataNascimento();
+                this.validarDataNascimento(dataNascimento);
                 
-                funcionario = new ModelFuncionarioHorista(nome, cpf, dataNascimento, tipo, valorHora);
+                if (this.viewCadastroFunc.getTipoFuncionario().equalsIgnoreCase("Horista")) {
+                    double valorHora = Double.parseDouble(this.viewCadastroFunc.getValorHora());
+                    this.validarValorHora(valorHora);
+                    
+                    funcionario = new ModelFuncionarioHorista(nome, cpf, dataNascimento, tipo, valorHora);
 
-            } else {
-                double salario = Double.parseDouble(viewCadastroFunc.getSalario());
-                this.validarSalario(salario);
-                float cargaHoraria = Float.parseFloat(viewCadastroFunc.getCargaHoraria());
-                this.validarCargaHoraria(cargaHoraria);
-                funcionario = new ModelFuncionarioFixo(nome, cpf, tipo, dataNascimento, salario, cargaHoraria);
+                } else {
+                    double salario = Double.parseDouble(viewCadastroFunc.getSalario());
+                    this.validarSalario(salario);
+                    float cargaHoraria = Float.parseFloat(viewCadastroFunc.getCargaHoraria());
+                    this.validarCargaHoraria(cargaHoraria);
+                    funcionario = new ModelFuncionarioFixo(nome, cpf, tipo, dataNascimento, salario, cargaHoraria);
+                    
+                }
+
+                //Criando o usuário
+                int login = this.criaLogin(cpf);
+                String senha = this.criaSenha(dataNascimento);
+                String perfil = this.viewCadastroFunc.getPerfilUsuario();
+
+                usuario = new ModelUsuario(login, senha, perfil, funcionario);
+                daoFuncionario = new DaoFuncionario();
+                daoFuncionario.salvar(funcionario); //ARRUMAR OS EXCEPTIONS
+
+            } catch (ExceptionCpfInvalido e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionDataNascimentoInvalido e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionValorInvalido e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionCargaHoraria e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (SQLException e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionLogin e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionSistemaPonto e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
                 
             }
-
-            //Criando o usuário
-            int login = this.criaLogin(cpf);
-            String senha = this.criaSenha(dataNascimento);
-            String perfil = this.viewCadastroFunc.getPerfilUsuario();
-
-            usuario = new ModelUsuario(login, senha, perfil, funcionario);
-            this.daoFuncionario.salvar(funcionario); //ARRUMAR OS EXCEPTIONS
-
-        } catch (ExceptionCpfInvalido e) {
-            this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-
-        } catch (ExceptionDataNascimentoInvalido e) {
-            this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-
-        } catch (ExceptionValorInvalido e) {
-            this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-
-        } catch (ExceptionCargaHoraria e) {
-            this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-
-        } catch (SQLException e) {
-            this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-
-        } catch (ExceptionLogin e) {
-            this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-
-        } catch (ExceptionSistemaPonto e) {
-            this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-            
+        } else {
+            this.alterarFuncionario();
         }
+
     }
 
     /**
      * Realiza a alteração do Funcionário
      */
     public void alterarFuncionario() {
-        this.viewCadastroFunc.getBtnLimpar().setEnabled(false);
-    }
+        try{
+            funcionarioAlteracao.setNome(this.viewCadastroFunc.getNome()); 
+
+            String cpf = this.viewCadastroFunc.getCpf();
+            this.validarCPF(cpf);
+            funcionarioAlteracao.setCPF(cpf);
+
+            funcionarioAlteracao.setTipo(this.viewCadastroFunc.getTipoFuncionario());
+
+            String dataNascimento = this.viewCadastroFunc.getDataNascimento();
+            this.validarDataNascimento(dataNascimento);
+            funcionarioAlteracao.setDataNascimento(dataNascimento);
+
+            if (this.viewCadastroFunc.getTipoFuncionario().equalsIgnoreCase("Horista")) {
+                ModelFuncionarioHorista func = (ModelFuncionarioHorista) funcionarioAlteracao;
+
+                double valorHora = Double.parseDouble(this.viewCadastroFunc.getValorHora());
+                this.validarValorHora(valorHora);
+                func.setValorHora(valorHora);
+
+            } else {
+                ModelFuncionarioFixo func = (ModelFuncionarioFixo) funcionarioAlteracao;
+
+                double salario = Double.parseDouble(viewCadastroFunc.getSalario());
+                this.validarSalario(salario);
+                func.setSalarioBase(salario);
+
+                float cargaHoraria = Float.parseFloat(viewCadastroFunc.getCargaHoraria());
+                this.validarCargaHoraria(cargaHoraria);
+                func.setCargaHoraria(cargaHoraria);
+
+            }
+
+                //Criando o usuário
+                int login = this.criaLogin(cpf);
+                String senha = this.criaSenha(dataNascimento);
+                String perfil = this.viewCadastroFunc.getPerfilUsuario();
+
+                daoUsuario = new DaoUsuario();
+                int cod = Integer.parseInt(viewCadastroFunc.getCodigo());
+                usuarioAlteracao = (ModelUsuario) daoUsuario.getFromCodigo(cod);
+
+                usuarioAlteracao.setLogin(login);
+                usuarioAlteracao.setSenha(senha);
+                usuarioAlteracao.setTipo(perfil);
+
+                daoUsuario.alterar(usuarioAlteracao);
+
+                daoFuncionario = new DaoFuncionario();
+                daoFuncionario.alterar(funcionarioAlteracao); //ARRUMAR OS EXCEPTIONS
+
+            } catch (ExceptionCpfInvalido e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionDataNascimentoInvalido e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionValorInvalido e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionCargaHoraria e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+                
+            } catch (ExceptionLogin e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
+
+            } catch (ExceptionSistemaPonto e) {
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());   
+
+            }
+        }
 
     /**
      * Realiza a limpeza da tela
@@ -266,5 +360,4 @@ public class ControllerCadastroFuncionario {
     public void limparTela(){
         this.viewCadastroFunc.limparTela();
     }
-
 }

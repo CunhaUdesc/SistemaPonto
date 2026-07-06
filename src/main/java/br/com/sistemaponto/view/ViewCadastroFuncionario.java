@@ -3,6 +3,10 @@ package br.com.sistemaponto.view;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import br.com.sistemaponto.model.ModelFuncionario;
+import br.com.sistemaponto.model.ModelFuncionarioFixo;
+import br.com.sistemaponto.model.ModelFuncionarioHorista;
+
 /**
  * Tela do Cadastro de Funcionários
  *
@@ -102,6 +106,10 @@ public class ViewCadastroFuncionario extends JFrame {
     public void setTxtValorHora(JTextField txtValorHora) {
         this.txtValorHora = txtValorHora;
     }
+
+    public void setLbTitulo(String titulo){
+        lbTitulo.setText(titulo);
+    }
     
     public void limparTela(){
         txtCodigo.setText("");
@@ -151,6 +159,30 @@ public class ViewCadastroFuncionario extends JFrame {
         return btnLimpar;
     }
 
+    public JTextField getTxtCodigo(){
+        return txtCodigo;
+    }
+
+    public void mostraFuncionarioNaTela(ModelFuncionario funcionario){
+        String codigo = String.valueOf(funcionario.getCodigo());
+        txtCodigo.setText(codigo);
+        txtNome.setText(funcionario.getNome());
+        txtCpf.setText(funcionario.getCPF());
+        txtDataNascimento.setText(funcionario.getDataNascimento());
+        cbTipoFuncionario.setSelectedItem(funcionario.getTipoFuncionario());
+
+        if(funcionario.getTipoFuncionario().equals("Horista")){
+            ModelFuncionarioHorista func = (ModelFuncionarioHorista) funcionario;
+            txtValorHora.setText(String.valueOf(func.getValorHora()));
+            
+        } else {
+            ModelFuncionarioFixo func = (ModelFuncionarioFixo) funcionario;
+            txtSalario.setText(String.valueOf(func.getSalarioBase()));
+            txtCargaHoraria.setText(String.valueOf(func.getCargaHoraria()));
+        }
+        
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -190,7 +222,7 @@ public class ViewCadastroFuncionario extends JFrame {
         txtCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         lbTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lbTitulo.setText("Cadastro de Funcionários");
+        lbTitulo.setText("Cadastro de Funcionario");
 
         lbNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbNome.setText("Nome");
