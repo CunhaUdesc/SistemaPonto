@@ -3,7 +3,17 @@ package br.com.sistemaponto.view;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.swing.*;
+
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.LayoutStyle;
+import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 /**
  * Tela de Bater o Ponto
@@ -113,7 +123,7 @@ public class ViewBaterPonto extends JFrame {
      * Apresenta uma mensagem em Tela
      * @param msg
      */
-    public void apresentaMensagem(String msg) {  
+    public void apresentaMensagem(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
 

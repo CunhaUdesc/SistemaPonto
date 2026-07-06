@@ -1,6 +1,12 @@
 package br.com.sistemaponto.controller;
 
-import br.com.sistemaponto.util.Session;
+import java.util.List;
+
+import br.com.sistemaponto.dao.DaoRegistroPonto;
+import br.com.sistemaponto.exception.ExceptionSistemaPonto;
+import br.com.sistemaponto.interfaces.InterfaceDadosRegistroPonto;
+import br.com.sistemaponto.model.ModelFuncionario;
+import br.com.sistemaponto.model.ModelRegistroPonto;
 import br.com.sistemaponto.view.ViewRegistrosFuncionario;
 
 /**
@@ -12,17 +18,24 @@ import br.com.sistemaponto.view.ViewRegistrosFuncionario;
 public class ControllerRegistrosFuncionario {
 
     /** @var ViewRegistrossFuncionário */
-    ViewRegistrosFuncionario view;
+    private ViewRegistrosFuncionario view;
+
+    private InterfaceDadosRegistroPonto daoRegistroPonto;
+
+    private ModelFuncionario func;
 
     /**
      * Construct
      *
      * @param viewRegistrosFuncionario
      */
-    public ControllerRegistrosFuncionario(ViewRegistrosFuncionario viewRegistrosFuncionario) {
+    public ControllerRegistrosFuncionario(ViewRegistrosFuncionario viewRegistrosFuncionario, ModelFuncionario funcionario) {
+        this.func = funcionario;
+        this.daoRegistroPonto = new DaoRegistroPonto();
         this.view = viewRegistrosFuncionario;
-        this.view.apresentarTela();
+        this.atualizarTabela();
         this.adicionarAcoes();
+        this.view.apresentarTela();
     }
 
     /**
@@ -36,13 +49,35 @@ public class ControllerRegistrosFuncionario {
      * Define as Labels da Tela
      */
     public void setLabels() {
-        this.view.setLabelNomeFuncionario(Session.getUsuario().getFuncionario().getNome());
+        this.view.setLabelNomeFuncionario(func.getNome());
     }
 
+    public void atualizarTabela(){
+        int codigo = func.getCodigo();
+        try {
+            List<ModelRegistroPonto> listaRegistros = ((DaoRegistroPonto) daoRegistroPonto).getRegistrosFromFuncionarioCodigo(codigo);
+            this.view.preencherTabela(listaRegistros);
+        } catch (ExceptionSistemaPonto e) {
+            this.view.apresentaMensagem("Selecione um Funcionario!");
+        }
+    }
+/*/
+    public void atualizarTabela(List<ModelFuncionario> listaFuncionario){ //Para os Filtros
+        this.viewManterFuncionario.preencherTabela(listaFuncionario);
+    }
+
+    public void atualizarTabela(ModelFuncionario funcionario){ //Para os Filtros
+        if (funcionario == null) {
+            viewManterFuncionario.apresentaMensagem("Funcionario não encontrado.");
+            return;
+        }
+        this.viewManterFuncionario.preencherTabelaRegistroUnico(funcionario);
+    }
+*/
     /**
      * Pesquisa
      */
     public void pesquisar() {
-        System.out.println(" ");
+        System.out.println("TESTE");
     }
 }

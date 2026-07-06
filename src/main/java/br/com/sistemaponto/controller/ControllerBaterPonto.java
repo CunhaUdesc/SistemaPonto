@@ -2,7 +2,8 @@ package br.com.sistemaponto.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import br.com.sistemaponto.dao.DaoRegistroPontoTeste;
+
+import br.com.sistemaponto.dao.DaoRegistroPonto;
 import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.model.ModelRegistroPonto;
@@ -21,7 +22,7 @@ public class ControllerBaterPonto {
     private ViewBaterPonto viewBaterPonto;
 
     /** @var DaoRegistroPonto */
-    private DaoRegistroPontoTeste daoRegistroPonto;
+    private DaoRegistroPonto daoRegistroPonto;
 
     /** @var ModelRegistroPonto */
     private ModelRegistroPonto registro;
@@ -32,15 +33,15 @@ public class ControllerBaterPonto {
      * @param viewBaterPonto
      * @param daoRegistroPonto
      */
-    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPontoTeste daoRegistroPonto) {
+    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto) {
         this.daoRegistroPonto = daoRegistroPonto;
         this.viewBaterPonto = viewBaterPonto;
-        this.viewBaterPonto.mostrarTela();
         this.registro = verificaRegistro();
         this.atualizaRegistrosDoDia();
         this.adicionarAcoes();
         this.setLabels();
         this.desabilitaBotao();
+        this.viewBaterPonto.mostrarTela();
     }
 
     /**
@@ -77,7 +78,7 @@ public class ControllerBaterPonto {
     }
 
     /**
-     *
+     * Adiciona o nome do funcionário atual na view
      */
     public void setLabels(){
         this.viewBaterPonto.setLabels(Session.getUsuario().getFuncionario().getNome());
@@ -109,16 +110,21 @@ public class ControllerBaterPonto {
             if (!adicionado) {
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
             }
-            atualizaRegistrosDoDia();
+
+            daoRegistroPonto.salvarRegistro(this.registro);
             
             //atualiza botão
             this.registro.setBotao(1);
-            desabilitaBotao();
-            
             //atualiza o idRegistro
             this.registro.setIdRegistro(this.registro.getIdRegistro()+1);
+
+            this.atualizaRegistrosDoDia();
+            this.desabilitaBotao();
             
         } catch (ExceptionLimiteRegistroPonto e) {
+            this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
+
+        } catch (ExceptionSistemaPonto e) {
             this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
         }
     }
@@ -142,16 +148,19 @@ public class ControllerBaterPonto {
             if(!adicionado)
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
 
-            this.atualizaRegistrosDoDia();
-            
+            daoRegistroPonto.salvarRegistro(this.registro);
             //atualiza botão
             this.registro.setBotao(0);
-            this.desabilitaBotao();
-            
             //atualiza o idRegistro
             this.registro.setIdRegistro(this.registro.getIdRegistro()+1);
- 
+
+            this.atualizaRegistrosDoDia();
+            this.desabilitaBotao();
+
         } catch(ExceptionLimiteRegistroPonto e) {
+            this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
+
+        } catch (ExceptionSistemaPonto e) {
             this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
         }
     }

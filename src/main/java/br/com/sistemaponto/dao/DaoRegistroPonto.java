@@ -22,14 +22,14 @@ import br.com.sistemaponto.util.Conexao;
  * @author Rafael Boing
  * @since 03/07/2026
  */
-public class DaoRegistroPontoTeste implements InterfaceDadosRegistroPonto {
+public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
 
     private static Map<String, ModelRegistroPonto> registros;
 
     /**
      * Construct
      */
-    public DaoRegistroPontoTeste() {
+    public DaoRegistroPonto() {
         this.registros = new HashMap<>();
     }
 

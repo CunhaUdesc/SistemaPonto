@@ -1,5 +1,12 @@
 package br.com.sistemaponto.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.sistemaponto.enumerados.EnumTipoFuncionario;
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.interfaces.InterfaceDados;
@@ -7,8 +14,6 @@ import br.com.sistemaponto.model.ModelFuncionario;
 import br.com.sistemaponto.model.ModelFuncionarioFixo;
 import br.com.sistemaponto.model.ModelFuncionarioHorista;
 import br.com.sistemaponto.util.Conexao;
-import java.sql.*;
-import java.util.*;
 
 /**
  * DAO do Funcionário
@@ -195,7 +200,7 @@ public class DaoFuncionario implements InterfaceDados {
         String sql = """
             SELECT * 
               FROM tbfuncionario 
-             WHERE funcodigo = ?;                
+             WHERE funcodigo = ?;
         """;
 
         try (
@@ -206,7 +211,7 @@ public class DaoFuncionario implements InterfaceDados {
             ResultSet src = stmt.executeQuery();
 
             if (src.next()) {
-                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
+                if (src.getString("funtipo").equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
                     ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
                         src.getString("funnome"),
                         src.getString("funcpf"),
