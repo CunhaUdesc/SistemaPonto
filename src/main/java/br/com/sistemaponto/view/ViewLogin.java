@@ -1,10 +1,10 @@
 package br.com.sistemaponto.view;
 
-import br.com.sistemaponto.Main;
-
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+
+import br.com.sistemaponto.Main;
 
 /**
  * @author Rafael
@@ -26,7 +26,7 @@ public class ViewLogin extends javax.swing.JFrame {
         btnEntrar.addActionListener(a);
     }
 
-    public void apresentaMensagem(String msg) {  
+    public void apresentaMensagem(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
     

@@ -36,12 +36,12 @@ public class ControllerBaterPonto {
     public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto) {
         this.daoRegistroPonto = daoRegistroPonto;
         this.viewBaterPonto = viewBaterPonto;
-        this.viewBaterPonto.mostrarTela();
         this.registro = verificaRegistro();
         this.atualizaRegistrosDoDia();
         this.adicionarAcoes();
         this.setLabels();
         this.desabilitaBotao();
+        this.viewBaterPonto.mostrarTela();
     }
 
     /**
@@ -110,16 +110,21 @@ public class ControllerBaterPonto {
             if (!adicionado) {
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
             }
-            atualizaRegistrosDoDia();
+
+            daoRegistroPonto.salvarRegistro(this.registro);
             
             //atualiza botão
             this.registro.setBotao(1);
-            desabilitaBotao();
-            
             //atualiza o idRegistro
             this.registro.setIdRegistro(this.registro.getIdRegistro()+1);
+
+            this.atualizaRegistrosDoDia();
+            this.desabilitaBotao();
             
         } catch (ExceptionLimiteRegistroPonto e) {
+            this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
+
+        } catch (ExceptionSistemaPonto e) {
             this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
         }
     }
@@ -143,16 +148,19 @@ public class ControllerBaterPonto {
             if(!adicionado)
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
 
-            this.atualizaRegistrosDoDia();
-            
+            daoRegistroPonto.salvarRegistro(this.registro);
             //atualiza botão
             this.registro.setBotao(0);
-            this.desabilitaBotao();
-            
             //atualiza o idRegistro
             this.registro.setIdRegistro(this.registro.getIdRegistro()+1);
- 
+
+            this.atualizaRegistrosDoDia();
+            this.desabilitaBotao();
+
         } catch(ExceptionLimiteRegistroPonto e) {
+            this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
+
+        } catch (ExceptionSistemaPonto e) {
             this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
         }
     }

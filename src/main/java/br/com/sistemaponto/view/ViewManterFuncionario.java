@@ -1,8 +1,26 @@
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
+import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+
 import br.com.sistemaponto.Main;
+import br.com.sistemaponto.model.ModelFuncionario;
+import br.com.sistemaponto.model.ModelFuncionarioFixo;
+import br.com.sistemaponto.model.ModelFuncionarioHorista;
 
 /**
  * Tela de Manter os Funcionários
@@ -115,10 +133,73 @@ public class ViewManterFuncionario extends JFrame {
     }
 
     /**
-     * Atualiza as informações da tabela
+     * Atualiza as informações da tabela para o ADM
      */
-    public void atualizarTabela(){
-        //TEM Q FAZER O METODO AINDA
+    public void preencherTabela(List<ModelFuncionario> listaFuncionarios){
+        DefaultTableModel model = (DefaultTableModel) tbFuncionarios.getModel();
+        model.setRowCount(0);
+
+        for (ModelFuncionario func : listaFuncionarios) {
+
+            Object salario = "";
+            Object cargaHoraria = "";
+            Object valorHora = "";
+
+            if (func instanceof ModelFuncionarioFixo) {
+                ModelFuncionarioFixo fixo = (ModelFuncionarioFixo) func;
+
+                salario = fixo.getSalarioBase();
+                cargaHoraria = fixo.getCargaHoraria();
+
+            } else if (func instanceof ModelFuncionarioHorista) {
+                ModelFuncionarioHorista horista = (ModelFuncionarioHorista) func;
+
+                valorHora = horista.getValorHora();
+            }
+
+            model.addRow(new Object[]{
+                func.getCodigo(),
+                func.getNome(),
+                func.getCPF(),
+                func.getDataNascimento(),
+                func.getTipoFuncionario(),
+                salario,
+                cargaHoraria,
+                valorHora
+            });
+        }
+    }
+
+    public void preencherTabelaRegistroUnico(ModelFuncionario funcionario){
+        DefaultTableModel model = (DefaultTableModel) tbFuncionarios.getModel();
+        model.setRowCount(0);
+
+        Object salario = "";
+        Object cargaHoraria = "";
+        Object valorHora = "";
+
+        if (funcionario instanceof ModelFuncionarioFixo) {
+            ModelFuncionarioFixo fixo = (ModelFuncionarioFixo) funcionario;
+
+            salario = fixo.getSalarioBase();
+            cargaHoraria = fixo.getCargaHoraria();
+
+        } else if (funcionario instanceof ModelFuncionarioHorista) {
+            ModelFuncionarioHorista horista = (ModelFuncionarioHorista) funcionario;
+
+            valorHora = horista.getValorHora();
+        }
+
+        model.addRow(new Object[]{
+            funcionario.getCodigo(),
+            funcionario.getNome(),
+            funcionario.getCPF(),
+            funcionario.getDataNascimento(),
+            funcionario.getTipoFuncionario(),
+            salario,
+            cargaHoraria,
+            valorHora
+        });
     }
 
     /**
@@ -138,7 +219,7 @@ public class ViewManterFuncionario extends JFrame {
         txtFiltro = new JTextField();
         btnPesquisar = new JButton();
 
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         this.tbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

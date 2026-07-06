@@ -1,7 +1,23 @@
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
+import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+
+import br.com.sistemaponto.model.ModelRegistroPonto;
 
 /**
  * Tela dos Registros de Ponto do Funcionário
@@ -62,6 +78,30 @@ public class ViewRegistrosFuncionario extends JFrame {
     public String getFiltro(){
         return txtFiltro.getText();
     }
+    
+    public void preencherTabela(List<ModelRegistroPonto> registros){
+        DefaultTableModel model = (DefaultTableModel) tbRegistros.getModel();
+        model.setRowCount(0);
+
+        for(ModelRegistroPonto registroPonto : registros){
+            model.addRow(new Object[]{
+                registroPonto.getCodigo(),
+                registroPonto.getDiaAtual(),
+                mudaRegistroPonto(registroPonto.getRegistroEntrada()),
+                mudaRegistroPonto(registroPonto.getRegistroSaida()),
+                mudaRegistroPonto(registroPonto.getRegistroEntradaIntervalo()),
+                mudaRegistroPonto(registroPonto.getRegistroSaidaIntervalo())
+            });
+        }
+    }
+
+    public String mudaRegistroPonto(String registroPonto) {
+        if (registroPonto == null) {
+            return "";
+        }
+
+        return registroPonto.substring(11, 19);
+    }
 
     /**
      * Adiciona ação no botão de Pesquisar
@@ -85,7 +125,7 @@ public class ViewRegistrosFuncionario extends JFrame {
         txtFiltro = new JTextField();
         cbFiltros = new JComboBox<>();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         tbRegistros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

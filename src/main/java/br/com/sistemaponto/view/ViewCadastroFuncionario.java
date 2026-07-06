@@ -1,7 +1,17 @@
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
-import javax.swing.*;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
+import javax.swing.WindowConstants;
 
 import br.com.sistemaponto.model.ModelFuncionario;
 import br.com.sistemaponto.model.ModelFuncionarioFixo;
@@ -214,7 +224,7 @@ public class ViewCadastroFuncionario extends JFrame {
         cbTipoUsuario = new JComboBox<>();
         jLabel1 = new JLabel();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         lbCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbCodigo.setText("Codigo");

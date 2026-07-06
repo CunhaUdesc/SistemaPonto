@@ -47,10 +47,14 @@ public class ControllerCadastroFuncionario {
         this.acao = 0;
         this.funcionarioAlteracao = null;
         this.viewCadastroFunc = viewCadastroFunc;
+        this.daoFuncionario = new DaoFuncionario();
+        this.daoUsuario = new DaoUsuario();
+
         viewCadastroFunc.mostrarTela();
         viewCadastroFunc.setLbTitulo("Cadastro de Funcionario");
         viewCadastroFunc.getBtnLimpar().setEnabled(true);
         viewCadastroFunc.getTxtCodigo().setEnabled(true);
+
         this.adicionarAcoes();
     }
 
@@ -63,11 +67,15 @@ public class ControllerCadastroFuncionario {
         this.acao = 1;
         this.funcionarioAlteracao = funcionario;
         this.viewCadastroFunc = viewCadastroFunc;
+        this.daoFuncionario = new DaoFuncionario();
+        this.daoUsuario = new DaoUsuario();
+
         viewCadastroFunc.mostrarTela();
         viewCadastroFunc.setLbTitulo("Alterar Funcionario");
         viewCadastroFunc.getBtnLimpar().setEnabled(false);
         viewCadastroFunc.getTxtCodigo().setEnabled(false);
         viewCadastroFunc.mostraFuncionarioNaTela(funcionario);
+
         this.adicionarAcoes();
     }
 
@@ -247,7 +255,6 @@ public class ControllerCadastroFuncionario {
                 String perfil = this.viewCadastroFunc.getPerfilUsuario();
 
                 usuario = new ModelUsuario(login, senha, perfil, funcionario);
-                daoFuncionario = new DaoFuncionario();
                 daoFuncionario.salvar(funcionario); //ARRUMAR OS EXCEPTIONS
 
             } catch (ExceptionCpfInvalido e) {
@@ -283,7 +290,7 @@ public class ControllerCadastroFuncionario {
      */
     public void alterarFuncionario() {
         try{
-            funcionarioAlteracao.setNome(this.viewCadastroFunc.getNome()); 
+            funcionarioAlteracao.setNome(this.viewCadastroFunc.getNome());
 
             String cpf = this.viewCadastroFunc.getCpf();
             this.validarCPF(cpf);
@@ -329,9 +336,7 @@ public class ControllerCadastroFuncionario {
                 usuarioAlteracao.setTipo(perfil);
 
                 daoUsuario.alterar(usuarioAlteracao);
-
-                daoFuncionario = new DaoFuncionario();
-                daoFuncionario.alterar(funcionarioAlteracao); //ARRUMAR OS EXCEPTIONS
+                daoFuncionario.alterar(funcionarioAlteracao);
 
             } catch (ExceptionCpfInvalido e) {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
@@ -349,7 +354,7 @@ public class ControllerCadastroFuncionario {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
 
             } catch (ExceptionSistemaPonto e) {
-                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());   
+                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
 
             }
         }
