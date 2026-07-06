@@ -94,7 +94,7 @@ public class DaoUsuario implements InterfaceDados {
                 PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
             stmt.setInt(1, codigo);
-            ResultSet src = stmt.executeQuery();
+            ResultSet src = stmt.executeQuery();    
 
             if (src.next()) {
                 ModelUsuario Usuario = new ModelUsuario(

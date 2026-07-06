@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -124,6 +125,9 @@ public class DaoRegistroPontoTeste implements InterfaceDadosRegistroPonto {
      * @return ModelRegistroPonto
      */
     private ModelRegistroPonto preencheModelo(ResultSet src) throws ExceptionSistemaPonto {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+
         try {
             ModelRegistroPonto Registro = new ModelRegistroPonto();
             Registro.setCodigo(src.getInt("regcodigo"));
@@ -133,6 +137,7 @@ public class DaoRegistroPontoTeste implements InterfaceDadosRegistroPonto {
             Registro.setRegistroEntradaIntervalo(src.getString("regvoltaintervalo"));
             Registro.setRegistroSaidaIntervalo(src.getString("regsaidafinal"));
             Registro.setFuncionario((new DaoFuncionario()).getFromCodigo(src.getInt("funcodigo")));
+
 
             return Registro;
         } catch (SQLException ex) {
