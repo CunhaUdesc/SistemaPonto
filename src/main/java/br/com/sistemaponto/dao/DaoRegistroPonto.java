@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,10 +133,10 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
             ModelRegistroPonto Registro = new ModelRegistroPonto();
             Registro.setCodigo(src.getInt("regcodigo"));
             Registro.setDiaAtual(src.getString("regdataregistro"));
-            Registro.setRegistroEntrada(src.getString("regentrada"));
-            Registro.setRegistroSaida(src.getString("regsaidaintervalo"));
-            Registro.setRegistroEntradaIntervalo(src.getString("regvoltaintervalo"));
-            Registro.setRegistroSaidaIntervalo(src.getString("regsaidafinal"));
+            Registro.setRegistroEntrada(this.getDataHoraFormatada(src.getString("regentrada")));
+            Registro.setRegistroSaida(this.getDataHoraFormatada(src.getString("regsaidaintervalo")));
+            Registro.setRegistroEntradaIntervalo(this.getDataHoraFormatada(src.getString("regvoltaintervalo")));
+            Registro.setRegistroSaidaIntervalo(this.getDataHoraFormatada(src.getString("regsaidafinal")));
             Registro.setFuncionario((new DaoFuncionario()).getFromCodigo(src.getInt("funcodigo")));
 
 
@@ -265,5 +266,16 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
         } catch (Exception ex) {
             throw new ExceptionSistemaPonto(ex.getMessage());
         }
+    }
+
+    /**
+     * Retorna a DataHora formatada no formato dd/mm/aa hh:mm:ss
+     *
+     * @param timestamp
+     * @return String
+     */
+    private String getDataHoraFormatada(String timestamp) {
+        LocalDateTime dataHora = LocalDateTime.parse(timestamp, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
     }
 }

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funnome"),
                             src.getString("funcpf"),
                             src.getString("funtipo"),
-                            src.getString("fundatanacimento"),
+                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funsalario"),
                             src.getFloat("funcargahoraria")
                     );
@@ -74,7 +76,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funnome"),
                             src.getString("funcpf"),
                             src.getString("funtipo"),
-                            src.getString("fundatanacimento"),
+                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -118,7 +120,7 @@ public class DaoFuncionario implements InterfaceDados {
                         src.getString("funnome"),
                         src.getString("funcpf"),
                         src.getString("funtipo"),
-                        src.getString("fundatanacimento"),
+                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funsalario"),
                         src.getFloat("funcargahoraria")
                     );
@@ -130,7 +132,7 @@ public class DaoFuncionario implements InterfaceDados {
                         src.getString("funnome"),
                         src.getString("funcpf"),
                         src.getString("funtipo"),
-                        src.getString("fundatanacimento"),
+                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -172,7 +174,7 @@ public class DaoFuncionario implements InterfaceDados {
                         src.getString("funnome"),
                         src.getString("funcpf"),
                         src.getString("funtipo"),
-                        src.getString("fundatanascimento"),
+                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funsalario"),
                         src.getFloat("funcargahoraria")
                     );
@@ -182,7 +184,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funnome"),
                             src.getString("funcpf"),
                             src.getString("funtipo"),
-                            src.getString("fundatanascimento"),
+                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funvalorhora")
                     );
                     return horista;
@@ -216,7 +218,7 @@ public class DaoFuncionario implements InterfaceDados {
                         src.getString("funnome"),
                         src.getString("funcpf"),
                         src.getString("funtipo"),
-                        src.getString("fundatanacimento"),
+                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funsalario"),
                         src.getFloat("funcargahoraria")
                     );
@@ -228,7 +230,7 @@ public class DaoFuncionario implements InterfaceDados {
                         src.getString("funnome"),
                         src.getString("funcpf"),
                         src.getString("funtipo"),
-                        src.getString("fundatanacimento"),
+                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -370,8 +372,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funnome"),
                             src.getString("funcpf"),
                             src.getString("funtipo"),
-                            src.getString("fundatanascimento"),
-//                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
+                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funsalario"),
                             src.getFloat("funcargahoraria")
                     );
@@ -383,8 +384,7 @@ public class DaoFuncionario implements InterfaceDados {
                             src.getString("funnome"),
                             src.getString("funcpf"),
                             src.getString("funtipo"),
-                            src.getString("fundatanascimento"),
-//                            (new DaoUsuario()).getUsuarioFromCodigo(src.getInt("usucodigo")),
+                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -396,5 +396,16 @@ public class DaoFuncionario implements InterfaceDados {
         } catch (Exception ex) {
             throw new ExceptionSistemaPonto(ex.getMessage());
         }
+    }
+
+    /**
+     * Retorna a data de Nascimento formatada em dd/mm/aa
+     *
+     * @param date
+     * @return String
+     */
+    private String getDataFormatada(String date) {
+        LocalDate data = LocalDate.parse(date);
+        return data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }
