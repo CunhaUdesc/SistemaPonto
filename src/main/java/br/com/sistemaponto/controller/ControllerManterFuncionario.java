@@ -89,7 +89,6 @@ public class ControllerManterFuncionario {
      */
     public void chamarTelaCadastroFuncionario() {
         new ControllerCadastroFuncionario(new ViewCadastroFuncionario());
-        this.atualizarTabela();
     }
 
     /**

@@ -19,7 +19,7 @@ public class ModelRegistroPonto implements Comparable<ModelRegistroPonto>{
     private String registroSaidaIntervalo;
     private float horasDia;
 
-    private int botao = 0; //0 para ENTRADA e 1 para
+    private int botao = 0; //0 para ENTRADA e 1 para SAIDA
     private int idRegistro = 1; // 1 a 4 para definir qual registro salvar
 
     /**
@@ -112,25 +112,24 @@ public class ModelRegistroPonto implements Comparable<ModelRegistroPonto>{
     }
 
     public void atualizarProximoRegistro() {
-
         if (this.registroEntrada == null) {
-            idRegistro = 1; // Entrada
-            botao = 1;
+            idRegistro = 1;
+            botao = 0;
 
         } else if (this.registroSaida == null) {
-            idRegistro = 2; // Saída para intervalo
-            botao = 0;
-
-        } else if (this.registroEntradaIntervalo == null) {
-            idRegistro = 3; // Volta intervalo
+            idRegistro = 2;
             botao = 1;
 
-        } else if (this.registroSaidaIntervalo == null) {
-            idRegistro = 4; // Saída final
+        } else if (this.registroEntradaIntervalo == null) {
+            idRegistro = 3;
             botao = 0;
 
+        } else if (this.registroSaidaIntervalo == null) {
+            idRegistro = 4;
+            botao = 1;
+
         } else {
-            idRegistro = 5; // Dia encerrado
+            idRegistro = 5;
         }
     }
     

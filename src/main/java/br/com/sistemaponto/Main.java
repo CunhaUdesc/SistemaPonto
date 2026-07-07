@@ -17,7 +17,7 @@ import br.com.sistemaponto.view.ViewLogin;
  */
  public class Main {
     
-    public static final String versao= "V 1.0.0";
+    public static final String versao= "V 2.0.0";
     
     public static void main(String[] args) {
 

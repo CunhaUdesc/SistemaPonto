@@ -34,6 +34,6 @@ CREATE TABLE IF NOT EXISTS tbregistroponto (
 
 INSERT INTO tbfuncionario (funnome, funcpf, fundatanascimento, funtipo, funvalorhora, funsalario, funcargahoraria) VALUES ('Administrador', '00000000001', '01/01/2020', 'HORISTA', '50', null, null);
 INSERT INTO tbusuario (usulogin, ususenha, usutipo, funcodigo) VALUES (0, 'adm', 'ADM', 1);
-INSERT INTO tbregistroponto (regentrada, regsaidaintervalo, regvoltaintervalo, regsaidafinal, funcodigo) VALUES ('2026-07-06 08:30:00', '2026-07-06 11:45:12', '2026-07-06 13:02:05', '2026-07-06 16:40:45', 1);
+INSERT INTO tbregistroponto (regdataregistro, regentrada, regsaidaintervalo, regvoltaintervalo, regsaidafinal, funcodigo) VALUES ('2025-12-25','2026-07-06 08:30:00', '2026-05-06 11:45:12', '2026-07-06 13:02:05', '2026-07-06 16:40:45', 1);
 
-INSERT INTO tbregistroponto (regentrada, regsaidaintervalo, regvoltaintervalo, regsaidafinal, funcodigo) VALUES ('2026-07-07 00:30:00', '2026-07-07 00:45:12', '2026-07-07 01:02:05', '2026-07-07 01:40:45', 1)
+INSERT INTO tbregistroponto (regdataregistro, regentrada, regsaidaintervalo, regvoltaintervalo, regsaidafinal, funcodigo) VALUES ('2026-12-25','2026-07-07 00:30:00', '2026-07-07 00:45:12', '2026-07-07 01:02:05', '2026-07-07 01:40:45', 1)

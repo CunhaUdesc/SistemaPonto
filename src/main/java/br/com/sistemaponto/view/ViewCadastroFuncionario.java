@@ -183,24 +183,20 @@ public class ViewCadastroFuncionario extends JFrame {
         return cbTipoFuncionario;
     }
 
-    public void mostraFuncionarioNaTela(ModelFuncionario funcionario){
-        String codigo = String.valueOf(funcionario.getCodigo());
-        txtCodigo.setText(codigo);
+    public void mostraFuncionarioNaTela(ModelFuncionario funcionario) {
+        txtCodigo.setText(String.valueOf(funcionario.getCodigo()));
         txtNome.setText(funcionario.getNome());
         txtCpf.setText(funcionario.getCPF());
         txtDataNascimento.setText(funcionario.getDataNascimento());
         cbTipoFuncionario.setSelectedItem(funcionario.getTipoFuncionario());
 
-        if(funcionario.getTipoFuncionario().equals("Horista")){
-            ModelFuncionarioHorista func = (ModelFuncionarioHorista) funcionario;
+        if (funcionario instanceof ModelFuncionarioHorista func) {
             txtValorHora.setText(String.valueOf(func.getValorHora()));
-            
-        } else {
-            ModelFuncionarioFixo func = (ModelFuncionarioFixo) funcionario;
+
+        } else if (funcionario instanceof ModelFuncionarioFixo func) {
             txtSalario.setText(String.valueOf(func.getSalarioBase()));
             txtCargaHoraria.setText(String.valueOf(func.getCargaHoraria()));
         }
-        
     }
 
     /**

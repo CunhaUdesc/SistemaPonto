@@ -341,17 +341,20 @@ public class DaoFuncionario implements InterfaceDados {
             stmt.setString(4, ((ModelFuncionario) obj).getTipoFuncionario());
 
             if (((ModelFuncionario) obj).getTipoFuncionario().equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
-                ModelFuncionarioFixo Fixo = (ModelFuncionarioFixo) obj;
-                stmt.setFloat(5, Fixo.getCargaHoraria());
-                stmt.setDouble(6, Fixo.getSalarioBase());
+                ModelFuncionarioFixo fixo = (ModelFuncionarioFixo) obj;
+                stmt.setFloat(5, fixo.getCargaHoraria());
+                stmt.setDouble(6, fixo.getSalarioBase());
                 stmt.setNull(7, Types.NULL);
 
             } else {
-                ModelFuncionarioHorista Horista = (ModelFuncionarioHorista) obj;
+                ModelFuncionarioHorista horista = (ModelFuncionarioHorista) obj;
                 stmt.setNull(5, Types.NULL);
                 stmt.setNull(6, Types.NULL);
-                stmt.setDouble(7, Horista.getValorHora());
+                stmt.setDouble(7, horista.getValorHora());
             }
+
+            stmt.setInt(8, ((ModelFuncionario) obj).getCodigo());
+
             stmt.executeUpdate();
             return;
 

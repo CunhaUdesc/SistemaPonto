@@ -58,7 +58,7 @@ public abstract class ModelFuncionario {
     }
 
     public String getTipoFuncionario() {
-        return tipoFuncionario;
+        return tipoFuncionario.toUpperCase();
     }
     
     public String getDataNascimento() {

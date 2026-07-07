@@ -2,7 +2,7 @@ package br.com.sistemaponto.controller;
 
 import java.time.LocalDate;
 
-import br.com.sistemaponto.dao.DaoRegistroPonto;
+import br.com.sistemaponto.dao.DaoRegistroPontoTeste;
 import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.model.ModelRegistroPonto;
@@ -21,7 +21,7 @@ public class ControllerBaterPonto {
     private ViewBaterPonto viewBaterPonto;
 
     /** @var DaoRegistroPonto */
-    private DaoRegistroPonto daoRegistroPonto;
+    private DaoRegistroPontoTeste daoRegistroPonto;
 
     /** @var ModelRegistroPonto */
     private ModelRegistroPonto registro;
@@ -32,7 +32,7 @@ public class ControllerBaterPonto {
      * @param viewBaterPonto
      * @param daoRegistroPonto
      */
-    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto) {
+    public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPontoTeste daoRegistroPonto) {
         this.daoRegistroPonto = daoRegistroPonto;
         this.viewBaterPonto = viewBaterPonto;
 
@@ -45,36 +45,35 @@ public class ControllerBaterPonto {
         this.viewBaterPonto.mostrarTela();
     }
 
-    private void carregarRegistroDia() {
-
+    public ModelRegistroPonto verificaRegistro(){
         try {
             String data = LocalDate.now().toString();
 
-            ModelRegistroPonto registroBanco = daoRegistroPonto.getRegistroPontoDiaFuncionario(data, Session.getUsuario().getFuncionario());
-
-            if (registroBanco == null) {
-
-                // Primeiro ponto do dia
-                this.registro = new ModelRegistroPonto();
-
-                this.registro.setFuncionario(
-                    Session.getUsuario().getFuncionario()
-                );
-
-                this.registro.setIdRegistro(1);
-                this.registro.setBotao(0);
-
-            } else {
-
-                // Já existe no banco
-                this.registro = registroBanco;
-
-                this.registro.atualizarProximoRegistro();
-            }
-
+            ModelRegistroPonto ponto = this.daoRegistroPonto.getRegistroPontoDiaFuncionario(data, Session.getUsuario().getFuncionario());
+            return ponto;
 
         } catch (ExceptionSistemaPonto e) {
-            viewBaterPonto.apresentaMensagem("Erro: " + e.getMessage());
+            this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
+        }
+        return null;
+    }
+
+    private void carregarRegistroDia() {
+
+        this.registro = this.verificaRegistro();
+
+        if (this.registro == null) {
+
+            this.registro = new ModelRegistroPonto();
+            this.registro.setFuncionario(Session.getUsuario().getFuncionario());
+
+            this.registro.setDiaAtual(LocalDate.now().toString());
+
+            this.registro.setIdRegistro(1);
+            this.registro.setBotao(0);
+
+        } else {
+            this.registro.atualizarProximoRegistro();
         }
     }
 
@@ -83,12 +82,10 @@ public class ControllerBaterPonto {
      */
     public void desabilitaBotao() {
 
-        if( this.registro.getBotao() == 5){
+        if( this.registro.getBotao() == 4){
             this.viewBaterPonto.getBtnEntrada().setEnabled(false);
             this.viewBaterPonto.getBtnSaida().setEnabled(false);
-        }
-
-        if(this.registro.getBotao() == 0){
+        } else if(this.registro.getBotao() == 0){
             this.viewBaterPonto.getBtnEntrada().setEnabled(true);
             this.viewBaterPonto.getBtnSaida().setEnabled(false);
 
@@ -96,7 +93,6 @@ public class ControllerBaterPonto {
             this.viewBaterPonto.getBtnEntrada().setEnabled(false);
             this.viewBaterPonto.getBtnSaida().setEnabled(true);
         }
-
     }
 
     /**

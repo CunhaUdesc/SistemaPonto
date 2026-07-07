@@ -257,6 +257,7 @@ public class ControllerCadastroFuncionario {
                 ModelFuncionario f = daoFuncionario.getFuncionarioFromCpf(funcionario.getCPF());
                 usuario.setFuncionario(f);
                 this.daoUsuario.salvar(usuario);
+
                 this.viewCadastroFunc.apresentaMensagem("Funcionario Cadastrado com sucesso!");
                 this.viewCadastroFunc.limparTela();
                 this.fecharTela();
@@ -338,7 +339,9 @@ public class ControllerCadastroFuncionario {
 
                 daoFuncionario.alterar(funcionarioAlteracao);
                 daoUsuario.alterar(usuarioAlteracao);
+
                 this.viewCadastroFunc.apresentaMensagem("Funcionario Alterado com sucesso!");
+                this.fecharTela();
 
             } catch (ExceptionCpfInvalido e) {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());

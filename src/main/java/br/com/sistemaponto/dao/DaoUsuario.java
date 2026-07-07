@@ -59,7 +59,46 @@ public class DaoUsuario implements InterfaceDados {
     }
 
     @Override
-    public void alterar(Object usuario) {}
+    public void alterar(Object obj) throws ExceptionSistemaPonto {
+
+        if (!(obj instanceof ModelUsuario)) {
+            throw new ExceptionSistemaPonto("Usuário inválido!");
+        }
+
+        ModelUsuario usuario = (ModelUsuario) obj;
+
+        String sql = """
+            UPDATE tbusuario
+            SET usulogin = ?,
+                ususenha = ?,
+                usutipo  = ?,
+                funcodigo = ?
+            WHERE usucodigo = ?;
+        """;
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+
+            stmt.setInt(1, usuario.getLogin());
+            stmt.setString(2, usuario.getSenha());
+            stmt.setString(3, usuario.getTipo());
+            stmt.setInt(4, usuario.getFuncionario().getCodigo());
+            stmt.setInt(5, usuario.getCodigo());
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas == 0) {
+                throw new ExceptionSistemaPonto("Usuário não encontrado!");
+            }
+
+        } catch (SQLException e) {
+            throw new ExceptionSistemaPonto(e.getMessage());
+        } catch (Exception e) {
+            throw new ExceptionSistemaPonto(e.getMessage());
+        }
+    }
 
     @Override
     public void excluir(int codigo) throws ExceptionSistemaPonto {

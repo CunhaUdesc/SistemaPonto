@@ -49,7 +49,7 @@ public class ViewManterFuncionario extends JFrame {
         // Ajuste das larguras das colunas
         tbFuncionarios.getColumnModel().getColumn(0).setPreferredWidth(70);   // Código
         tbFuncionarios.getColumnModel().getColumn(1).setPreferredWidth(180);  // Nome
-        tbFuncionarios.getColumnModel().getColumn(2).setPreferredWidth(120);  // CPF
+        tbFuncionarios.getColumnModel().getColumn(2).setPreferredWidth(130);  // CPF
         tbFuncionarios.getColumnModel().getColumn(3).setPreferredWidth(140);  // Data de Nascimento
         tbFuncionarios.getColumnModel().getColumn(4).setPreferredWidth(80);   // Tipo
         tbFuncionarios.getColumnModel().getColumn(5).setPreferredWidth(90);  // Salário
@@ -156,6 +156,9 @@ public class ViewManterFuncionario extends JFrame {
         DefaultTableModel model = (DefaultTableModel) tbFuncionarios.getModel();
         model.setRowCount(0);
 
+        if(listaFuncionarios==null)
+            return;
+
         for (ModelFuncionario func : listaFuncionarios) {
 
             Object salario = 0.00;
@@ -182,7 +185,7 @@ public class ViewManterFuncionario extends JFrame {
             model.addRow(new Object[]{
                 func.getCodigo(),
                 func.getNome(),
-                func.getCPF(),
+                formatarCPF(func.getCPF()),
                 func.getDataNascimento(),
                 func.getTipoFuncionario(),
                 salario,
@@ -220,13 +223,20 @@ public class ViewManterFuncionario extends JFrame {
         model.addRow(new Object[]{
             funcionario.getCodigo(),
             funcionario.getNome(),
-            funcionario.getCPF(),
+            formatarCPF(funcionario.getCPF()),
             funcionario.getDataNascimento(),
             funcionario.getTipoFuncionario(),
             salario,
             cargaHoraria,
             valorHora
         });
+    }
+
+    public String formatarCPF(String cpf) {
+        return cpf.substring(0, 3) + "." +
+               cpf.substring(3, 6) + "." +
+               cpf.substring(6, 9) + "-" +
+               cpf.substring(9, 11);
     }
     
     @SuppressWarnings("unchecked")

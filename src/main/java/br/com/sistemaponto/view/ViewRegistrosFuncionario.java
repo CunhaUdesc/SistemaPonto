@@ -170,7 +170,7 @@ public class ViewRegistrosFuncionario extends JFrame {
 
         btnPesquisar.setText("Pesquisar");
 
-        cbFiltros.setModel(new DefaultComboBoxModel<>(new String[] { "Dia", "Mes", "Ano" }));
+        cbFiltros.setModel(new DefaultComboBoxModel<>(new String[] { "Dia", "Ano" }));
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
