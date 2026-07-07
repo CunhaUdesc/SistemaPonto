@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.sistemaponto.enumerados.EnumTipoFuncionario;
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.interfaces.InterfaceDados;
@@ -58,7 +57,7 @@ public class DaoFuncionario implements InterfaceDados {
             ResultSet src = stmt.executeQuery();
 
             while (src.next()) {
-                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
+                if (src.getString("funtipo").equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
 
                     ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
                             src.getString("funnome"),
@@ -114,7 +113,7 @@ public class DaoFuncionario implements InterfaceDados {
             ResultSet src = stmt.executeQuery();
 
             while (src.next()) {
-                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
+                if (src.getString("funtipo").equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
 
                     ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
                         src.getString("funnome"),
@@ -169,7 +168,7 @@ public class DaoFuncionario implements InterfaceDados {
             ResultSet src = stmt.executeQuery();
 
             if (src.next()) {
-                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
+                if (src.getString("funtipo").equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
                     ModelFuncionarioFixo fixo = new ModelFuncionarioFixo(
                         src.getString("funnome"),
                         src.getString("funcpf"),
@@ -252,8 +251,8 @@ public class DaoFuncionario implements InterfaceDados {
         ModelFuncionario Funcionario = (ModelFuncionario) obj;
 
         String sql = """
-            INSERT INTO tbfuncionario (funnome, funcpf, funtipo, fundatanascimento, funcargahoraria, funsalario, funhorastrabalhadas, funvalorhora)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?); 
+            INSERT INTO tbfuncionario (funnome, funcpf, funtipo, fundatanascimento, funcargahoraria, funsalario, funvalorhora)
+            VALUES (?, ?, ?, ?, ?, ?, ?); 
         """;
 
         try (
@@ -265,7 +264,7 @@ public class DaoFuncionario implements InterfaceDados {
             stmt.setString(3, Funcionario.getTipoFuncionario());
             stmt.setString(4, Funcionario.getDataNascimento());
 
-            if (Funcionario.getTipoFuncionario().equals(EnumTipoFuncionario.FIXO)) {
+            if (Funcionario.getTipoFuncionario().equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
                 ModelFuncionarioFixo Fixo = (ModelFuncionarioFixo) Funcionario;
                 stmt.setFloat(5, Fixo.getCargaHoraria());
                 stmt.setDouble(6, Fixo.getSalarioBase());
@@ -316,7 +315,7 @@ public class DaoFuncionario implements InterfaceDados {
                    funcargahoraria   = ?,
                    funsalario        = ?,
                    funvalorhora      = ?
-             WHERE id = ?;
+             WHERE funcodigo = ?;
         """;
 
         try (
@@ -329,7 +328,7 @@ public class DaoFuncionario implements InterfaceDados {
             stmt.setString(3, ((ModelFuncionario) obj).getTipoFuncionario());
             stmt.setString(4, ((ModelFuncionario) obj).getDataNascimento());
 
-            if (((ModelFuncionario) obj).getTipoFuncionario().equals(EnumTipoFuncionario.FIXO)) {
+            if (((ModelFuncionario) obj).getTipoFuncionario().equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
                 ModelFuncionarioFixo Fixo = (ModelFuncionarioFixo) obj;
                 stmt.setFloat(5, Fixo.getCargaHoraria());
                 stmt.setDouble(6, Fixo.getSalarioBase());
@@ -367,7 +366,7 @@ public class DaoFuncionario implements InterfaceDados {
             ResultSet src = stmt.executeQuery();
 
             while (src.next()) {
-                if (src.getString("funtipo").equals(EnumTipoFuncionario.FIXO)) {
+                if (src.getString("funtipo").equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
                     ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
                             src.getString("funnome"),
                             src.getString("funcpf"),

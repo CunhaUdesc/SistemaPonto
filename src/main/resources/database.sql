@@ -4,9 +4,9 @@ CREATE TABLE IF NOT EXISTS tbfuncionario (
     funcpf 			  VARCHAR(11) NOT NULL UNIQUE,
     funtipo 		  VARCHAR(7) NOT NULL CHECK (funtipo IN('FIXO', 'HORISTA')),
     fundatanascimento DATE,
-    funcargahoraria   SMALLINT,
-    funsalario		  DECIMAL(5,2),
-    funvalorhora      DECIMAL(5,2)
+    funcargahoraria   SMALLINT DEFAULT 0.0,
+    funsalario		  DECIMAL(5,2) DEFAULT 0.0,
+    funvalorhora      DECIMAL(5,2) DEFAULT 0.0
 );
 
 CREATE TABLE IF NOT EXISTS tbusuario (

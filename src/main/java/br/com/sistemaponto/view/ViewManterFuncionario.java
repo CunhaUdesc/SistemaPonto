@@ -162,17 +162,23 @@ public class ViewManterFuncionario extends JFrame {
             Object cargaHoraria = "";
             Object valorHora = "";
 
+
+
             if (func instanceof ModelFuncionarioFixo) {
                 ModelFuncionarioFixo fixo = (ModelFuncionarioFixo) func;
 
-                salario = fixo.getSalarioBase();
-                cargaHoraria = fixo.getCargaHoraria();
+                Double salarioBase = fixo.getSalarioBase();
+                salario = salarioBase != null ? salarioBase : 0.0;
+
+                Float horas = fixo.getCargaHoraria();
+                cargaHoraria = horas != null ? horas : 0.0;
 
             } else 
                 if (func instanceof ModelFuncionarioHorista) {
                 ModelFuncionarioHorista horista = (ModelFuncionarioHorista) func;
 
-                valorHora = horista.getValorHora();
+                Double valor = horista.getValorHora();
+                valorHora = valor != null ? valor : 0.0;
             }
 
             model.addRow(new Object[]{
