@@ -1,3 +1,8 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
@@ -37,6 +42,7 @@ public class ViewCadastroFuncionario extends JFrame {
         configuraAcoes();
         visualizaCamposPorTipoFuncionario();
         //desabilitar botões
+        txtCodigo.setEnabled(false);
         txtSalario.setEnabled(false);
         txtCargaHoraria.setEnabled(false);
     }
@@ -122,7 +128,6 @@ public class ViewCadastroFuncionario extends JFrame {
     }
     
     public void limparTela(){
-        txtCodigo.setText("");
         txtNome.setText("");
         txtCpf.setText("");
         txtDataNascimento.setText("");
@@ -167,10 +172,6 @@ public class ViewCadastroFuncionario extends JFrame {
 
     public JButton getBtnLimpar(){
         return btnLimpar;
-    }
-
-    public JTextField getTxtCodigo(){
-        return txtCodigo;
     }
 
     public void mostraFuncionarioNaTela(ModelFuncionario funcionario){

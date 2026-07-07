@@ -53,8 +53,6 @@ public class ControllerCadastroFuncionario {
         viewCadastroFunc.mostrarTela();
         viewCadastroFunc.setLbTitulo("Cadastro de Funcionario");
         viewCadastroFunc.getBtnLimpar().setEnabled(true);
-        viewCadastroFunc.getTxtCodigo().setEnabled(true);
-
         this.adicionarAcoes();
     }
 
@@ -73,7 +71,6 @@ public class ControllerCadastroFuncionario {
         viewCadastroFunc.mostrarTela();
         viewCadastroFunc.setLbTitulo("Alterar Funcionario");
         viewCadastroFunc.getBtnLimpar().setEnabled(false);
-        viewCadastroFunc.getTxtCodigo().setEnabled(false);
         viewCadastroFunc.mostraFuncionarioNaTela(funcionario);
 
         this.adicionarAcoes();

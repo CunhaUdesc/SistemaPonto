@@ -1,3 +1,8 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
@@ -132,9 +137,14 @@ public class ViewRegistrosFuncionario extends JFrame {
 
             },
             new String [] {
-                "Entrada", "Saida", "Entrada Intervalo", "Saida Intervalo"
+                "Codigo", "Data", "Entrada", "Saida", "Entrada Intervalo", "Saida Intervalo"
             }
-        ));
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
         jScrollPane1.setViewportView(tbRegistros);
 
         lbRegistros.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N

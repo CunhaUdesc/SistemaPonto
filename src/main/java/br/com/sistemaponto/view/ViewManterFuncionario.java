@@ -1,3 +1,8 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
@@ -14,7 +19,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
-import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.sistemaponto.Main;
@@ -37,7 +41,20 @@ public class ViewManterFuncionario extends JFrame {
      */
     public ViewManterFuncionario() {
         this.initComponents();
+        this.initTabela();
         this.lbVersao.setText(Main.versao);
+    }
+
+    public void initTabela(){
+        // Ajuste das larguras das colunas
+        tbFuncionarios.getColumnModel().getColumn(0).setPreferredWidth(70);   // Código
+        tbFuncionarios.getColumnModel().getColumn(1).setPreferredWidth(180);  // Nome
+        tbFuncionarios.getColumnModel().getColumn(2).setPreferredWidth(120);  // CPF
+        tbFuncionarios.getColumnModel().getColumn(3).setPreferredWidth(140);  // Data de Nascimento
+        tbFuncionarios.getColumnModel().getColumn(4).setPreferredWidth(80);   // Tipo
+        tbFuncionarios.getColumnModel().getColumn(5).setPreferredWidth(100);  // Salário
+        tbFuncionarios.getColumnModel().getColumn(6).setPreferredWidth(100);  // Carga Horária
+        tbFuncionarios.getColumnModel().getColumn(7).setPreferredWidth(100);  // Valor Hora
     }
 
     /**
@@ -151,7 +168,8 @@ public class ViewManterFuncionario extends JFrame {
                 salario = fixo.getSalarioBase();
                 cargaHoraria = fixo.getCargaHoraria();
 
-            } else if (func instanceof ModelFuncionarioHorista) {
+            } else 
+                if (func instanceof ModelFuncionarioHorista) {
                 ModelFuncionarioHorista horista = (ModelFuncionarioHorista) func;
 
                 valorHora = horista.getValorHora();
@@ -201,63 +219,69 @@ public class ViewManterFuncionario extends JFrame {
             valorHora
         });
     }
-
+    
+    @SuppressWarnings("unchecked")
     /**
      * Inicialização dos Componentes
      */
     private void initComponents() {
 
-        jScrollPane1 = new JScrollPane();
-        tbFuncionarios = new JTable();
-        lbFuncionarios = new JLabel();
-        btnAlterar = new JButton();
-        btnExcluir = new JButton();
-        btnIncluir = new JButton();
-        lbVersao = new JLabel();
-        btnRegistrosPonto = new JButton();
-        cbFiltros = new JComboBox<>();
-        txtFiltro = new JTextField();
-        btnPesquisar = new JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbFuncionarios = new javax.swing.JTable();
+        lbFuncionarios = new javax.swing.JLabel();
+        btnAlterar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnIncluir = new javax.swing.JButton();
+        lbVersao = new javax.swing.JLabel();
+        btnRegistrosPonto = new javax.swing.JButton();
+        cbFiltros = new javax.swing.JComboBox<>();
+        txtFiltro = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JButton();
 
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        this.tbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+        tbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
             },
             new String [] {
-                "Nome", "CPF", "Data de Nascimento", "Tipo", "Salario"
+                "Codigo", "Nome", "CPF", "Data de Nascimento",
+                "Tipo", "Salario", "Carga Horaria", "Valor Hora"
             }
-        ));
-        this.jScrollPane1.setViewportView(tbFuncionarios);
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        jScrollPane1.setViewportView(tbFuncionarios);
 
-        this.lbFuncionarios.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        this.lbFuncionarios.setText("Funcionários");
+        lbFuncionarios.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbFuncionarios.setText("Funcionários");
 
-        this.btnAlterar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        this.btnAlterar.setText("Alterar");
+        btnAlterar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnAlterar.setText("Alterar");
 
-        this.btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        this.btnExcluir.setText("Excluir");
+        btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnExcluir.setText("Excluir");
 
-        this.btnIncluir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        this.btnIncluir.setText("Incluir");
+        btnIncluir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnIncluir.setText("Incluir");
 
-        this.lbVersao.setText("Versao");
+        lbVersao.setText("Versao");
 
-        this.btnRegistrosPonto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        this.btnRegistrosPonto.setText("Visualizar Registros");
+        btnRegistrosPonto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnRegistrosPonto.setText("Visualizar Registros");
 
-        this.cbFiltros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        this.cbFiltros.setModel(new DefaultComboBoxModel<>(new String[] { "Nome", "CPF", "Tipo" }));
+        cbFiltros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbFiltros.setModel(new DefaultComboBoxModel<>(new String[] { "Nome", "CPF", "Tipo" }));
 
-        this.txtFiltro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtFiltro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        this.btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        this.btnPesquisar.setText("Pesquisar");
+        btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnPesquisar.setText("Pesquisar");
 
         GroupLayout layout = new GroupLayout(getContentPane());
-        this.getContentPane().setLayout(layout);
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -310,8 +334,9 @@ public class ViewManterFuncionario extends JFrame {
         );
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton btnAlterar;
     private JButton btnExcluir;
     private JButton btnIncluir;
@@ -323,4 +348,5 @@ public class ViewManterFuncionario extends JFrame {
     private JLabel lbVersao;
     private JTable tbFuncionarios;
     private JTextField txtFiltro;
+    // End of variables declaration//GEN-END:variables
 }
