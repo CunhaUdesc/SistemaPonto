@@ -227,23 +227,24 @@ public class ControllerCadastroFuncionario {
                 this.validarCPF(cpf);
 
                 String tipo = this.viewCadastroFunc.getTipoFuncionario();
+                String tipoFunc = tipo.toUpperCase();
 
                 String dataNascimento = this.viewCadastroFunc.getDataNascimento();
                 this.validarDataNascimento(dataNascimento);
-                
+
                 if (this.viewCadastroFunc.getTipoFuncionario().equalsIgnoreCase("Horista")) {
                     double valorHora = Double.parseDouble(this.viewCadastroFunc.getValorHora());
                     this.validarValorHora(valorHora);
-                    
-                    funcionario = new ModelFuncionarioHorista(nome, cpf, dataNascimento, tipo, valorHora);
+
+                    funcionario = new ModelFuncionarioHorista(nome, cpf, dataNascimento, tipoFunc, valorHora);
 
                 } else {
                     double salario = Double.parseDouble(viewCadastroFunc.getSalario());
                     this.validarSalario(salario);
                     float cargaHoraria = Float.parseFloat(viewCadastroFunc.getCargaHoraria());
                     this.validarCargaHoraria(cargaHoraria);
-                    funcionario = new ModelFuncionarioFixo(nome, cpf, tipo, dataNascimento, salario, cargaHoraria);
-                    
+                    funcionario = new ModelFuncionarioFixo(nome, cpf, tipoFunc, dataNascimento, salario, cargaHoraria);
+
                 }
 
                 //Criando o usuário
@@ -252,7 +253,8 @@ public class ControllerCadastroFuncionario {
                 String perfil = this.viewCadastroFunc.getPerfilUsuario();
 
                 usuario = new ModelUsuario(login, senha, perfil, funcionario);
-                daoFuncionario.salvar(funcionario); //ARRUMAR OS EXCEPTIONS
+                this.daoFuncionario.salvar(funcionario); //ARRUMAR OS EXCEPTIONS
+                this.daoUsuario.salvar(usuario);
 
             } catch (ExceptionCpfInvalido e) {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
@@ -274,7 +276,7 @@ public class ControllerCadastroFuncionario {
 
             } catch (ExceptionSistemaPonto e) {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-                
+
             }
         } else {
             this.alterarFuncionario();

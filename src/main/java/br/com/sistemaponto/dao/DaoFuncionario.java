@@ -53,7 +53,8 @@ public class DaoFuncionario implements InterfaceDados {
             Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
-            stmt.setString(1, "%"+tipo+"%");
+            String filtro = "%"+tipo+"%";
+            stmt.setString(1, filtro);
             ResultSet src = stmt.executeQuery();
 
             while (src.next()) {
@@ -81,9 +82,8 @@ public class DaoFuncionario implements InterfaceDados {
                     Funcionario.setCodigo(src.getInt("funcodigo"));
                     allFuncionarios.add(Funcionario);
                 }
-                return allFuncionarios;
             }
-            return null;
+            return allFuncionarios;
 
         } catch (Exception ex) {
             throw new ExceptionSistemaPonto(ex.getMessage());

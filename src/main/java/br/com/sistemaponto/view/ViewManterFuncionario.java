@@ -158,11 +158,9 @@ public class ViewManterFuncionario extends JFrame {
 
         for (ModelFuncionario func : listaFuncionarios) {
 
-            Object salario = "";
-            Object cargaHoraria = "";
-            Object valorHora = "";
-
-
+            Object salario = 0.00;
+            Object cargaHoraria = 0.00;
+            Object valorHora = 0.00;
 
             if (func instanceof ModelFuncionarioFixo) {
                 ModelFuncionarioFixo fixo = (ModelFuncionarioFixo) func;
