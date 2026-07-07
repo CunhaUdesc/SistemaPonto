@@ -6,7 +6,12 @@
 package br.com.sistemaponto.view;
 
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -84,20 +89,30 @@ public class ViewRegistrosFuncionario extends JFrame {
         return txtFiltro.getText();
     }
     
-    public void preencherTabela(List<ModelRegistroPonto> registros){
+    public void preencherTabela(Set<ModelRegistroPonto> registros){
+
+        List<ModelRegistroPonto> lista = new ArrayList<>(registros);
+        Collections.sort(lista);
+
         DefaultTableModel model = (DefaultTableModel) tbRegistros.getModel();
         model.setRowCount(0);
 
-        for(ModelRegistroPonto registroPonto : registros){
+        for(ModelRegistroPonto registroPonto : lista){
             model.addRow(new Object[]{
                 registroPonto.getCodigo(),
-                registroPonto.getDiaAtual(),
+                alteraFormatoData(registroPonto.getDiaAtual()),
                 mudaRegistroPonto(registroPonto.getRegistroEntrada()),
                 mudaRegistroPonto(registroPonto.getRegistroSaida()),
                 mudaRegistroPonto(registroPonto.getRegistroEntradaIntervalo()),
                 mudaRegistroPonto(registroPonto.getRegistroSaidaIntervalo())
             });
         }
+    }
+
+    public String alteraFormatoData(String diaRegistro) {
+        LocalDate diaAtual = LocalDate.parse(diaRegistro);
+        DateTimeFormatter formatoDia = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return diaAtual.format(formatoDia);
     }
 
     public String mudaRegistroPonto(String registroPonto) {
@@ -155,7 +170,7 @@ public class ViewRegistrosFuncionario extends JFrame {
 
         btnPesquisar.setText("Pesquisar");
 
-        cbFiltros.setModel(new DefaultComboBoxModel<>(new String[] { "Dia", "Mês", "Ano" }));
+        cbFiltros.setModel(new DefaultComboBoxModel<>(new String[] { "Dia", "Mes", "Ano" }));
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

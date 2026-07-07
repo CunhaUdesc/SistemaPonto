@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.interfaces.InterfaceDadosRegistroPonto;
@@ -25,34 +28,90 @@ import br.com.sistemaponto.util.Conexao;
  */
 public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
 
-    private static Map<String, ModelRegistroPonto> registros;
-
     /**
      * Construct
      */
     public DaoRegistroPonto() {
-        this.registros = new HashMap<>();
+
     }
 
     @Override
     public void salvarRegistro(ModelRegistroPonto registro) throws ExceptionSistemaPonto {
+
+        if (registro.getCodigo() == 0) {
+            inserirRegistro(registro);
+        } else {
+            atualizarRegistro(registro);
+        }
+    }
+
+    private void inserirRegistro(ModelRegistroPonto registro) throws ExceptionSistemaPonto {
+
         String sql = """
-            INSERT INTO tbregistroponto (regdataregistro, regentrada, regsaidaintervalo, regvoltaintervalo, regsaidafinal, funcodigo)
-            VALUES (?, ?, ?, ?, ?, ?);
+            INSERT INTO tbregistroponto
+            (
+                regdataregistro,
+                regentrada,
+                funcodigo
+            )
+            VALUES
+            (
+                CURRENT_DATE,
+                ?,
+                ?
+            )
         """;
 
         try (
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(
+                sql,
+                Statement.RETURN_GENERATED_KEYS
+            )
         ) {
-            stmt.setString(1, registro.getDiaAtual());
-            stmt.setString(2, registro.getRegistroEntrada());
-            stmt.setString(3, registro.getRegistroSaidaIntervalo());
-            stmt.setString(4, registro.getRegistroEntradaIntervalo());
-            stmt.setString(5, registro.getRegistroSaida());
-            stmt.setInt(6, registro.getFuncionario().getCodigo());
 
-        } catch(Exception e){
+            stmt.setString(1, registro.getRegistroEntrada());
+            stmt.setInt(2, registro.getFuncionario().getCodigo());
+
+            stmt.executeUpdate();
+
+            ResultSet src = stmt.getGeneratedKeys();
+
+            if (src.next()) {
+                registro.setCodigo(src.getInt(1));
+            }
+
+        } catch (Exception e) {
+            throw new ExceptionSistemaPonto(e.getMessage());
+        }
+    }
+
+    private void atualizarRegistro(ModelRegistroPonto registro)throws ExceptionSistemaPonto {
+
+        String sql = """
+            UPDATE tbregistroponto
+            SET regentrada = ?,
+                regsaidaintervalo = ?,
+                regvoltaintervalo = ?,
+                regsaidafinal = ?
+            WHERE regcodigo = ?
+        """;
+
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, registro.getRegistroEntrada());
+            stmt.setString(2, registro.getRegistroSaida());
+            stmt.setString(3, registro.getRegistroEntradaIntervalo());
+            stmt.setString(4, registro.getRegistroSaidaIntervalo());
+            stmt.setInt(5, registro.getCodigo());
+
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
             throw new ExceptionSistemaPonto(e.getMessage());
         }
     }
@@ -64,24 +123,34 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
      * @param func
      * @return ModelRegistroPonto
      */
-    public List<ModelRegistroPonto> getRegistroPontoDiaFuncionario(String data, ModelFuncionario func) throws ExceptionSistemaPonto {
+    public ModelRegistroPonto getRegistroPontoDiaFuncionario(String data, ModelFuncionario func)
+            throws ExceptionSistemaPonto {
+
         String sql = """
-            SELECT * 
-              FROM tbregistroponto 
-             WHERE regdataregistro = ?
-               AND funcodigo = ? 
+            SELECT *
+            FROM tbregistroponto
+            WHERE regdataregistro = ?
+            AND funcodigo = ?
         """;
-        
+
         try (
             Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
+
             stmt.setString(1, data);
             stmt.setInt(2, func.getCodigo());
-            return this.getRegistros(stmt);
+
+            ResultSet src = stmt.executeQuery();
+
+            if (src.next()) {
+                return preencheModelo(src);
+            }
+
+            return null;
 
         } catch (Exception ex) {
-            throw new ExceptionSistemaPonto("Nenhum registro encontrado!");
+            throw new ExceptionSistemaPonto(ex.getMessage());
         }
     }
 
@@ -96,7 +165,7 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
 
             String sql = """
                 SELECT *
-                  FROM tbregistroponto 
+                  FROM tbregistroponto
             """;
         if (!data2.isEmpty()) {
             sql += "\n WHERE regdataregistro BETWEEN ? and ?";
@@ -126,8 +195,6 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
      * @return ModelRegistroPonto
      */
     private ModelRegistroPonto preencheModelo(ResultSet src) throws ExceptionSistemaPonto {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
 
         try {
             ModelRegistroPonto Registro = new ModelRegistroPonto();
@@ -154,7 +221,7 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
      */
     public List<ModelRegistroPonto> getRegistrosFromFuncionarioNome(String nome) throws ExceptionSistemaPonto {
         String sql = """
-            SELECT * 
+            SELECT *
               FROM tbregistroponto
              WHERE regnome = ?;
         """;
@@ -199,9 +266,9 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
      * @param codigo
      * @return List<ModelRegistroPonto>
      */
-    public List<ModelRegistroPonto> getRegistrosFromFuncionarioCodigo(int codigo) throws ExceptionSistemaPonto {
+    public Set<ModelRegistroPonto> getRegistrosFromFuncionarioCodigo(int codigo) throws ExceptionSistemaPonto {
         String sql = """
-            SELECT * 
+            SELECT *
               FROM tbregistroponto
              WHERE funcodigo = ?;
         """;
@@ -211,8 +278,7 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
                 PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
             stmt.setInt(1, codigo);
-            return this.getRegistros(stmt);
-
+            return new HashSet<>(this.getRegistros(stmt));
         } catch (Exception ex) {
             throw new ExceptionSistemaPonto(ex.getMessage());
         }
@@ -248,7 +314,7 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
         List<ModelRegistroPonto> allRegistros = new ArrayList<>();
 
         String sql = """
-            SELECT * 
+            SELECT *
               FROM tbregistroponto
         """;
 
@@ -275,7 +341,65 @@ public class DaoRegistroPonto implements InterfaceDadosRegistroPonto {
      * @return String
      */
     private String getDataHoraFormatada(String timestamp) {
-        LocalDateTime dataHora = LocalDateTime.parse(timestamp, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        return dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+
+        if(timestamp == null)
+            return null;
+
+        LocalDateTime dataHora =
+            LocalDateTime.parse(
+                timestamp,
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            );
+
+        return dataHora.format(
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
+        );
+    }
+
+    public Set<ModelRegistroPonto> getRegistrosFromDia(String dia) throws ExceptionSistemaPonto {
+
+        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataBanco = LocalDate.parse(dia, formatoEntrada).toString();
+
+        String sql = """
+            SELECT *
+            FROM tbregistroponto
+            WHERE regdataregistro = ?
+        """;
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+
+            stmt.setString(1, dataBanco);
+
+            return new HashSet<>(this.getRegistros(stmt));
+
+        } catch (Exception ex) {
+            throw new ExceptionSistemaPonto(ex.getMessage());
+        }
+    }
+
+    public Set<ModelRegistroPonto> getRegistrosFromAno(String ano) throws ExceptionSistemaPonto {
+        String sql = """
+            SELECT *
+            FROM tbregistroponto
+            WHERE regdataregistro BETWEEN ? AND ?
+        """;
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+
+            stmt.setString(1, ano + "-01-01");
+            stmt.setString(2, ano + "-12-31");
+
+            return new LinkedHashSet<>(this.getRegistros(stmt));
+
+        } catch (Exception ex) {
+            throw new ExceptionSistemaPonto(ex.getMessage());
+        }
     }
 }

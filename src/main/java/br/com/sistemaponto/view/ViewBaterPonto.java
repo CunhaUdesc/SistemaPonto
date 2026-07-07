@@ -20,6 +20,8 @@ import javax.swing.LayoutStyle;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
+import br.com.sistemaponto.model.ModelRegistroPonto;
+
 /**
  * Tela de Bater o Ponto
  *
@@ -29,6 +31,7 @@ public class ViewBaterPonto extends JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ViewBaterPonto.class.getName());
     private DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private Timer timer;
     
     /**
      * Criação da Tela
@@ -37,29 +40,57 @@ public class ViewBaterPonto extends JFrame {
         this.initComponents();
     }
 
+    @Override
+    public void dispose(){
+        if(timer != null)
+            timer.stop();
+
+        super.dispose();
+    }
+
     /**
      * Seta as Labels da Tela
      *
      * @param nomeFuncionario
      */
-    public void setLabels(String nomeFuncionario) {
-        //Método para puxar o nome do funcionario + data atual para o registro do ponto
-        Timer timer = new Timer(1000, e -> {
-        LocalDateTime dataAtual = LocalDateTime.now();
-            lbDataHoje.setText(dataAtual.format(formato));
-        });
-        
-        timer.start();
-        this.lbNomeFuncionario.setText(nomeFuncionario);
-    }
+        public void setLabels(String nomeFuncionario) {
+
+            this.lbNomeFuncionario.setText(nomeFuncionario);
+
+            timer = new Timer(1000, e -> {
+                LocalDateTime dataAtual = LocalDateTime.now();
+                lbDataHoje.setText(dataAtual.format(formato));
+            });
+
+            timer.start();
+        }
 
     /**
      * Atualiza os registros da Tela
      *
      * @param registro
      */
-    public void atualizaRegistros(String registro) {
-        this.txtRegistroPonto.setText(registro);
+    public void atualizaRegistros(ModelRegistroPonto registro) {
+
+        String texto = "";
+
+        if (registro.getRegistroEntrada() != null) {
+            texto += "Entrada: " + registro.getRegistroEntrada() + "\n";
+        }
+
+        if (registro.getRegistroSaida() != null) {
+            texto += "Saída intervalo: " + registro.getRegistroSaida() + "\n";
+        }
+
+        if (registro.getRegistroEntradaIntervalo() != null) {
+            texto += "Volta intervalo: " + registro.getRegistroEntradaIntervalo() + "\n";
+        }
+
+        if (registro.getRegistroSaidaIntervalo() != null) {
+            texto += "Saída final: " + registro.getRegistroSaidaIntervalo() + "\n";
+        }
+
+        this.txtRegistroPonto.setText(texto);
     }
 
     /**

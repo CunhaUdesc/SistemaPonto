@@ -160,10 +160,15 @@ public class ViewCadastroFuncionario extends JFrame {
                 txtValorHora.setEnabled(true);
                 txtSalario.setEnabled(false);
                 txtCargaHoraria.setEnabled(false);
+
+                txtSalario.setText("");
+                txtCargaHoraria.setText("");
             } else {
                 txtValorHora.setEnabled(false);
                 txtSalario.setEnabled(true);
                 txtCargaHoraria.setEnabled(true);
+
+                txtValorHora.setText("");
             }
             revalidate();
             repaint();
@@ -172,6 +177,10 @@ public class ViewCadastroFuncionario extends JFrame {
 
     public JButton getBtnLimpar(){
         return btnLimpar;
+    }
+
+    public JComboBox<String> getCbTipoFuncionario(){
+        return cbTipoFuncionario;
     }
 
     public void mostraFuncionarioNaTela(ModelFuncionario funcionario){

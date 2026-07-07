@@ -3,11 +3,11 @@ package br.com.sistemaponto.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 import br.com.sistemaponto.enumerados.EnumTipoFuncionario;
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.interfaces.InterfaceDados;
@@ -63,8 +63,8 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
                             src.getString("funnome"),
                             src.getString("funcpf"),
+                            src.getString("fundatanascimento"),
                             src.getString("funtipo"),
-                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funsalario"),
                             src.getFloat("funcargahoraria")
                     );
@@ -75,8 +75,8 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioHorista Funcionario = new ModelFuncionarioHorista(
                             src.getString("funnome"),
                             src.getString("funcpf"),
+                            src.getString("fundatanascimento"),
                             src.getString("funtipo"),
-                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -118,8 +118,8 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
                         src.getString("funnome"),
                         src.getString("funcpf"),
+                        src.getString("fundatanascimento"),
                         src.getString("funtipo"),
-                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funsalario"),
                         src.getFloat("funcargahoraria")
                     );
@@ -130,8 +130,8 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioHorista Funcionario = new ModelFuncionarioHorista(
                         src.getString("funnome"),
                         src.getString("funcpf"),
+                        src.getString("fundatanascimento"),
                         src.getString("funtipo"),
-                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -172,20 +172,22 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioFixo fixo = new ModelFuncionarioFixo(
                         src.getString("funnome"),
                         src.getString("funcpf"),
+                        src.getString("fundatanascimento"),
                         src.getString("funtipo"),
-                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funsalario"),
                         src.getFloat("funcargahoraria")
                     );
+                    fixo.setCodigo(src.getInt("funcodigo"));
                     return fixo;
                 } else {
                     ModelFuncionarioHorista horista = new ModelFuncionarioHorista(
                             src.getString("funnome"),
                             src.getString("funcpf"),
+                            src.getString("fundatanascimento"),
                             src.getString("funtipo"),
-                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funvalorhora")
                     );
+                    horista.setCodigo(src.getInt("funcodigo"));
                     return horista;
                 }
              }
@@ -216,8 +218,8 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
                         src.getString("funnome"),
                         src.getString("funcpf"),
+                        src.getString("fundatanascimento"),
                         src.getString("funtipo"),
-                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funsalario"),
                         src.getFloat("funcargahoraria")
                     );
@@ -228,8 +230,8 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioHorista Funcionario = new ModelFuncionarioHorista(
                         src.getString("funnome"),
                         src.getString("funcpf"),
+                        src.getString("fundatanascimento"),
                         src.getString("funtipo"),
-                        this.getDataFormatada(src.getString("fundatanascimento")),
                         src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -251,8 +253,8 @@ public class DaoFuncionario implements InterfaceDados {
         ModelFuncionario Funcionario = (ModelFuncionario) obj;
 
         String sql = """
-            INSERT INTO tbfuncionario (funnome, funcpf, funtipo, fundatanascimento, funcargahoraria, funsalario, funvalorhora)
-            VALUES (?, ?, ?, ?, ?, ?, ?); 
+            INSERT INTO tbfuncionario (funnome, funcpf, fundatanascimento, funtipo, funcargahoraria, funsalario, funvalorhora)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
         """;
 
         try (
@@ -261,8 +263,8 @@ public class DaoFuncionario implements InterfaceDados {
         ) {
             stmt.setString(1, Funcionario.getNome());
             stmt.setString(2, Funcionario.getCPF());
-            stmt.setString(3, Funcionario.getTipoFuncionario());
-            stmt.setString(4, Funcionario.getDataNascimento());
+            stmt.setString(3, Funcionario.getDataNascimento());
+            stmt.setString(4, Funcionario.getTipoFuncionario());
 
             if (Funcionario.getTipoFuncionario().equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
                 ModelFuncionarioFixo Fixo = (ModelFuncionarioFixo) Funcionario;
@@ -278,26 +280,36 @@ public class DaoFuncionario implements InterfaceDados {
             }
             stmt.executeUpdate();
         } catch (Exception ex) {
-            throw new ExceptionSistemaPonto("Funcinário inválido!");
+            ex.printStackTrace();
+            throw new ExceptionSistemaPonto("Funcionário inválido!");
         }
     }
 
     @Override
     public void excluir(int codigo) throws ExceptionSistemaPonto {
         String sql = """
-            DELETE 
-              FROM tbfuncionario
-             WHERE funcodigo = ?;
+            DELETE
+            FROM tbfuncionario
+            WHERE funcodigo = ?;
         """;
 
         try (
             Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
-            stmt.executeUpdate();
+            stmt.setInt(1, codigo);
 
-        } catch (Exception ex) {
-            throw new ExceptionSistemaPonto("Funcionário não encontrado!");
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas == 0) {
+                throw new ExceptionSistemaPonto("Funcionário não encontrado!");
+            }
+
+        } catch (SQLException e) {
+            throw new ExceptionSistemaPonto("Erro ao excluir funcionário");
+
+        } catch (Exception e) {
+            throw new ExceptionSistemaPonto("Erro ao excluir funcionário");
         }
     }
 
@@ -310,8 +322,8 @@ public class DaoFuncionario implements InterfaceDados {
             UPDATE tbfuncionario
                SET funnome           = ?,
                    funcpf            = ?,
-                   funtipo           = ?,
                    fundatanascimento = ?,
+                   funtipo           = ?,
                    funcargahoraria   = ?,
                    funsalario        = ?,
                    funvalorhora      = ?
@@ -325,8 +337,8 @@ public class DaoFuncionario implements InterfaceDados {
         ) {
             stmt.setString(1, ((ModelFuncionario) obj).getNome());
             stmt.setString(2, ((ModelFuncionario) obj).getCPF());
-            stmt.setString(3, ((ModelFuncionario) obj).getTipoFuncionario());
-            stmt.setString(4, ((ModelFuncionario) obj).getDataNascimento());
+            stmt.setString(3, ((ModelFuncionario) obj).getDataNascimento());
+            stmt.setString(4, ((ModelFuncionario) obj).getTipoFuncionario());
 
             if (((ModelFuncionario) obj).getTipoFuncionario().equalsIgnoreCase(EnumTipoFuncionario.FIXO)) {
                 ModelFuncionarioFixo Fixo = (ModelFuncionarioFixo) obj;
@@ -370,8 +382,8 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioFixo Funcionario = new ModelFuncionarioFixo(
                             src.getString("funnome"),
                             src.getString("funcpf"),
+                            src.getString("fundatanascimento"),
                             src.getString("funtipo"),
-                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funsalario"),
                             src.getFloat("funcargahoraria")
                     );
@@ -382,8 +394,8 @@ public class DaoFuncionario implements InterfaceDados {
                     ModelFuncionarioHorista Funcionario = new ModelFuncionarioHorista(
                             src.getString("funnome"),
                             src.getString("funcpf"),
+                            src.getString("fundatanascimento"),
                             src.getString("funtipo"),
-                            this.getDataFormatada(src.getString("fundatanascimento")),
                             src.getDouble("funvalorhora")
                     );
                     Funcionario.setCodigo(src.getInt("funcodigo"));
@@ -403,8 +415,4 @@ public class DaoFuncionario implements InterfaceDados {
      * @param date
      * @return String
      */
-    private String getDataFormatada(String date) {
-        LocalDate data = LocalDate.parse(date);
-        return data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    }
 }

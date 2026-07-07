@@ -1,7 +1,5 @@
 package br.com.sistemaponto.controller;
 
-import java.sql.SQLException;
-
 import br.com.sistemaponto.dao.DaoFuncionario;
 import br.com.sistemaponto.dao.DaoUsuario;
 import br.com.sistemaponto.exception.ExceptionCargaHoraria;
@@ -10,7 +8,6 @@ import br.com.sistemaponto.exception.ExceptionDataNascimentoInvalido;
 import br.com.sistemaponto.exception.ExceptionLogin;
 import br.com.sistemaponto.exception.ExceptionSistemaPonto;
 import br.com.sistemaponto.exception.ExceptionValorInvalido;
-import br.com.sistemaponto.interfaces.InterfaceDados;
 import br.com.sistemaponto.model.ModelFuncionario;
 import br.com.sistemaponto.model.ModelFuncionarioFixo;
 import br.com.sistemaponto.model.ModelFuncionarioHorista;
@@ -28,9 +25,9 @@ public class ControllerCadastroFuncionario {
     /** @var ViewCadastroFuncionario */
     private ViewCadastroFuncionario viewCadastroFunc;
     /** @var InterfaceDados */
-    private InterfaceDados daoFuncionario;
+    private DaoFuncionario daoFuncionario;
 
-    private InterfaceDados daoUsuario;
+    private DaoUsuario daoUsuario;
 
     private ModelFuncionario funcionarioAlteracao;
 
@@ -70,6 +67,7 @@ public class ControllerCadastroFuncionario {
 
         viewCadastroFunc.mostrarTela();
         viewCadastroFunc.setLbTitulo("Alterar Funcionario");
+        viewCadastroFunc.getCbTipoFuncionario().setEnabled(false);
         viewCadastroFunc.getBtnLimpar().setEnabled(false);
         viewCadastroFunc.mostraFuncionarioNaTela(funcionario);
 
@@ -232,7 +230,7 @@ public class ControllerCadastroFuncionario {
                 String dataNascimento = this.viewCadastroFunc.getDataNascimento();
                 this.validarDataNascimento(dataNascimento);
 
-                if (this.viewCadastroFunc.getTipoFuncionario().equalsIgnoreCase("Horista")) {
+                if (tipoFunc.equalsIgnoreCase("Horista")) {
                     double valorHora = Double.parseDouble(this.viewCadastroFunc.getValorHora());
                     this.validarValorHora(valorHora);
 
@@ -243,7 +241,7 @@ public class ControllerCadastroFuncionario {
                     this.validarSalario(salario);
                     float cargaHoraria = Float.parseFloat(viewCadastroFunc.getCargaHoraria());
                     this.validarCargaHoraria(cargaHoraria);
-                    funcionario = new ModelFuncionarioFixo(nome, cpf, tipoFunc, dataNascimento, salario, cargaHoraria);
+                    funcionario = new ModelFuncionarioFixo(nome, cpf, dataNascimento, tipoFunc, salario, cargaHoraria);
 
                 }
 
@@ -251,10 +249,18 @@ public class ControllerCadastroFuncionario {
                 int login = this.criaLogin(cpf);
                 String senha = this.criaSenha(dataNascimento);
                 String perfil = this.viewCadastroFunc.getPerfilUsuario();
+                String perfilMasc = perfil.toUpperCase();
 
-                usuario = new ModelUsuario(login, senha, perfil, funcionario);
+                usuario = new ModelUsuario(login, senha, perfilMasc, funcionario);
+
                 this.daoFuncionario.salvar(funcionario); //ARRUMAR OS EXCEPTIONS
+                ModelFuncionario f = daoFuncionario.getFuncionarioFromCpf(funcionario.getCPF());
+                usuario.setFuncionario(f);
                 this.daoUsuario.salvar(usuario);
+                this.viewCadastroFunc.apresentaMensagem("Funcionario Cadastrado com sucesso!");
+                this.viewCadastroFunc.limparTela();
+                this.fecharTela();
+
 
             } catch (ExceptionCpfInvalido e) {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
@@ -266,9 +272,6 @@ public class ControllerCadastroFuncionario {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
 
             } catch (ExceptionCargaHoraria e) {
-                this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
-
-            } catch (SQLException e) {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
 
             } catch (ExceptionLogin e) {
@@ -295,13 +298,13 @@ public class ControllerCadastroFuncionario {
             this.validarCPF(cpf);
             funcionarioAlteracao.setCPF(cpf);
 
-            funcionarioAlteracao.setTipo(this.viewCadastroFunc.getTipoFuncionario());
-
             String dataNascimento = this.viewCadastroFunc.getDataNascimento();
             this.validarDataNascimento(dataNascimento);
             funcionarioAlteracao.setDataNascimento(dataNascimento);
 
-            if (this.viewCadastroFunc.getTipoFuncionario().equalsIgnoreCase("Horista")) {
+            funcionarioAlteracao.setTipo(this.viewCadastroFunc.getTipoFuncionario());
+
+            if (funcionarioAlteracao instanceof ModelFuncionarioHorista) {
                 ModelFuncionarioHorista func = (ModelFuncionarioHorista) funcionarioAlteracao;
 
                 double valorHora = Double.parseDouble(this.viewCadastroFunc.getValorHora());
@@ -318,7 +321,6 @@ public class ControllerCadastroFuncionario {
                 float cargaHoraria = Float.parseFloat(viewCadastroFunc.getCargaHoraria());
                 this.validarCargaHoraria(cargaHoraria);
                 func.setCargaHoraria(cargaHoraria);
-
             }
 
                 //Criando o usuário
@@ -328,14 +330,15 @@ public class ControllerCadastroFuncionario {
 
                 daoUsuario = new DaoUsuario();
                 int cod = Integer.parseInt(viewCadastroFunc.getCodigo());
-                usuarioAlteracao = (ModelUsuario) daoUsuario.getFromCodigo(cod);
+                usuarioAlteracao = daoUsuario.getUsuarioFromFuncionario(cod);
 
                 usuarioAlteracao.setLogin(login);
                 usuarioAlteracao.setSenha(senha);
                 usuarioAlteracao.setTipo(perfil);
 
-                daoUsuario.alterar(usuarioAlteracao);
                 daoFuncionario.alterar(funcionarioAlteracao);
+                daoUsuario.alterar(usuarioAlteracao);
+                this.viewCadastroFunc.apresentaMensagem("Funcionario Alterado com sucesso!");
 
             } catch (ExceptionCpfInvalido e) {
                 this.viewCadastroFunc.apresentaMensagem("Erro: " + e.getMessage());
@@ -363,5 +366,9 @@ public class ControllerCadastroFuncionario {
      */
     public void limparTela(){
         this.viewCadastroFunc.limparTela();
+    }
+
+    public void fecharTela(){
+        this.viewCadastroFunc.dispose();
     }
 }

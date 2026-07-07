@@ -1,12 +1,14 @@
 package br.com.sistemaponto.model;
 
+import java.util.Objects;
+
 /**
  * Modelo de Dados do Registro de Ponto
  *
  * @author Vitor Hugo da Cunha
  * @since 06/06/2026
  */
-public class ModelRegistroPonto {
+public class ModelRegistroPonto implements Comparable<ModelRegistroPonto>{
 
     private int codigo;
     private ModelFuncionario funcionario;
@@ -108,6 +110,29 @@ public class ModelRegistroPonto {
     public void setIdRegistro(int idRegistro) {
         this.idRegistro = idRegistro;
     }
+
+    public void atualizarProximoRegistro() {
+
+        if (this.registroEntrada == null) {
+            idRegistro = 1; // Entrada
+            botao = 1;
+
+        } else if (this.registroSaida == null) {
+            idRegistro = 2; // Saída para intervalo
+            botao = 0;
+
+        } else if (this.registroEntradaIntervalo == null) {
+            idRegistro = 3; // Volta intervalo
+            botao = 1;
+
+        } else if (this.registroSaidaIntervalo == null) {
+            idRegistro = 4; // Saída final
+            botao = 0;
+
+        } else {
+            idRegistro = 5; // Dia encerrado
+        }
+    }
     
     @Override
     public String toString(){
@@ -131,5 +156,36 @@ public class ModelRegistroPonto {
         }
 
         return s.toString().trim();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + this.codigo;
+        hash = 61 * hash + Objects.hashCode(this.diaAtual);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ModelRegistroPonto other = (ModelRegistroPonto) obj;
+        if (this.codigo != other.codigo) {
+            return false;
+        }
+        return Objects.equals(this.diaAtual, other.diaAtual);
+    }
+
+    @Override
+    public int compareTo(ModelRegistroPonto outro) {
+        return Integer.compare(this.codigo, outro.codigo);
     }
 }

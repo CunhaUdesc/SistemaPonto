@@ -19,8 +19,8 @@ public class ModelFuncionarioFixo extends ModelFuncionario {
      * @param salarioBase
      * @param cargaHoraria
      */
-    public ModelFuncionarioFixo(String nome, String CPF, String tipoFuncionario, String dataNascimento, double salarioBase, float cargaHoraria) {
-        super(nome, CPF, tipoFuncionario, dataNascimento);
+    public ModelFuncionarioFixo(String nome, String CPF, String dataNascimento, String tipoFuncionario, double salarioBase, float cargaHoraria) {
+        super(nome, CPF, dataNascimento, tipoFuncionario);
         this.salarioBase = salarioBase;
         this.cargaHoraria = cargaHoraria;
     }

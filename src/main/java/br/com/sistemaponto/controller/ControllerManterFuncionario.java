@@ -89,6 +89,7 @@ public class ControllerManterFuncionario {
      */
     public void chamarTelaCadastroFuncionario() {
         new ControllerCadastroFuncionario(new ViewCadastroFuncionario());
+        this.atualizarTabela();
     }
 
     /**
@@ -96,7 +97,6 @@ public class ControllerManterFuncionario {
      */
     public void incluirFuncionario() {
         this.chamarTelaCadastroFuncionario();
-        this.atualizarTabela();
     }
 
     /**
@@ -121,9 +121,8 @@ public class ControllerManterFuncionario {
                 viewManterFuncionario.apresentaMensagem("Funcionario não encontrado.");
                 return;
             }
-
+            
             new ControllerCadastroFuncionario(new ViewCadastroFuncionario(), funcionario);
-            this.atualizarTabela();
 
         } catch (ExceptionSistemaPonto e) { //TEM Q VER SE É ISSO MESMO
             viewManterFuncionario.apresentaMensagem("Erro: "+e.getMessage());
@@ -143,6 +142,7 @@ public class ControllerManterFuncionario {
                 return;
             }
             this.daoFuncionario.excluir(codigo);
+            this.viewManterFuncionario.apresentaMensagem("Funcionario excluído com sucesso!");
             this.atualizarTabela();
 
         } catch (Exception e) {

@@ -94,7 +94,7 @@ public class DaoUsuario implements InterfaceDados {
                 PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
             stmt.setInt(1, codigo);
-            ResultSet src = stmt.executeQuery();    
+            ResultSet src = stmt.executeQuery();
 
             if (src.next()) {
                 ModelUsuario Usuario = new ModelUsuario(
@@ -110,6 +110,40 @@ public class DaoUsuario implements InterfaceDados {
 
         } catch (Exception ex) {
             throw new ExceptionLogin("Nenhum funcionário encontrado!");
+        }
+    }
+
+    public ModelUsuario getUsuarioFromFuncionario(int codigoFuncionario) throws ExceptionLogin {
+        String sql = """
+            SELECT *
+            FROM tbusuario
+            WHERE funcodigo = ?;
+        """;
+
+        try (
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setInt(1, codigoFuncionario);
+
+            ResultSet src = stmt.executeQuery();
+
+            if (src.next()) {
+                ModelUsuario usuario = new ModelUsuario(
+                    src.getInt("usulogin"),
+                    src.getString("ususenha"),
+                    src.getString("usutipo"),
+                    (ModelFuncionario) new DaoFuncionario().getFromCodigo(src.getInt("funcodigo"))
+                );
+
+                usuario.setCodigo(src.getInt("usucodigo"));
+                return usuario;
+            }
+
+            return null;
+
+        } catch (Exception e) {
+            throw new ExceptionLogin("Nao existe usuario para esse funcionário!");
         }
     }
 

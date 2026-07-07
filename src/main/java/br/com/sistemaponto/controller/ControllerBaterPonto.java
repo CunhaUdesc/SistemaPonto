@@ -1,7 +1,6 @@
 package br.com.sistemaponto.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import br.com.sistemaponto.dao.DaoRegistroPonto;
 import br.com.sistemaponto.exception.ExceptionLimiteRegistroPonto;
@@ -36,45 +35,68 @@ public class ControllerBaterPonto {
     public ControllerBaterPonto(ViewBaterPonto viewBaterPonto, DaoRegistroPonto daoRegistroPonto) {
         this.daoRegistroPonto = daoRegistroPonto;
         this.viewBaterPonto = viewBaterPonto;
-        this.registro = verificaRegistro();
+
+        this.carregarRegistroDia();
+
+        this.setLabels();
         this.atualizaRegistrosDoDia();
         this.adicionarAcoes();
-        this.setLabels();
         this.desabilitaBotao();
         this.viewBaterPonto.mostrarTela();
     }
 
-    /**
-     * Realiza a verificação do Registro Ponto
-     *
-     * @return ModelRegistroPonto
-     */
-    public ModelRegistroPonto verificaRegistro(){
-        try {
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = LocalDate.now().format(formato);
+    private void carregarRegistroDia() {
 
-            for (ModelRegistroPonto ponto : this.daoRegistroPonto.getRegistroPontoDiaFuncionario(data, Session.getUsuario().getFuncionario())) {
-                return ponto;
+        try {
+            String data = LocalDate.now().toString();
+
+            ModelRegistroPonto registroBanco = daoRegistroPonto.getRegistroPontoDiaFuncionario(data, Session.getUsuario().getFuncionario());
+
+            if (registroBanco == null) {
+
+                // Primeiro ponto do dia
+                this.registro = new ModelRegistroPonto();
+
+                this.registro.setFuncionario(
+                    Session.getUsuario().getFuncionario()
+                );
+
+                this.registro.setIdRegistro(1);
+                this.registro.setBotao(0);
+
+            } else {
+
+                // Já existe no banco
+                this.registro = registroBanco;
+
+                this.registro.atualizarProximoRegistro();
             }
 
+
         } catch (ExceptionSistemaPonto e) {
-            this.viewBaterPonto.apresentaMensagem("Erro: "+e.getMessage());
+            viewBaterPonto.apresentaMensagem("Erro: " + e.getMessage());
         }
-        return null;
     }
 
     /**
      * Desabilita o Botão 'Bater Ponto'
      */
     public void desabilitaBotao() {
+
+        if( this.registro.getBotao() == 5){
+            this.viewBaterPonto.getBtnEntrada().setEnabled(false);
+            this.viewBaterPonto.getBtnSaida().setEnabled(false);
+        }
+
         if(this.registro.getBotao() == 0){
             this.viewBaterPonto.getBtnEntrada().setEnabled(true);
             this.viewBaterPonto.getBtnSaida().setEnabled(false);
-            return;
-        }
+
+        } else {
             this.viewBaterPonto.getBtnEntrada().setEnabled(false);
             this.viewBaterPonto.getBtnSaida().setEnabled(true);
+        }
+
     }
 
     /**
@@ -112,11 +134,8 @@ public class ControllerBaterPonto {
             }
 
             daoRegistroPonto.salvarRegistro(this.registro);
-            
-            //atualiza botão
-            this.registro.setBotao(1);
-            //atualiza o idRegistro
-            this.registro.setIdRegistro(this.registro.getIdRegistro()+1);
+
+            this.registro.atualizarProximoRegistro();
 
             this.atualizaRegistrosDoDia();
             this.desabilitaBotao();
@@ -149,10 +168,8 @@ public class ControllerBaterPonto {
                 throw new ExceptionLimiteRegistroPonto("Limite de Registros do dia atingido");
 
             daoRegistroPonto.salvarRegistro(this.registro);
-            //atualiza botão
-            this.registro.setBotao(0);
-            //atualiza o idRegistro
-            this.registro.setIdRegistro(this.registro.getIdRegistro()+1);
+
+            this.registro.atualizarProximoRegistro();
 
             this.atualizaRegistrosDoDia();
             this.desabilitaBotao();
@@ -169,6 +186,6 @@ public class ControllerBaterPonto {
      * Atualiza o Registro dos Pontos do dia
      */
     public void atualizaRegistrosDoDia(){
-        this.viewBaterPonto.atualizaRegistros(this.registro.toString());
+        this.viewBaterPonto.atualizaRegistros(this.registro);
     }
 }

@@ -21,7 +21,7 @@ public abstract class ModelFuncionario {
      * @param tipoFuncionario
      * @param dataNascimento
      */
-    public ModelFuncionario(String nome, String CPF, String tipoFuncionario, String dataNascimento) {
+    public ModelFuncionario(String nome, String CPF, String dataNascimento, String tipoFuncionario) {
         this.nome = nome;
         this.CPF = CPF;
         this.tipoFuncionario = tipoFuncionario;

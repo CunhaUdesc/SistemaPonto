@@ -49,5 +49,4 @@ public class ModelFuncionarioHorista extends ModelFuncionario {
     public String toString(){
         return super.toString() + ", Valor p/ Hora: "+valorHora+", Horas Trabalhadas: "+horasTrabalhadas;
     }
-    
 }

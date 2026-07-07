@@ -52,8 +52,8 @@ public class ViewManterFuncionario extends JFrame {
         tbFuncionarios.getColumnModel().getColumn(2).setPreferredWidth(120);  // CPF
         tbFuncionarios.getColumnModel().getColumn(3).setPreferredWidth(140);  // Data de Nascimento
         tbFuncionarios.getColumnModel().getColumn(4).setPreferredWidth(80);   // Tipo
-        tbFuncionarios.getColumnModel().getColumn(5).setPreferredWidth(100);  // Salário
-        tbFuncionarios.getColumnModel().getColumn(6).setPreferredWidth(100);  // Carga Horária
+        tbFuncionarios.getColumnModel().getColumn(5).setPreferredWidth(90);  // Salário
+        tbFuncionarios.getColumnModel().getColumn(6).setPreferredWidth(110);  // Carga Horária
         tbFuncionarios.getColumnModel().getColumn(7).setPreferredWidth(100);  // Valor Hora
     }
 
@@ -171,7 +171,7 @@ public class ViewManterFuncionario extends JFrame {
                 Float horas = fixo.getCargaHoraria();
                 cargaHoraria = horas != null ? horas : 0.0;
 
-            } else 
+            } else
                 if (func instanceof ModelFuncionarioHorista) {
                 ModelFuncionarioHorista horista = (ModelFuncionarioHorista) func;
 
@@ -196,20 +196,25 @@ public class ViewManterFuncionario extends JFrame {
         DefaultTableModel model = (DefaultTableModel) tbFuncionarios.getModel();
         model.setRowCount(0);
 
-        Object salario = "";
-        Object cargaHoraria = "";
-        Object valorHora = "";
+        Object salario = 0.00;
+        Object cargaHoraria = 0.00;
+        Object valorHora = 0.00;
 
         if (funcionario instanceof ModelFuncionarioFixo) {
             ModelFuncionarioFixo fixo = (ModelFuncionarioFixo) funcionario;
 
-            salario = fixo.getSalarioBase();
-            cargaHoraria = fixo.getCargaHoraria();
+            Double salarioBase = fixo.getSalarioBase();
+            salario = salarioBase != null ? salarioBase : 0.0;
 
-        } else if (funcionario instanceof ModelFuncionarioHorista) {
+            Float horas = fixo.getCargaHoraria();
+            cargaHoraria = horas != null ? horas : 0.0;
+
+        } else
+            if (funcionario instanceof ModelFuncionarioHorista) {
             ModelFuncionarioHorista horista = (ModelFuncionarioHorista) funcionario;
 
-            valorHora = horista.getValorHora();
+            Double valor = horista.getValorHora();
+            valorHora = valor != null ? valor : 0.0;
         }
 
         model.addRow(new Object[]{
